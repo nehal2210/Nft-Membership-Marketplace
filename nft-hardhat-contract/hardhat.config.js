@@ -1,56 +1,73 @@
-require("@nomicfoundation/hardhat-toolbox");
-require("hardhat-gas-reporter");
 require("dotenv").config();
+require("@nomicfoundation/hardhat-toolbox");
 
-/*** 
- * @type import('hardhat/config').HardhatUserConfig 
- * */
-
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
 module.exports = {
+  defaultNetwork: "polygonMumbai",
+  networks: {
+    hardhat: {
+      // // If you want to do some forking, uncomment this
+      // forking: {
+      //   url: MAINNET_RPC_URL
+      // }
+    },
+    localhost: {},
+    polygonMumbai: {
+      url: process.env.POLYGON_MUMBAI_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY, process.env.CREATOR_PRIVATE_KEY, process.env.BUYER_PRIVATE_KEY],
+      saveDeployments: true,
+    },
+    // ethereumSepolia: {
+    //   url: process.env.ETHEREUM_SEPOLIA_RPC_URL || "",
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   saveDeployments: true,
+    // },
+    // avalancheFuji: {
+    //   url: process.env.AVALANCHE_FUJI_RPC_URL || "",
+    //   accounts: [process.env.PRIVATE_KEY],
+    //   saveDeployments: true,
+    // },
+  },
   solidity: {
     compilers: [
       {
-        version: "0.8.18",
-      },
-      {
-        version: "0.6.7",
-      },
-      {
         version: "0.8.7",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1_000,
+          },
+        },
+      },
+      {
+        version: "0.7.0",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1_000,
+          },
+        },
+      },
+      {
+        version: "0.6.6",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1_000,
+          },
+        },
+      },
+      {
+        version: "0.4.24",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 1_000,
+          },
+        },
       },
     ],
-  },
-  defaultNetwork: "hardhat",
-  networks: {
-    hardhat: {
-      chainId: 31337,
-      // blockConfirmations: 1,
-    },
-    sepolia: {
-      url: process.env.SEPOLIA_RPC_URL,
-      gas: 1000000000,
-      accounts: [process.env.PRIVATE_KEY],
-      blockConfirmations: 6,
-      chainId: 11155111,
-    },
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
-  gasReporter: {
-    currency: "USD",
-    gasPrice: 100,
-    enabled: false,
-  },
-  namedAccounts: {
-    deployer: {
-      default: 0,
-    },
-    buyer:{
-      default: 1,
-    }
-  },
-  mocha: {
-    timeout: 2000000,
   },
 };

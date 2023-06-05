@@ -11,17 +11,24 @@
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
-    "hardhat": "^2.14.0"
+    "hardhat": "^2.14.1"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.6.1",
+    "@chainlink/env-enc": "^1.0.5",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomiclabs/hardhat-waffle": "^2.0.5",
-    "@openzeppelin/contracts": "^4.8.3",
-    "dotenv": "^16.0.3",
+    "@openzeppelin/contracts": "^4.9.0",
+    "@openzeppelin/contracts-upgradeable": "^4.9.0",
+    "axios": "^1.4.0",
+    "dotenv": "^16.1.1",
+    "eth-crypto": "^2.6.0",
     "ethers": "^5.7.2",
     "hardhat-deploy": "^0.11.28",
     "hardhat-ethers": "^1.0.1",
-    "hardhat-gas-reporter": "^1.0.9"
+    "hardhat-gas-reporter": "^1.0.9",
+    "is-http-url": "^2.0.0",
+    "prompt-sync": "^4.2.0",
+    "vm2": "^3.9.19"
   }
 }
