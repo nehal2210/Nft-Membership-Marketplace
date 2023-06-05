@@ -5,6 +5,18 @@
 .dark {
   background-color: black;
 }
+
+.dark .ant-spin-dot-item{
+  background: #016fff !important;
+}
+
+.ant-spin-dot-item{
+  background: #ff0140 !important;
+}
+
+.dark .ant-tabs-tab-btn{
+  color: white !important;
+}
 /* 
 .bg-animated{
   background-size: 1300px 400px;
@@ -35,3 +47,27 @@
     background-repeat: no-repeat;
   }
 } */
+
+/* FOR PROVIDER DASHBOARD */
+
+  /* table{
+    background: linear-gradient(144deg, #920ffa, #f01bac);
+  }
+  
+  .dark table{
+    background: linear-gradient(144deg, #330ffa, #e363df);
+  }
+  
+
+  table td, th { 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    text-align: left; 
+    font-size: 18px;
+    }
+
+     .dark table td { 
+      color: #ffffff; 
+      } */
+
+/* END PROVIDER DASHBOARD */

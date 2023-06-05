@@ -4,7 +4,7 @@ import { Progress, Space } from 'antd';
 import { Link } from 'react-router-dom';
 
 
-const Cart = ({ cardData }) => {
+const Cart = ({ cardData, showBtn }) => {
 
     return (
         <div className='w-80 m-5 mb-10 bg-[#8f808003] shadow-[0_0_5px_0px_#8f808040] rounded-t-xl'>
@@ -56,11 +56,13 @@ const Cart = ({ cardData }) => {
                 </Link>
 
                 <div className='w-full'>
-                    {/* <Link to={{ pathname: '/card-detail', query: { id: 2 } }}> */}
-                    {/* <Link to="/card-detail",> */}
-                    <Link to={`/buynow?cardId=${cardData.id}`}>
-                        <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
-                    </Link>
+                    {
+                        showBtn ?
+                            <Link to={`/buynow?cardId=${cardData.id}`}>
+                                <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                            </Link>
+                            : null
+                    }
                 </div>
 
 

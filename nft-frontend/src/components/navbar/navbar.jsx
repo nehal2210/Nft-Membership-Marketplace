@@ -46,14 +46,9 @@ export default function CustomNavbar() {
           Create
         </Link>
       </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
+      <Typography as="li" variant="small" className="p-1 font-normal lg:mr-6">
         <Link to="/dashboard" className="flex items-center justify-center">
           Dashboard
-        </Link>
-      </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal lg:mr-6">
-        <Link to="/about" className="flex items-center justify-center">
-          About
         </Link>
       </Typography>
     </ul>

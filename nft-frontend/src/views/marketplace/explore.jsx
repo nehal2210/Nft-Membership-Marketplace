@@ -116,12 +116,12 @@ const Explore = () => {
               return (
                 <div key={i}>
                   <h1 className="text-2xl ml-10 dark:text-white">{data.category}</h1>
-                  <div className="flex flex-row flex-wrap justify-center w-full">
+                  <div className="flex flex-row flex-wrap justify-around w-full">
                     {
                       data.data && data.data.length > 0 ?
                         data.data.map((card, i) => {
                           return (
-                            <Cart key={i} cardData={card}></Cart>
+                            <Cart key={i} cardData={card} showBtn={true}></Cart>
                           )
                         })
                         :
