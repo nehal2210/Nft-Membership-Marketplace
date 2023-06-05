@@ -7,6 +7,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { Link } from "react-router-dom";
 
 export default function CustomNavbar() {
   const [openNav, setOpenNav] = useState(false);
@@ -36,24 +37,19 @@ export default function CustomNavbar() {
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:gap-6 text-black dark:text-white">
       <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="/explore" className="flex items-center justify-center">
+        <Link to="/explore" className="flex items-center justify-center">
           Explore
-        </a>
+        </Link>
       </Typography>
       <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="/create" className="flex items-center justify-center">
+        <Link to="/create" className="flex items-center justify-center">
           Create
-        </a>
-      </Typography>
-      <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="/dashboard" className="flex items-center justify-center">
-          Dashboard
-        </a>
+        </Link>
       </Typography>
       <Typography as="li" variant="small" className="p-1 font-normal lg:mr-6">
-        <a href="/about" className="flex items-center justify-center">
-          About
-        </a>
+        <Link to="/dashboard" className="flex items-center justify-center">
+          Dashboard
+        </Link>
       </Typography>
     </ul>
   );

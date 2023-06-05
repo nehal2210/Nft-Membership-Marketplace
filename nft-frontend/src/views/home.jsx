@@ -6,13 +6,17 @@ import spotify from "../assets/spotify.png";
 import { Button } from "@material-tailwind/react";
 import TrendingNFT from "../components/home page comp/trending";
 import Partner from "../components/home page comp/partner";
+import { Link } from "react-router-dom";
+import '../App.css'
 
 const Home = () => {
   return (
     <div className="flex px-10 flex-col py-4 2xl:p-48 2xl:items-center">
-      <div className="md:flex md:flex-row sm:flex sm:flex-col">
+      {/* <div className=" bg-animated"> */}
+      <div className="md:flex md:flex-row sm:flex sm:flex-col h-[80vh] bg-animated">
         <div className="md:w-2/4 px-4">
           <img src={cards} alt="cards" className="object-contain" />
+          {/* <div className="object-contain w-full h-full bg-animated"></div> */}
         </div>
         <div className="flex flex-col sm:items-center md:items-start justify-center md:text-4xl md:w-2/4 md:px-6 lg:px-20 sm:text-3xl sm:my-4 md:my-0 lg:text-5xl ">
           <h1 className=" text-black dark:text-white dark:bg-black">
@@ -27,13 +31,17 @@ const Home = () => {
             and enjoy the deals offered here
           </p>
           <div className="sm:flex md:flex-row sm:flex-col sm:items-center">
-            <Button variant="filled" className="bg-primary">
-              Explore
-            </Button>
+            <Link to={'/explore'}>
+              <Button variant="filled" className="bg-primary">
+                Explore
+              </Button>
+            </Link>
             <div className="sm:my-2 sm:mx-0 md:my-0 md:mx-4 md:inline"></div>
-            <Button variant="outlined" className="text-black dark:text-white">
-              Create
-            </Button>
+            <Link to={'/create'}>
+              <Button variant="outlined" className="text-black dark:text-white">
+                Create
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -64,6 +72,7 @@ const Home = () => {
           />
         </div>
       </div>
+      {/* </div> */}
       <div className="flex flex-col items-center my-10 w-full">
         <h2 className="sm:text-2xl md:text-xl lg:text-3xl font-bold text-black dark:text-white my-4">
           Trending memberships

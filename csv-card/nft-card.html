@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .main-container {
+            width: 20rem;
+            background: rgb(255, 255, 255);
+            box-shadow: 0px 0px 3px 0px rgba(128, 128, 128, 0.239);
+            border-top-left-radius: 0.75rem
+                /* 12px */
+            ;
+            border-top-right-radius: 0.75rem
+                /* 12px */
+            ;
+        }
+
+        .inner-container {
+            width: 100%;
+            background: white;
+            border: 2px solid blue;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-radius: 0.75rem
+                /* 12px */
+            ;
+        }
+
+        .cart-header {
+            height: 2rem
+                /* 32px */
+            ;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0.5rem
+                /* 8px */
+            ;
+        }
+
+        .header-inner {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .w-23 {
+            width: 23px;
+        }
+
+        .ml-1 {
+            margin-left: 0.25rem
+                /* 4px */
+            ;
+        }
+
+        .header-inner2 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-logo {
+            padding: 1rem
+                /* 16px */
+            ;
+            margin-top: 0.5rem
+                /* 8px */
+            ;
+            margin-bottom: 0.5rem
+                /* 8px */
+            ;
+            border-radius: 9999px;
+            width: 5rem
+                /* 80px */
+            ;
+            height: 5rem;
+            border: 2px solid blue;
+        }
+
+        .bottom-line {
+            height: 3rem
+                /* 48px */
+            ;
+            padding: 0px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: row;
+            border-bottom-right-radius: 0.55rem
+                /* 8.8px */
+            ;
+            border-bottom-left-radius: 0.55rem
+                /* 8.8px */
+            ;
+            background: #ff008e;
+        }
+
+        .bottom-line-text {
+            color: white;
+            letter-spacing: 0.1em;
+        }
+
+        .bottom-line-end {
+            border-radius: 9999px;
+            background: black;
+            width: 2rem
+                /* 32px */
+            ;
+            height: 2rem
+                /* 32px */
+            ;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .card-img {
+            max-width: 100%;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <div class='main-container'>
+        <div K='inner-container'>
+            <div class='cart-header'>
+                <div class='header-inner'>
+                    <img class="w-23" src="https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png" />
+                    <p class='ml-1'>GRANDEUR</p>
+                </div>
+                <div class='header-inner2'>
+                    <img class="w-23"
+                        src="https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg" />
+                    <p class='ml-1'>MACDONALD's</p>
+                </div>
+            </div>
+            <div class='card-body'>
+                <div class='card-logo'>
+                    <img class="card-img"
+                        src="https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg" />
+                </div>
+                <div class='bottom-line'>
+                    <div></div>
+                    <div class='bottom-line-text'>Venkatesh Patil</div>
+                    <div class='bottom-line-end'>21</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

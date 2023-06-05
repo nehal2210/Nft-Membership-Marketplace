@@ -1,0 +1,72 @@
+{
+    "image_data": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=",
+    "external_url":  "localhost:3000/mcdonalds-nft",
+    "description": "About the company  Benefits Enjoy 50% of discounts on any item of McDonalds using this NFT", 
+    "name": "Mcdonalds Membership Card",
+    "attributes": [
+    {
+    "trait_type": "Discount", 
+    "value": 50,
+    "display_type":"boost_percentage"
+    },
+    
+   {
+        "trait_type": "Expiry", 
+        "value": "1 year of expiry after mint"
+    },
+
+    {
+        "trait_type": "Expiry Date", 
+        "value": 00, 
+        "display_type": "date"
+	
+    },
+
+    {
+
+    "trait_type": "Used Count",
+    "value": 5, 
+    "display_type":"number"
+
+    },
+
+    {
+    "trait_type": "category", 
+    "value": "Food and Dining"
+    },
+   
+    {
+
+    "trait_type": "Applicable in", 
+    "value": "world",
+    "display_type":"map"
+
+    },
+
+    {
+    "trait_type": "Maximum Purchase Limit",
+    "value": "1000$/day",
+    
+    },
+
+    {
+     "trait_type": "Remaining Amount",
+    "value": 1000,
+    "currency": "dollars", 
+    "max_value" : 1000,
+
+    },
+
+    {
+        "trait_type": "Days", 
+          "value": 0
+	"max_value": 365,
+	
+	
+    }
+
+
+],
+    
+    
+}
