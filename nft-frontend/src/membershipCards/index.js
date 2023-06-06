@@ -1,7 +1,7 @@
 
 
 function getFoodBase64Svg(companyName,companyLogo){
-    svg = `
+    let svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="380" height="248">
   <rect width="380" height="248" fill="#FFF" rx="12" ry="12" filter="url(#shadow)"/>
   
@@ -12,7 +12,7 @@ function getFoodBase64Svg(companyName,companyLogo){
         <text class="ml-1" x="30" y="16">GRANDEUR</text>
       </g>
       <g class="header-inner">
-        <image class="w-23"  x="220" id="companyLogo" href=${companyLogo} width="23" height="23" />
+        <image class="w-23"  x="220" id="companyLogo" href='${companyLogo}' width="23" height="23" />
         <text class="ml-1" x="250" y="16" id="companyName">${companyName}</text>
       </g>
     </g>
@@ -38,6 +38,9 @@ function getFoodBase64Svg(companyName,companyLogo){
 </svg>
 `
 
-
 return btoa(svg)
+}
+
+export {
+  getFoodBase64Svg
 }

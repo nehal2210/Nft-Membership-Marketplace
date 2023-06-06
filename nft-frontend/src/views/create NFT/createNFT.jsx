@@ -5,14 +5,17 @@ import Loader from "../../components/general-components/loader";
 import { ToastContainer, toast } from "react-toastify";
 // import { postLogoToIPFS } from '../../helperFunctions/pinata';
 import "react-toastify/dist/ReactToastify.css";
-import { postLogoToIPFS } from "../../helperFunctions/pinata";
+import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
+import { BASE_PINATA_URL } from "../../constants";
+import { getFoodBase64Svg } from '../../membershipCards'
 
 const CreateNFT = () => {
 
 
   const [showLoader, setShowLoader] = useState(false);
+  const [hashImg, setHashImg] = useState();
+  const [pureImg, setPureImg] = useState();
   const [formData, setFormData] = useState({
     'image_data': 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=',
     'external_url': 'localhost:3000/mcdonalds-nft',
@@ -57,16 +60,21 @@ const CreateNFT = () => {
   };
 
   /*!formData.name || !formData.description || !formData.Discount || !formData.Expiry || !formData.category || !formData["Applicable in"] || !formData['Maximum Purchase duration'] || !formData["Maximum Purchase amount"] || !formData.price || !formData["NFT Price"] || !formData["Comapny Symbol"]*/
-  const submitForm = () => {
+  const submitForm = async () => {
     console.log('form', formData);
-    if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["NFT Price"].length <= 0 || formData["Comapny Symbol"].length <= 0) {
+    // if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["NFT Price"].length <= 0 || formData["Comapny Symbol"].length <= 0 || !pureImg) {
+    if (!formData) {
+
 
       notify('Form Invalid, Please Fill Full Form!');
       console.log('Form Invalid');
     } else {
       setShowLoader(true);
+      let hashIPFSimg = await postLogoToIPFS(pureImg);
+      console.log('BASE_PINATA', BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
+      let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
       let modifiedData = {
-        "image_data": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=",
+        "image_data": `data:image/svg+xml;base64,${img}`,
         "external_url": "localhost:3000/mcdonalds-nft",
         "description": formData.description,
         "name": formData.name,
@@ -118,23 +126,32 @@ const CreateNFT = () => {
         ]
       };
       console.log('modified data', modifiedData);
-      setTimeout(() => {
+      let res = await postTokenMetaData(modifiedData);
+      console.log('res', res);
+      if(res.status == 200){
         setShowLoader(false);
-      }, 3000);
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
-
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your application has been Submitted',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }else{
+        setShowLoader(false);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Something went wrong',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }
   }
 
   const handleLogoImg = (event) => {
-    postLogoToIPFS(event.target.files[0]);
-    console.log(event.target.files[0]);
+    setPureImg(event.target.files[0]);
   }
 
   const { Option } = Select;

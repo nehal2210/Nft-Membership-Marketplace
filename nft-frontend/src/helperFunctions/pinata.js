@@ -52,11 +52,15 @@ async function postTokenMetaData(metaData){
            const newNft = await axios.post('https://api.pinata.cloud/pinning/pinJSONToIPFS',data,
        { headers: { 
    'Content-Type': 'application/json', 
-   'Authorization': process.env.ACCESS_TOKEN_PINATA
+   'Authorization': process.env.REACT_APP_ACCESS_TOKEN_PINATA
 }})
     
-return  newNft.data.IpfsHash
+// return  newNft.data.IpfsHash
 
+return  ({
+  status: newNft.status,
+  data: newNft.data
+})
 }
 catch(e){
     console.log("error in posting metadata to pinata")
@@ -70,7 +74,7 @@ async function postLogoToIPFS (file) {
     const src = "path/to/file.png";
     
     // const file = fs.createReadStream(src)
-    // formData.append('file', file)
+    formData.append('file', file)
     
     const metadata = JSON.stringify({
       name: 'File name',
@@ -87,9 +91,13 @@ async function postLogoToIPFS (file) {
         maxBodyLength: "Infinity",
         headers: {
           'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-          Authorization: process.env.ACCESS_TOKEN_PINATA
+          Authorization: process.env.REACT_APP_ACCESS_TOKEN_PINATA
         }
       });
+      return({
+        status: res.status,
+        data: res.data
+      })
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -98,5 +106,6 @@ async function postLogoToIPFS (file) {
 
 
 export{
-  postLogoToIPFS
+  postLogoToIPFS,
+  postTokenMetaData
 }
