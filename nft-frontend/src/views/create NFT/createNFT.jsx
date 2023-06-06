@@ -4,7 +4,7 @@ import TextArea from "antd/es/input/TextArea";
 import Loader from "../../components/general-components/loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { postLogoToIPFS } from "../../helperFunctions/pinata";
 
 const CreateNFT = () => {
 
