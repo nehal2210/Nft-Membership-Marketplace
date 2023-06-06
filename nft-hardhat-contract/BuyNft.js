@@ -8,8 +8,7 @@ const newOwner =  args[4]
 // const biscuit = secrets.biscuit
 // need to paas in arg
 const accessTokenOfPinata = secrets.pinataToken
-// const SXT_API_DML_URL = "https://hackathon.spaceandtime.dev/v1/sql/dml/"
-// const SXT_API_DQL_URL = "https://hackathon.spaceandtime.dev/v1/sql/dql/"
+
 
 
 const tokenCID = tokenURI.split("ipfs/")[1]

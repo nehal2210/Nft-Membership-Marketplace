@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import {
   Navbar,
   Collapse,
@@ -71,13 +72,9 @@ export default function CustomNavbar() {
           size={30}
           className="lg:mr-6"
         />
-        <Button
-          variant="gradient"
-          size="md"
-          className="hidden lg:inline-block sm:bg-primary"
-        >
-          <span>Connect Wallet</span>
-        </Button>
+  
+  <ConnectButton/>
+  
         <IconButton
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
