@@ -1,4 +1,5 @@
 import { BASE_PINATA_URL, DELETE_URL_PINATA } from "../constants"
+import axios from "axios"
 import dotenv from "dotenv"
 
 dotenv.config()
@@ -64,12 +65,12 @@ catch(e){
 }
 
 
-async function postLogoToIPFS () {
+async function postLogoToIPFS (file) {
     const formData = new FormData();
     const src = "path/to/file.png";
     
-    const file = fs.createReadStream(src)
-    formData.append('file', file)
+    // const file = fs.createReadStream(src)
+    // formData.append('file', file)
     
     const metadata = JSON.stringify({
       name: 'File name',
@@ -96,3 +97,6 @@ async function postLogoToIPFS () {
 }
 
 
+export{
+  postLogoToIPFS
+}

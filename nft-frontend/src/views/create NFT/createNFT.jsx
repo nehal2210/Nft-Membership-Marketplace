@@ -5,7 +5,11 @@ import Loader from "../../components/general-components/loader";
 import { ToastContainer, toast } from "react-toastify";
 // import { postLogoToIPFS } from '../../helperFunctions/pinata';
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+=======
+import { postLogoToIPFS } from "../../helperFunctions/pinata";
+>>>>>>> main
 
 const CreateNFT = () => {
 
