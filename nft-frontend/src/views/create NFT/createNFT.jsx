@@ -3,8 +3,9 @@ import { Alert, Button, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Loader from "../../components/general-components/loader";
 import { ToastContainer, toast } from "react-toastify";
+// import { postLogoToIPFS } from '../../helperFunctions/pinata';
 import "react-toastify/dist/ReactToastify.css";
-
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 const CreateNFT = () => {
 
@@ -56,6 +57,14 @@ const CreateNFT = () => {
 
   /*!formData.name || !formData.description || !formData.Discount || !formData.Expiry || !formData.category || !formData["Applicable in"] || !formData['Maximum Purchase duration'] || !formData["Maximum Purchase amount"] || !formData.price || !formData["NFT Price"] || !formData["Comapny Symbol"]*/
   const submitForm = () => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Your work has been saved',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    return
     console.log('form', formData);
     if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["NFT Price"].length <= 0 || formData["Comapny Symbol"].length <= 0) {
 
@@ -121,6 +130,11 @@ const CreateNFT = () => {
       }, 3000);
 
     }
+  }
+
+  const handleLogoImg = (event) => {
+    // postLogoToIPFS(event.target.files[0]);
+    console.log(event.target.files[0]);
   }
 
   const { Option } = Select;
@@ -209,7 +223,7 @@ const CreateNFT = () => {
 
             <div className="w-full h-20 mt-2 mb-2 p-1">
               <p className="dark:text-white">Comapny Logo</p>
-              <Input placeholder="Company Logo" type="file" className="dark:bg-black dark:text-white w-full" />
+              <Input placeholder="Company Logo" type="file" onChange={handleLogoImg} className="dark:bg-black dark:text-white w-full" />
             </div>
 
             <div className="w-full h-20 mt-2 mb-2 p-1">
