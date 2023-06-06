@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Loader from "../../components/general-components/loader";
@@ -12,7 +12,6 @@ import { postLogoToIPFS } from "../../helperFunctions/pinata";
 >>>>>>> main
 
 const CreateNFT = () => {
-
 
 
   const [showLoader, setShowLoader] = useState(false);
