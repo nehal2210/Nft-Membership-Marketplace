@@ -1,14 +1,15 @@
 import { Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const LINKS = [
   {
     title: "Product",
     items: ["Explore", "Create"],
   },
-  {
-    title: "Company",
-    items: ["About us", "Privacy Policy", "Terms of Service"],
-  },
+  // {
+  //   title: "Company",
+  //   items: ["About us", "Privacy Policy", "Terms of Service"],
+  // },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -50,14 +51,15 @@ export default function Footer() {
                 </Typography>
                 {items.map((link) => (
                   <li key={link}>
-                    <Typography
-                      as="a"
-                      href="#"
-                      color="gray"
-                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
-                    >
-                      {link}
-                    </Typography>
+
+                    <Link to={link}>
+                      <Typography
+                        color="gray"
+                        className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                      >
+                        {link}
+                      </Typography>
+                    </Link>
                   </li>
                 ))}
               </ul>

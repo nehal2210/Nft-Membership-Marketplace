@@ -1,5 +1,5 @@
-import { Table } from 'antd';
-import { AiFillSignal } from "react-icons/ai";
+import { Table, Tooltip } from 'antd';
+import { AiFillGolden, AiFillSignal, AiOutlineRise } from "react-icons/ai";
 import React, { useState } from 'react';
 const columns = [
     {
@@ -49,7 +49,16 @@ let data = [
     {
         id: 0,
         token_id: 0,
+        dataIndex: '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',
         owner: '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',
+        ellipsis: {
+            showTitle: false,
+        },
+        render: (address) => (
+            <Tooltip placement="topLeft" title={address}>
+                {address}
+            </Tooltip>
+        ),
         used_count: 0,
         resold_count: 0,
         total_royalty: 0,
@@ -64,26 +73,63 @@ data.forEach((ele, i) => {
 const ProviderDashboard = () => {
     return (
         <div>
-            <div className='flex items-center'>
-                <div className='w-20'>
-                    <img className='object-fill' src='https://cdn.dribbble.com/userupload/3158902/file/original-7c71bfa677e61dea61bc2acd59158d32.jpg?resize=400x300' />
+
+            <div className='w-full flex justify-between items-center'>
+
+                <div className='m-2 w-[20%] p-1'>
+                    <div className='flex items-center justify-center flex-col'>
+                        <div className='w-40'>
+                            <img className='object-fill' src='https://cdn.dribbble.com/userupload/3158902/file/original-7c71bfa677e61dea61bc2acd59158d32.jpg?resize=400x300' />
+                        </div>
+                        <h2 className='text-2xl font-bold ml-2 dark:text-white'>COMPANY NAME</h2>
+                    </div>
                 </div>
-                <h2 className='text-4xl font-bold ml-2'>COMPANY NAME</h2>
-            </div>
-            <div className='w-full mt-2 border-2 flex justify-between items-center'>
-                <div className='m-2 w-60 h-32 border-2 flex flex-row justify-center items-start'>
-                    <div className='flex flex-col justify-center items-center'>
-                        <p className='text-xl'>Royalties earned</p>
-                        <div>
-                            <p className='text-2xl font-bold'>50</p>
-                            <AiFillSignal style={{ position: 'relative', fontSize: '80px', left: '73px', bottom: '20px' }} />
+
+                <div className='w-[60%] flex flex-row justify-between'>
+                    <div className='m-2 p-1 card-gradient rounded-md'>
+                        <div className='w-52 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
+                            <div className='w-full h-24 dark:text-white flex flex-col justify-between items-center'>
+                                <p className='text-lg'>Royalties earned</p>
+                                <div className='w-full flex justify-around flex-row items-center'>
+                                    <div></div>
+                                    <p className='text-3xl font-bold'>50</p>
+                                    <AiFillSignal size={60} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className='m-2 p-1 card-gradient rounded-md'>
+                        <div className='w-52 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
+                            <div className='w-full h-24 dark:text-white flex flex-col justify-between items-center'>
+                                <p className='text-lg'>NFT sold / NFTs Remain</p>
+                                <div className='w-full flex justify-around flex-row items-center'>
+                                    <div></div>
+                                    <p className='text-3xl font-bold'>50 / 50</p>
+                                    <AiFillGolden size={60} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='m-2 p-1 card-gradient rounded-md'>
+                        <div className='w-52 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
+                            <div className='w-full h-24 dark:text-white flex flex-col justify-between items-center'>
+                                <p className='text-lg'>Revenue</p>
+                                <div className='w-full flex justify-around flex-row items-center'>
+                                    <div></div>
+                                    <p className='text-3xl font-bold'>50</p>
+                                    <AiOutlineRise size={60} />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className='m-2 w-40 h-20 border-2'></div>
-                <div className='m-2 w-40 h-20 border-2'></div>
             </div>
-            <Table columns={columns} dataSource={data} />
+            <div className='mt-5 mb-10'>
+                <Table columns={columns} dataSource={data} />
+            </div>
         </div>
     )
 };
