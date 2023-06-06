@@ -5,6 +5,33 @@ import { BrowserRouter as Router } from "react-router-dom";
 import MyRoutes from "./routers/routes";
 import { useEffect } from "react";
 import Footer from "./components/footer/footer";
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { mainnet, polygon, optimism, arbitrum, polygonMumbai } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
+
+const { chains, publicClient } = configureChains(
+  [polygonMumbai],
+  [
+    publicProvider()
+  ]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'Grandeur',
+  projectId: 'YOUR_PROJECT_ID',
+  chains
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient
+})
 
 function App() {
   useEffect(() => {
@@ -34,9 +61,13 @@ function App() {
   }, []);
   return (
     <Router>
+          <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider chains={chains}>
       <CustomNavbar />
       <MyRoutes />
       <Footer />
+      </RainbowKitProvider>
+      </WagmiConfig>
     </Router>
   );
 }
