@@ -9,10 +9,11 @@ import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata"
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { BASE_PINATA_URL } from "../../constants";
 import { getFoodBase64Svg } from '../../membershipCards'
-import { insertProviderData } from "../../helperFunctions/sxt";
+import { postLogoToIPFS } from "../../helperFunctions/pinata";
 import { useAccount, useContractWrite } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
+import { insertProviderData } from "../../helperFunctions/sxt";
 
 const CreateNFT = () => {
 

@@ -62,11 +62,6 @@ const NftJson = await Functions.makeHttpRequest({
     if(NftJson.status !== 200){throw "Unable to get token URI"}
         
 
-
-      
-
-
-
         // use NFT
         
         // get the previous count use of nft from sxt
@@ -83,7 +78,6 @@ const NftJson = await Functions.makeHttpRequest({
         NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value = NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value + 1
         NftJson.data.attributes[ATTRIBUTES.REMAINING_AMOUNT].value = NftJson.data.attributes[ATTRIBUTES.REMAINING_AMOUNT].value - amountUsed
 
-        NftJson.data.image_data = updateSvg(NftJson.data.image_data,NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value)
         
         // postin new data on pinata
 
