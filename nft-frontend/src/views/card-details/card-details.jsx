@@ -2,7 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Progress } from 'antd';
 import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, AiOutlineRise } from "react-icons/ai";
 import { BiBarChartAlt2, BiCalendar, BiFlag, BiStar } from "react-icons/bi";
-import * as moment from 'moment'
+import * as moment from 'moment';
+import { useLocation } from "react-router-dom";
+import { BASE_PINATA_URL } from '../../constants';
+
 
 const CardDetails = () => {
 
@@ -11,9 +14,15 @@ const CardDetails = () => {
         data: [],
     });
     const [cardDetail, setCardDetail] = useState({});
+    const searchParams = new URLSearchParams(useLocation().search).get("token");
+    console.log('searchParams', searchParams);
 
     const fetchUserData = () => {
-        fetch("https://magenta-distinct-guan-162.mypinata.cloud/ipfs/QmQprRZRMU7vNjh2sbGByrZrtVHhTLx3pboYoWbbpa7rCt")
+
+
+
+
+        fetch(BASE_PINATA_URL+searchParams)
             .then(response => {
                 return response.json()
             })

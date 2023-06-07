@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SXT_API_BASE_URL, SXT_API_DML_URL, SXT_API_DQL_URL, USER_ID } from "../constants";
+import { SXT, SXT_API_BASE_URL, SXT_API_DML_URL, SXT_API_DQL_URL, USER_ID } from "../constants";
 import nacl from "tweetnacl";
 import { decodeUTF8, encodeUTF8, encodeBase64,decodeBase64 } from "tweetnacl-util";
 import crypto from"crypto"
@@ -49,7 +49,7 @@ async function getAllProviderData(){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYxNjgzNDcsIm5iZiI6MTY4NjE2ODM0NywiZXhwIjoxNjg2MTY5ODQ3LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjI1Y2IwY2NlNGIyMGE5Y2EzMDVhMDY5MSIsInNzbl9leHAiOjE2ODYyNTQ3NDcyNzMsIml0ZXJhdGlvbiI6IjIyZjcxYzE2MzVjNDBkZTE4OWQyZjM0OCJ9.SqsRO-3w55k_6Ql1BcdyqYCCA_BVYc5xwEHxfeIhL0bdT11O2OCm9ERsJzs1Wt7OhoCth3iLb88h3semrUM9Bw'
+        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYxNzY1MDQsIm5iZiI6MTY4NjE3NjUwNCwiZXhwIjoxNjg2MTc4MDA0LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6ImY3YmY1NmUyYjA3M2VmMmEwM2VlZWExMyIsInNzbl9leHAiOjE2ODYyNjI5MDQ1NTYsIml0ZXJhdGlvbiI6ImY4MjM4YzgzMGQxZjU0MTI4OTM1NTZjZiJ9.irdEbJgC5q1M0ge0dqFRW9gKRH0ab4kecqM3Kj4UteZJh7ewcoc7pAWXFSoOpXTPyjj8nqf_kOiHnPaSMppHGA'
         // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
     }
 
