@@ -3,7 +3,7 @@
 function getFoodBase64Svg(companyName,companyLogo,category){
 
   let svg = `  
-  <svg xmlns="http://www.w3.org/2000/svg" width="380" height="248"><rect width="100%" height="100%"/><image y="5" x="5" href="${companyLogo}" width="5%"/><text class="ml-1" x="7%" y="17" style="fill:#fff;font-size:12px">${companyName}</text><text x="35%" y="50%" style="fill:#fff;font-size:18px">${category}</text><text x="30%" y="75%" style="fill:#fff;font-size:14px">address or name of owner</text><text x="40%" y="85%" style="fill:#fff;font-size:12px">Used Count</text><text x="58%" y="85%" style="fill:#fff;font-size:12px">0</text></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="380" height="248"><rect width="100%" height="100%"/><image y="5" x="5"  id="companyLogo" href='${companyLogo}' width="5%"/><text class="ml-1" x="7%" y="17" style="fill:#fff;font-size:12px" id="companyName">${companyName}</text><text x="35%" y="50%" style="fill:#fff;font-size:18px" id="category">${category}</text><text x="30%" y="75%" style="fill:#fff;font-size:14px" id="ownerAddress">address or name of owner</text><text x="40%" y="85%" style="fill:#fff;font-size:12px">Used Count</text><text x="58%" y="85%" style="fill:#fff;font-size:12px" id="usedCount">0</text></svg>
   `
 
 
