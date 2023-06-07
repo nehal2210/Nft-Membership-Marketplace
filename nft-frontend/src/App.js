@@ -6,6 +6,7 @@ import MyRoutes from "./routers/routes";
 import { useEffect } from "react";
 import Footer from "./components/footer/footer";
 import '@rainbow-me/rainbowkit/styles.css';
+// import Cookies from 'universal-cookie';
 import {
   getDefaultWallets,
   RainbowKitProvider,
@@ -13,6 +14,8 @@ import {
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, polygonMumbai } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { authenticate, signMessage, validateToken } from "./helperFunctions/sxt";
+
 
 const { chains, publicClient } = configureChains(
   [polygonMumbai],
@@ -33,8 +36,27 @@ const wagmiConfig = createConfig({
   publicClient
 })
 
+
+
 function App() {
+
+
+const getSxtToken=async ()=>{
+
+  signMessage()
+  // const token = await authenticate()
+  // console.log(token)
+}
+
   useEffect(() => {
+
+    getSxtToken()
+    // const cookies = new Cookies();
+    // let authValidateToken = validateToken();
+    // console.log('authValidateToken', authValidateToken);
+    // cookies.set('myCat', 'Pacman', { path: '/' });
+    // console.log(cookies.get('myCat'));
+
     localStorage.setItem("theme", "light");
     let theme = localStorage.getItem("theme");
     console.log("theme: " + theme);

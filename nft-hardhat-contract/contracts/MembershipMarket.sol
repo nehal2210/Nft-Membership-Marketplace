@@ -323,7 +323,7 @@ function getNFTCategory(address _nft) external returns(nftCategory) {
     addExternalRequest(oracleAddress, requestId);
   }
 
-
+// function 
 
 }
 

@@ -71,9 +71,7 @@ catch(e){
 
 async function postLogoToIPFS (file) {
     const formData = new FormData();
-    const src = "path/to/file.png";
-    
-    // const file = fs.createReadStream(src)
+  
     formData.append('file', file)
     
     const metadata = JSON.stringify({

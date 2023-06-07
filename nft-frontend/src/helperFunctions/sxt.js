@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SXT_API_BASE_URL, SXT_API_DML_URL, SXT_API_DQL_URL, USER_ID } from "../constants";
-import ed25519  from "ed25519";
+import nacl from "tweetnacl";
+import { decodeUTF8, encodeUTF8, encodeBase64,decodeBase64 } from "tweetnacl-util";
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -13,7 +14,7 @@ async function getProviderData(providerAddress){
         
     }
 
-    headers = {
+    const headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -22,7 +23,7 @@ async function getProviderData(providerAddress){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        const res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -43,7 +44,7 @@ async function getAllProviderData(){
         
     }
 
-    headers = {
+    const headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -52,7 +53,7 @@ async function getAllProviderData(){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        const res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -72,7 +73,7 @@ async function getNftData(nftAddress){
         
     }
 
-    headers = {
+    const headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -81,7 +82,7 @@ async function getNftData(nftAddress){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        const res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -103,7 +104,7 @@ async function getAllNftData(){
         
     }
 
-    headers = {
+    const headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -112,7 +113,7 @@ async function getAllNftData(){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        const res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -132,7 +133,7 @@ async function getProviderNftData(){
         
     }
 
-    headers = {
+    const headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -141,7 +142,7 @@ async function getProviderNftData(){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        const res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -163,7 +164,7 @@ async function insertProviderData(providerData){
         
     }
 
-    headers = {
+    const headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -172,7 +173,7 @@ async function insertProviderData(providerData){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        const res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -191,7 +192,7 @@ async function insertProviderData(providerData){
             
         }
     
-        headers = {
+        const headers = {
             "accept": "application/json",
             "biscuit": process.env.REACT_APP_BISCUIT,
             "content-type": "application/json",
@@ -200,7 +201,7 @@ async function insertProviderData(providerData){
     
         
         try{
-            res = await axios.post(url,payload,{headers:headers})
+            const res = await axios.post(url,payload,{headers:headers})
             console.log(res.data)
         } 
         catch(e){
@@ -221,11 +222,11 @@ async function requestAuthCode(){
      const user_id = "nehal"
      // const org_code = ""
 
-     payload = {
+     const payload = {
          "userId": user_id
      }
      
-     headers = {"accept": "application/json"}
+     const headers = {"accept": "application/json"}
     
      // """ joinCode is now optional with SxT Beta Release. If supplied it will connect your account to the relevant subscription
      // payload = {
@@ -255,19 +256,22 @@ async function requestAuthCode(){
  
  
  
-  async function signMessage(authCode) {
+  async function signMessage() {
+
+    const authCode = "6f32191db0b3fbd0e4bb9aec"
      // Convert the auth code to bytes for signing
+
      const bytesMessage = Buffer.from(authCode, 'utf-8');
-     // console.log(bytesMessage);
+     console.log(bytesMessage);
    
      // Decode the private key for signing
-     const privateKey = Buffer.from(process.env.REACT_APP_SXT_USER_PRIVATE_KEY, 'base64');
+     const privateKey = Buffer.from(process.env.REACT_APP_SXT_USER_PRIVATE_KEY,"base64");
      // console.log(privateKey);
    
      // Generate the signature
-     const signature = ed25519.Sign(Buffer.from(bytesMessage), privateKey).toString('hex');
+     const signature = nacl.sign(bytesMessage, privateKey).toString('hex');
    
-   
+        console.log(signature)
  
    
      return signature;
@@ -284,13 +288,13 @@ async function requestAuthCode(){
   
  
      const url = SXT_API_BASE_URL + "auth/token"
-     payload = {
+     const payload = {
          "userId": USER_ID,
          "authCode": auth_code,
          "signature": signed_auth_code,
          "key": process.env.REACT_APP_SXT_USER_PUBLIC_KEY,
      }
-     headers = {"accept": "application/json"}
+     const headers = {"accept": "application/json"}
      try{
  
          const res = await axios.post(url, payload,{headers:headers})
@@ -337,7 +341,7 @@ async function requestAuthCode(){
 
 async  function validateToken(token){
     const url = SXT_API_BASE_URL + "auth/validtoken"
-    headers = {
+    const headers = {
         "accept": "*/*",
         "authorization": `Bearer ${token}`
     }  
@@ -352,6 +356,9 @@ export {
     getAllProviderData,
     getProviderNftData,
     getAllNftData,
-    getNftData
+    getNftData,
+    validateToken,
+    authenticate,
+    signMessage
 
 }
