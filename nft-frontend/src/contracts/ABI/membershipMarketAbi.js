@@ -1,4 +1,4 @@
-const MEMBERSHIP_MARKET_ABI = [
+export const MEMBERSHIP_MARKET_ABI = [
     {
       "inputs": [
         {

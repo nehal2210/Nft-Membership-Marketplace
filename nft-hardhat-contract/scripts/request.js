@@ -40,7 +40,7 @@ require("dotenv").config()
 
   // Default example
   const source = await fs.readFile("./UseNft.js", "utf8");
-  const args = ["10",tokenId,nft, tokenUri];
+  const args = ["0",tokenId,nft, tokenUri];
   // const args = ["nehal",tokenId,nft, tokenUri,newOwner,tableId];
 
   const secrets = { biscuit: process.env.BISCUIT, sxtToken: process.env.SXT_ACCESS_TOKEN,pinataToken:process.env.PINATA_ACCESS_TOKEN}
