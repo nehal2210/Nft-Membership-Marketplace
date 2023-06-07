@@ -18,7 +18,8 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
     bytes32 public latestRequestId;
     string public latestResponse;
     bytes public latestError;
-    
+    uint256 private precentageEarnedPerNFTSelling = 10;
+
     
 
     // IERC20 immutable USDC;
@@ -52,6 +53,10 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
 
     event SaleExcecuted(address indexed nft,address indexed to, uint256 indexed tokenId);
 
+    event NftListedForSale(address indexed nft, address indexed seller, uint256 indexed tokenId,uint256 _price,bool reSale);    
+
+    event NftUsed(address _nft, uint256 tokenID);
+
     event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
 
 
@@ -80,14 +85,13 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
     // constructor(IERC20 _usdc, AggregatorV3Interface _priceFeed){
     constructor( AggregatorV3Interface _priceFeed, address oracle)  FunctionsClient(oracle) ConfirmedOwner(msg.sender){
  
-        // USDC = IERC20(_usdc);
+      
         priceFeed = _priceFeed;
 
     }
 
 
-    // fixed amount in usd
-
+    
     function createNFT(string memory name, string memory symbol,uint256 _supplyLimit,uint256 priceOfNft,bool _isTransferable,bool _isExpireable, uint256 expiration, nftCategory _category) public returns(address){
 
             NFT nft =  new NFT(name,symbol,_supplyLimit,_isTransferable,_isExpireable);
@@ -134,7 +138,7 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
         // uint priceInUsd = PriceConverter.getConversionRate(msg.value, priceFeed);
         require(msg.value >= NftToPrice[_nft] && msg.value > 0 ,"amount not correct"); // found vulnerability if we not put amount > 0
 
-        uint revenue = msg.value * 10 / 100;
+        uint revenue = msg.value * precentageEarnedPerNFTSelling / 100;
 
         
         (bool sent,bytes memory data) = NftToProvider[_nft].call{value:msg.value - revenue}("");
@@ -201,7 +205,7 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
         nftToTokenIdToListedTokenInfo[_nft][tokenId] = ListedToken(tokenId,payable(NftToProvider[_nft]),payable(seller),_price,reSale);
         ProviderToNft[NftToProvider[_nft]].approve(address(this), tokenId);
 
-        
+        emit NftListedForSale( _nft, seller, tokenId, _price, reSale);
     }
 
 
@@ -233,7 +237,9 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
        
     responseIdToNftAddress[reqId] = _nft;
     responseIdToTokenId[reqId] = tokenID;
+    emit NftUsed(_nft, tokenID);
 
+    
     }
 
 
@@ -247,11 +253,11 @@ function getNFTCategory(address _nft) external returns(nftCategory) {
 }
 
 
-function setCategoryFunctionScripts(string memory _cid,nftCategory _category) external {
+// function setCategoryFunctionScripts(string memory _cid,nftCategory _category) external {
 
-    categoryToFunctionScript[_category] = _cid;
+//     categoryToFunctionScript[_category] = _cid;
 
-} 
+// } 
 
 
  /**
