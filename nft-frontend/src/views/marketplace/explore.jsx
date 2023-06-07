@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cart from "../../components/general-components/cart";
-import { getAllProviderData } from "../../helperFunctions/sxt";
+import { authenticate, getAllProviderData } from "../../helperFunctions/sxt";
 import { getTokenData } from "../../helperFunctions/pinata";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/general-components/loader";
@@ -29,19 +29,22 @@ const Explore = () => {
 
 
   const getDate = async () => {
+    authenticate();
+    return;
     try {
       let allProviders = await getAllProviderData();
       console.log('getAllProviderData', allProviders);
-      var arr = [];
+      // var arr = [];
       if (allProviders.status == 200) {
         allProviders.data.forEach(async (data) => {
           var nftDetail = await getTokenData(data.BASE_META_DATA_URI);
-          arr.push(nftDetail);
+          setMockData(oldArray => [...oldArray, nftDetail]);
+          // arr.push(nftDetail);
           console.log('nftDetail', nftDetail);
         });
         if (allProviders.data && allProviders.data.length > 0) {
-          console.log('Arr', arr);
-          setMockData(arr);
+          // console.log('Arr', arr);
+          // setMockData(arr);
           console.log('mock', mockData);
         }
 
