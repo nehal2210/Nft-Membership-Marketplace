@@ -42,8 +42,18 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
         uint256 price,
         bool currentlyListed
     );
-
+    
     enum nftCategory{ Food, Transport, Sport }
+
+
+    event NFTCreadted(string indexed name, string  symbol, address indexed nft , address indexed provider , uint256 _supplyLimit, uint256 priceOfNft, bool _isTransferable, bool _isExpireable, uint256 expiration, nftCategory _category);
+    
+    event NftPurchasedWithNative(address indexed to, address indexed nft, string  tokenUri);
+
+    event excecuteSale(address indexed nft,address indexed to, uint256 indexed tokenId);
+
+    event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
+
 
     mapping(address  => mapping(uint256 => ListedToken)) private nftToTokenIdToListedTokenInfo;
     // right now we are supposing provider can only create NFt once, because if he create seconnd time the fist one address will replace
@@ -60,7 +70,6 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
 
 
 
-event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
 
     modifier isWhiteListed(){
         require(ProviderToIsWhitelist[msg.sender],"not in White list");
@@ -91,6 +100,7 @@ event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
             nftToExpiration[address(nft)] = expiration; // if not expire put 0
             nftToCategory[address(nft)] = _category;
 
+            emit NFTCreadted( name,   symbol,  address(nft) , msg.sender,  _supplyLimit,  priceOfNft,  _isTransferable,  _isExpireable, expiration, _category);
            return  address(nft);
 
     }
@@ -118,7 +128,7 @@ event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
 }
 
 
-    function buyNftWithNative(address to, address _nft, string memory tokenUri) external payable {
+  function buyNftWithNative(address to, address _nft, string memory tokenUri) external payable {
 
         
         // uint priceInUsd = PriceConverter.getConversionRate(msg.value, priceFeed);
@@ -134,6 +144,7 @@ event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
         NFT nft = ProviderToNft[NftToProvider[_nft]];
         nft.safeMint(to, block.timestamp + nftToExpiration[_nft],  tokenUri);
 
+        emit NftPurchasedWithNative(to,  _nft, tokenUri);
 
     }
 
