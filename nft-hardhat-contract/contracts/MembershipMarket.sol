@@ -50,7 +50,7 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
     
     event NftPurchasedWithNative(address indexed to, address indexed nft, string  tokenUri);
 
-    event excecuteSale(address indexed nft,address indexed to, uint256 indexed tokenId);
+    event SaleExcecuted(address indexed nft,address indexed to, uint256 indexed tokenId);
 
     event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
 
@@ -189,7 +189,7 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
     nftToTokenIdToListedTokenInfo[_nft][tokenId].currentlyListed = false;
     ProviderToNft[NftToProvider[_nft]].transferFrom(msg.sender,to, tokenId);
 
-
+    emit SaleExcecuted(_nft, to, tokenId);
 
     }
 
