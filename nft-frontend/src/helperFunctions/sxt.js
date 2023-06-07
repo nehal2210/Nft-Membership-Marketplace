@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SXT_API_BASE_URL, SXT_API_DML_URL, SXT_API_DQL_URL, USER_ID } from "../constants";
-import ed25519  from "ed25519";
+import nacl from "tweetnacl";
+import { decodeUTF8, encodeUTF8, encodeBase64,decodeBase64 } from "tweetnacl-util";
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -265,19 +266,22 @@ async function requestAuthCode(){
  
  
  
-  async function signMessage(authCode) {
+  async function signMessage() {
+
+    const authCode = "6f32191db0b3fbd0e4bb9aec"
      // Convert the auth code to bytes for signing
+
      const bytesMessage = Buffer.from(authCode, 'utf-8');
-     // console.log(bytesMessage);
+     console.log(bytesMessage);
    
      // Decode the private key for signing
-     const privateKey = Buffer.from(process.env.REACT_APP_SXT_USER_PRIVATE_KEY, 'base64');
+     const privateKey = Buffer.from(process.env.REACT_APP_SXT_USER_PRIVATE_KEY,"base64");
      // console.log(privateKey);
    
      // Generate the signature
-     const signature = ed25519.Sign(Buffer.from(bytesMessage), privateKey).toString('hex');
+     const signature = nacl.sign(bytesMessage, privateKey).toString('hex');
    
-   
+        console.log(signature)
  
    
      return signature;
@@ -347,7 +351,7 @@ async function requestAuthCode(){
 
 async  function validateToken(token){
     const url = SXT_API_BASE_URL + "auth/validtoken"
-    headers = {
+    const headers = {
         "accept": "*/*",
         "authorization": `Bearer ${token}`
     }  
