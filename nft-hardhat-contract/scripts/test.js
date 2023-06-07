@@ -133,7 +133,7 @@ async function main() {
     console.log("matic price of NFt ",nftMaticPrice)
 
 
-    const tokenUri = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreifyhdvkwvcavjhxgibb7yk7tnhimd75qqglspncj5hun5oi47yxae"
+    const tokenUri = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreiamcnqy5cghsrytkg4fqrjcojd6jiaqbptfigun2yiktdfzs3jexm"
     const buyNftTx = await MembershipMarket.connect(buyer).buyNftWithNative(buyer.address,nft,tokenUri,{value:hre.ethers.utils.parseEther(nftMaticPrice)})
     await buyNftTx.wait()
 

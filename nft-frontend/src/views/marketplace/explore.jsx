@@ -4,8 +4,19 @@ import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/general-components/loader";
 import { getFoodBase64Svg } from "../../membershipCards";
 import { BASE_PINATA_URL, svgBase64 } from "../../constants";
-
+import { useAccount, useContractWrite } from 'wagmi'
+import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
+import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 const Explore = () => {
+
+
+
+  const { address, isConnected, isDisconnected } = useAccount()
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: MEMBERSHIP_MARKET_ADDRESS,
+    abi: MEMBERSHIP_MARKET_ABI,
+    functionName: 'buyNftWithNative',
+  })
 
   const [nftCardData, setNftCardData] = useState([]);
 
@@ -86,6 +97,8 @@ const Explore = () => {
 
 
 
+
+  // buyNftWithNative(address to, address _nft, string memory tokenUri)
 
   return (
     <div>
