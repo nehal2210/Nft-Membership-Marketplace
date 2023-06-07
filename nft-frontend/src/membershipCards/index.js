@@ -1,6 +1,6 @@
 
 
-function getFoodBase64Svg(companyName,companyLogo){
+function getFoodBase64Svg(companyName,companyLogo,categoryImg){
     let svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="380" height="248">
   <rect width="380" height="248" fill="#FFF" rx="12" ry="12" filter="url(#shadow)"/>
@@ -22,7 +22,7 @@ function getFoodBase64Svg(companyName,companyLogo){
   <g class="card-body">
       <g class="card-logo">
         <circle cx="195" cy="120" r="65" fill="#fff" stroke="blue" stroke-width="4"/>
-        <image class="card-img" x= "160" y="80"  href="https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg" width="80" height="80"/>
+        <image class="card-img" x= "160" y="80"  href='${categoryImg}' width="80" height="80"/>
       </g>
 <!--     bottom part -->
       <g class="bottom-line">

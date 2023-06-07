@@ -1,112 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cart from "../../components/general-components/cart";
+import { getAllProviderData } from "../../helperFunctions/sxt";
+import { getTokenData } from "../../helperFunctions/pinata";
+import { ToastContainer, toast } from "react-toastify";
+import Loader from "../../components/general-components/loader";
+
 const Explore = () => {
 
-  const [mockData, setMockData] = useState([
-    {
-      category: 'Dining',
-      data: [
-        {
-          id: 1,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 2,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 3,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-      ]
-    },
-    {
-      category: 'Delivery',
-      data: [
-        {
-          id: 4,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 5,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 6,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 7,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 8,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-        {
-          id: 9,
-          cardName: 'NFT Famous Monkey',
-          cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-          companyName: 'GRANDEUR',
-          companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-          secondCompanyName: 'Mcdonalds',
-          secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-          price: '250$'
-        },
-      ]
-    }
-  ]);
+  const [mockData, setMockData] = useState();
+
+  const notify = (msg) => {
+    toast.error(msg, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+
+  useEffect(() => {
+    getDate();
+  }, []);
+
+
+  const getDate = async () => {
+    try {
+      let allProviders = await getAllProviderData();
+      console.log('getAllProviderData', allProviders);
+      var arr = [];
+      if (allProviders.status == 200) {
+        allProviders.data.forEach(async (data) => {
+          var nftDetail = await getTokenData(data.BASE_META_DATA_URI);
+          arr.push(nftDetail);
+          console.log('nftDetail', nftDetail);
+        });
+        if (allProviders.data && allProviders.data.length > 0) {
+          console.log('Arr', arr);
+          setMockData(arr);
+          console.log('mock', mockData);
+        }
+
+      }
+    } catch (error) {
+      notify('Something went wrong');
+    };
+  };
+
+
+
 
   return (
     <div>
+      <ToastContainer />
       <div className="w-full pt-10 pl-10 pr-10 mb-5 shadow-[0_0_5px_0px_#8f808040] dark:shadow-[0_0_5px_0px_#1235ce40] rounded-md">
         <h1 className="text-3xl dark:text-white mb-5 border-b-2 border-primary-500 w-[full] dark:border-blue">Explore</h1>
 
@@ -125,14 +75,14 @@ const Explore = () => {
                           )
                         })
                         :
-                        'Loading...'
+                        <Loader />
                     }
                   </div>
                 </div>
               )
             })
             :
-            'Loading...'
+            <Loader />
         }
 
       </div>

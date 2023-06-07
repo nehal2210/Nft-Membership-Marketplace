@@ -12,7 +12,7 @@ async function getProviderData(providerAddress){
         
     }
 
-    headers = {
+    var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -21,7 +21,7 @@ async function getProviderData(providerAddress){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        var res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -42,17 +42,22 @@ async function getAllProviderData(){
         
     }
 
-    headers = {
+    var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYwOTU4NjUsIm5iZiI6MTY4NjA5NTg2NSwiZXhwIjoxNjg2MDk3MzY1LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjEyZWFkZGM4NjhiOThjMDU0OTM1M2RmZiIsInNzbl9leHAiOjE2ODYxODIyNjU1OTAsIml0ZXJhdGlvbiI6ImNhMzdlODVlYzk0OGI5MGM0YjRlZjY0OSJ9.IWNpjA-zxrpt185uirZrbM5xOufhZPzsyZ2NLN4yA4FSomJiVMMPMEFcgIYjR1Oai9TTpCZuxlffsMRTAuwF6w'
+        // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
-        console.log(res.data)
+        let res = await axios.post(url,payload,{headers:headers})
+        console.log(res.data);
+        return({
+            status: 200,
+            data: res.data
+        })
     } 
     catch(e){
         console.log("error in getting provider data")
@@ -71,17 +76,22 @@ async function getNftData(nftAddress){
         
     }
 
-    headers = {
+    var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYwODk0MDYsIm5iZiI6MTY4NjA4OTQwNiwiZXhwIjoxNjg2MDkwOTA2LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6ImMxYjI2OGE2NzY4OGRjN2I2ZGQwMWIxMCIsInNzbl9leHAiOjE2ODYxNzU4MDYwMjUsIml0ZXJhdGlvbiI6ImE4NjhiOTk5NmFkODQ2MGMxODhiNmQwNCJ9.fRBC78xFaI37Xz4hw-DxerUo2SR5_TcNxhnr3Bbrlq3iUaS4XJFqduIlSpbNLKLwQJXZf5jbXiZzhAjuB9SQnQ'
+        // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
-        console.log(res.data)
+        let res = await axios.post(url,payload,{headers:headers})
+        console.log(res.data);
+        return({
+            status: res.status,
+            data: res.data
+        })
     } 
     catch(e){
         console.log("error in getting provider data")
@@ -102,7 +112,7 @@ async function getAllNftData(){
         
     }
 
-    headers = {
+    var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -111,7 +121,7 @@ async function getAllNftData(){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        let res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -131,7 +141,7 @@ async function getProviderNftData(){
         
     }
 
-    headers = {
+    var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -140,7 +150,7 @@ async function getProviderNftData(){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        let res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -158,11 +168,11 @@ async function insertProviderData(providerData){
 
    const payload = { 
         "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": `INSERT INTO  MARKET.NEWPROVIDER (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('0x07dbC5662442cdD6F7461982D493788FcC70A572','0x8167c75B006819DCE12E106344b1849c7144B623', 'QmZhYbUgzQNjJHiAmEjNzChY4hoRLmheyyHAJAh8BUuGPt','QmQprRZRMU7vNjh2sbGByrZrtVHhTLx3pboYoWbbpa7rCt',100,0.01)`
+        "sqlText": `INSERT INTO  MARKET.NEWPROVIDER (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price})`
         
     }
 
-    headers = {
+    var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
@@ -171,7 +181,7 @@ async function insertProviderData(providerData){
 
     
     try{
-        res = await axios.post(url,payload,{headers:headers})
+        let res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
     } 
     catch(e){
@@ -190,7 +200,7 @@ async function insertProviderData(providerData){
             
         }
     
-        headers = {
+        var headers = {
             "accept": "application/json",
             "biscuit": process.env.REACT_APP_BISCUIT,
             "content-type": "application/json",
@@ -199,7 +209,7 @@ async function insertProviderData(providerData){
     
         
         try{
-            res = await axios.post(url,payload,{headers:headers})
+            let res = await axios.post(url,payload,{headers:headers})
             console.log(res.data)
         } 
         catch(e){
@@ -220,6 +230,7 @@ export {
     getAllProviderData,
     getProviderNftData,
     getAllNftData,
-    getNftData
+    getNftData,
+    insertProviderData
 
 }

@@ -9,12 +9,12 @@ import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata"
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { BASE_PINATA_URL } from "../../constants";
 import { getFoodBase64Svg } from '../../membershipCards'
+import { insertProviderData } from "../../helperFunctions/sxt";
 
 const CreateNFT = () => {
 
 
   const [showLoader, setShowLoader] = useState(false);
-  const [hashImg, setHashImg] = useState();
   const [pureImg, setPureImg] = useState();
   const [formData, setFormData] = useState({
     'image_data': 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=',
@@ -70,9 +70,9 @@ const CreateNFT = () => {
       console.log('Form Invalid');
     } else {
       setShowLoader(true);
-      let hashIPFSimg = await postLogoToIPFS(pureImg);
-      console.log('BASE_PINATA', BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
-      let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
+      var hashIPFSimg = await postLogoToIPFS(pureImg);
+      console.log('BASE_PINATA', BASE_PINATA_URL + hashIPFSimg?.data?.IpfsHash);
+      let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash, formData.category == 'Sports & Activity' ? 'https://www.freeiconspng.com/thumbs/travel-icon/travel-guide-icon-map-ticket-travel-icon-17.png' : formData.category == 'Tranposrtation' ? 'https://www.flaticon.com/free-icon/travel_5086472?related_id=5086445&origin=search' : 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg');
       let modifiedData = {
         "image_data": `data:image/svg+xml;base64,${img}`,
         "external_url": "localhost:3000/mcdonalds-nft",
@@ -126,9 +126,22 @@ const CreateNFT = () => {
         ]
       };
       console.log('modified data', modifiedData);
-      let res = await postTokenMetaData(modifiedData);
+      var res = await postTokenMetaData(modifiedData);
       console.log('res', res);
       if(res.status == 200){
+
+
+        let obj = {
+          nft: 'ABCD',
+          provider: 'EFGH',
+          logo: hashIPFSimg.data.IpfsHash,
+          base_meta_data_URI: res.data.IpfsHash,
+          total_supply: 'qwqwd',
+          nft_price: formData['NFT Price']
+        }
+
+        insertProviderData(obj)
+
         setShowLoader(false);
         Swal.fire({
           position: 'top-end',

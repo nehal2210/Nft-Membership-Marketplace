@@ -107,5 +107,6 @@ async function postLogoToIPFS (file) {
 
 export{
   postLogoToIPFS,
-  postTokenMetaData
+  postTokenMetaData,
+  getTokenData
 }
