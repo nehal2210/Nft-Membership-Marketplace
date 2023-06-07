@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import Cart from "../../components/general-components/cart";
+import { useAccount, useContractWrite } from 'wagmi'
+import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
+import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 const Explore = () => {
+
+
+
+  const { address, isConnected, isDisconnected } = useAccount()
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: MEMBERSHIP_MARKET_ADDRESS,
+    abi: MEMBERSHIP_MARKET_ABI,
+    functionName: 'buyNftWithNative',
+  })
+
+  // buyNftWithNative(address to, address _nft, string memory tokenUri)
 
   const [mockData, setMockData] = useState([
     {

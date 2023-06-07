@@ -2,6 +2,7 @@ import axios from "axios";
 import { SXT_API_BASE_URL, SXT_API_DML_URL, SXT_API_DQL_URL, USER_ID } from "../constants";
 import nacl from "tweetnacl";
 import { decodeUTF8, encodeUTF8, encodeBase64,decodeBase64 } from "tweetnacl-util";
+import crypto from"crypto"
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -258,23 +259,34 @@ async function requestAuthCode(){
  
   async function signMessage() {
 
-    const authCode = "6f32191db0b3fbd0e4bb9aec"
+    // const authCode = "6f32191db0b3fbd0e4bb9aec"
      // Convert the auth code to bytes for signing
+    // Get bytes of the auth code for signing
 
-     const bytesMessage = Buffer.from(authCode, 'utf-8');
-     console.log(bytesMessage);
+    // const bytesMessage = (decodeUTF8(authCode));
+    // console.log(bytesMessage);
+
+    // // Decode the private key for signing
+    // const userPrivateKey = process.env.REACT_APP_SXT_USER_PRIVATE_KEY;
+    // const privateKey = decodeBase64(userPrivateKey);
+    // console.log(privateKey);
+
+    // // Generate the signature
+    // const signatureBytes = nacl.sign.detached(bytesMessage, privateKey);
+    // const signature = encodeBase64(signatureBytes);
+
+    // console.log("Signature | hashed message, base64:", signature);
+    // console.log("Signature, base64:", signature.slice(0, 88));
+
+
+    // console.log("Signature | hashed message, hex:", signedMessage);
+    // console.log("Signature, hex:", signedMessage.slice(0, 64));
+    
+    // return signedMessage.slice(0, 64);
    
-     // Decode the private key for signing
-     const privateKey = Buffer.from(process.env.REACT_APP_SXT_USER_PRIVATE_KEY,"base64");
-     // console.log(privateKey);
-   
-     // Generate the signature
-     const signature = nacl.sign(bytesMessage, privateKey).toString('hex');
-   
-        console.log(signature)
+     
  
    
-     return signature;
    }
  
  

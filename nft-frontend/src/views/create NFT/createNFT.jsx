@@ -9,10 +9,22 @@ import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata"
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { BASE_PINATA_URL } from "../../constants";
 import { getFoodBase64Svg } from '../../membershipCards'
+import { postLogoToIPFS } from "../../helperFunctions/pinata";
+import { useAccount, useContractWrite } from 'wagmi'
+import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
+import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 
 const CreateNFT = () => {
 
 
+  const { address, isConnected, isDisconnected } = useAccount()
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: MEMBERSHIP_MARKET_ADDRESS,
+    abi: MEMBERSHIP_MARKET_ABI,
+    functionName: 'createNFT',
+  })
+  // function createNFT(string memory name, string memory symbol,uint256 _supplyLimit,uint256 priceOfNft,bool _isTransferable,bool _isExpireable, uint256 expiration, nftCategory _category)
+ 
   const [showLoader, setShowLoader] = useState(false);
   const [hashImg, setHashImg] = useState();
   const [pureImg, setPureImg] = useState();

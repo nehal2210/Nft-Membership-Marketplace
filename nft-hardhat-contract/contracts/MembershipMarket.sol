@@ -323,7 +323,17 @@ function getNFTCategory(address _nft) external returns(nftCategory) {
     addExternalRequest(oracleAddress, requestId);
   }
 
-// function 
+function  setPercentagePerNFTPrice(uint256 percentage) external onlyOwner(){
+
+   precentageEarnedPerNFTSelling  = percentage;
+}
+
+function  getPercentagePerNFTPrice() external view returns(uint256){
+
+   return precentageEarnedPerNFTSelling;
+}
+
+
 
 }
 
