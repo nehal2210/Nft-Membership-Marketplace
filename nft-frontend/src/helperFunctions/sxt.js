@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SXT_API_BASE_URL, SXT_API_DML_URL, SXT_API_DQL_URL, USER_ID } from "../constants";
+import ed25519  from "ed25519";
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -334,7 +335,16 @@ async function requestAuthCode(){
  }
  
 
+async  function validateToken(token){
+    const url = SXT_API_BASE_URL + "auth/validtoken"
+    headers = {
+        "accept": "*/*",
+        "authorization": `Bearer ${token}`
+    }  
 
+    const res = await axios.get(url,{headers:headers});
+    console.log(res);
+ }
 
 
 export {
