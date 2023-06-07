@@ -230,11 +230,11 @@ async function requestAuthCode(){
      const user_id = "nehal"
      // const org_code = ""
 
-     payload = {
+     const payload = {
          "userId": user_id
      }
      
-     headers = {"accept": "application/json"}
+     const headers = {"accept": "application/json"}
     
      // """ joinCode is now optional with SxT Beta Release. If supplied it will connect your account to the relevant subscription
      // payload = {
@@ -293,13 +293,13 @@ async function requestAuthCode(){
   
  
      const url = SXT_API_BASE_URL + "auth/token"
-     payload = {
+     const payload = {
          "userId": USER_ID,
          "authCode": auth_code,
          "signature": signed_auth_code,
          "key": process.env.REACT_APP_SXT_USER_PUBLIC_KEY,
      }
-     headers = {"accept": "application/json"}
+     const headers = {"accept": "application/json"}
      try{
  
          const res = await axios.post(url, payload,{headers:headers})
