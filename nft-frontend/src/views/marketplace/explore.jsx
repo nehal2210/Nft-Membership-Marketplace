@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Cart from "../../components/general-components/cart";
-import { authenticate, getAllProviderData } from "../../helperFunctions/sxt";
-import { getTokenData } from "../../helperFunctions/pinata";
+import { getAllProviderData } from "../../helperFunctions/sxt";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/general-components/loader";
+import { getFoodBase64Svg } from "../../membershipCards";
+import { BASE_PINATA_URL, svgBase64 } from "../../constants";
 
 const Explore = () => {
 
-  const [mockData, setMockData] = useState();
+  const [nftCardData, setNftCardData] = useState([]);
 
   const notify = (msg) => {
     toast.error(msg, {
@@ -29,24 +29,54 @@ const Explore = () => {
 
 
   const getDate = async () => {
-    authenticate();
-    return;
     try {
       let allProviders = await getAllProviderData();
-      console.log('getAllProviderData', allProviders);
-      // var arr = [];
+      const arr = []
       if (allProviders.status == 200) {
-        allProviders.data.forEach(async (data) => {
-          var nftDetail = await getTokenData(data.BASE_META_DATA_URI);
-          setMockData(oldArray => [...oldArray, nftDetail]);
-          // arr.push(nftDetail);
-          console.log('nftDetail', nftDetail);
+        console.log('allProviders', allProviders);
+        allProviders.data.forEach((d) => {
+          let modifiedSvg = getFoodBase64Svg('asc', BASE_PINATA_URL + d.LOGO, 'https://www.freeiconspng.com/thumbs/travel-icon/travel-guide-icon-map-ticket-travel-icon-17.png');
+
+          arr.push({
+            img: svgBase64 + modifiedSvg,
+            companyName: 'asc',
+            NFT_PRICE: d.NFT_PRICE,
+            PROVIDER: d.PROVIDER,
+            NFT: d.NFT,
+            TOTAL_SUPPLY: d.TOTAL_SUPPLY,
+            category: 'Food & Dining'
+          },
+            {
+              img: svgBase64 + modifiedSvg,
+              companyName: 'asc',
+              NFT_PRICE: d.NFT_PRICE,
+              PROVIDER: d.PROVIDER,
+              NFT: d.NFT,
+              TOTAL_SUPPLY: d.TOTAL_SUPPLY,
+              category: 'Transportation'
+            },
+            {
+              img: svgBase64 + modifiedSvg,
+              companyName: 'asc',
+              NFT_PRICE: d.NFT_PRICE,
+              PROVIDER: d.PROVIDER,
+              NFT: d.NFT,
+              TOTAL_SUPPLY: d.TOTAL_SUPPLY,
+              category: 'Food & Dining'
+            },
+            {
+              img: svgBase64 + modifiedSvg,
+              companyName: 'asc',
+              NFT_PRICE: d.NFT_PRICE,
+              PROVIDER: d.PROVIDER,
+              NFT: d.NFT,
+              TOTAL_SUPPLY: d.TOTAL_SUPPLY,
+              category: 'Sports & Activity'
+            });
         });
-        if (allProviders.data && allProviders.data.length > 0) {
-          // console.log('Arr', arr);
-          // setMockData(arr);
-          console.log('mock', mockData);
-        }
+        console.log("arr", arr);
+        setNftCardData(arr);
+        console.log('nftCardData', nftCardData);
 
       }
     } catch (error) {
@@ -62,10 +92,94 @@ const Explore = () => {
       <ToastContainer />
       <div className="w-full pt-10 pl-10 pr-10 mb-5 shadow-[0_0_5px_0px_#8f808040] dark:shadow-[0_0_5px_0px_#1235ce40] rounded-md">
         <h1 className="text-3xl dark:text-white mb-5 border-b-2 border-primary-500 w-[full] dark:border-blue">Explore</h1>
-
         {
-          mockData && mockData.length > 0 ?
-            mockData.map((data, i) => {
+          nftCardData.some(data => { return data.category == 'Transportation' }) ?
+            <h1 className="text-2xl ml-5 mt-10 dark:text-white">Transportation</h1> : null
+
+        }
+        <div className="flex justify-aroun w-full flex-row flex-wrap pointer">
+          {
+            nftCardData.length > 0 ?
+              nftCardData.map((data, i) => {
+                return (
+                  <>
+                    {
+                      data.category == 'Transportation' ?
+                        <div className="w-[300px] m-2" key={i}>
+                          <img src={data.img} />
+
+                        </div>
+                        : null
+                    }
+
+                  </>
+                )
+              })
+              :
+              <Loader />
+          }
+        </div>
+        {
+          nftCardData.some(data => { return data.category == 'Sports & Activity' }) ?
+            <h1 className="text-2xl ml-5 mt-10 dark:text-white">Sports & Activity</h1> : null
+
+        }
+        <div className="flex justify-aroun w-full flex-row flex-wrap">
+          {
+            nftCardData.length > 0 ?
+              nftCardData.map((data, i) => {
+                return (
+                  <>
+                    {
+                      data.category == 'Sports & Activity' ?
+                        <div className="w-[300px] m-2" key={i}>
+                          <img src={data.img} />
+
+                        </div>
+                        : null
+                    }
+
+                  </>
+                )
+              })
+              :
+              <Loader />
+          }
+        </div>
+        {
+          nftCardData.some(data => { return data.category == 'Food & Dining' }) ?
+            <h1 className="text-2xl ml-5 mt-10 dark:text-white">Food & Dining</h1> : null
+
+        }
+        <div className="flex justify-aroun w-full flex-row flex-wrap mb-20">
+          {
+            nftCardData.length > 0 ?
+              nftCardData.map((data, i) => {
+                return (
+                  <>
+                    {
+                      data.category == 'Food & Dining' ?
+                        <div className="w-[300px] m-2" key={i}>
+                          <img src={data.img} />
+
+                        </div>
+                        : null
+                    }
+
+                  </>
+                )
+              })
+              :
+              <Loader />
+          }
+        </div>
+        {/* {
+          !mockData1 && mockData1.length <= 0 ?
+          <Loader />
+            
+            :
+            mockData1.map((data, i) => {
+              console.log("data", data);
               return (
                 <div key={i}>
                   <h1 className="text-2xl ml-10 dark:text-white">{data.category}</h1>
@@ -78,15 +192,13 @@ const Explore = () => {
                           )
                         })
                         :
-                        <Loader />
+                        <p>Error</p>
                     }
                   </div>
                 </div>
               )
             })
-            :
-            <Loader />
-        }
+        } */}
 
       </div>
 

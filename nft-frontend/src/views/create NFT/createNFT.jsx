@@ -72,7 +72,7 @@ const CreateNFT = () => {
       setShowLoader(true);
       var hashIPFSimg = await postLogoToIPFS(pureImg);
       console.log('BASE_PINATA', BASE_PINATA_URL + hashIPFSimg?.data?.IpfsHash);
-      let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash, formData.category == 'Sports & Activity' ? 'https://www.freeiconspng.com/thumbs/travel-icon/travel-guide-icon-map-ticket-travel-icon-17.png' : formData.category == 'Tranposrtation' ? 'https://www.flaticon.com/free-icon/travel_5086472?related_id=5086445&origin=search' : 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg');
+      let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash, formData.category == 'Sports & Activity' ? 'https://www.freeiconspng.com/thumbs/travel-icon/travel-guide-icon-map-ticket-travel-icon-17.png' : formData.category == 'Transportation' ? 'https://www.flaticon.com/free-icon/travel_5086472?related_id=5086445&origin=search' : 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg');
       let modifiedData = {
         "image_data": `data:image/svg+xml;base64,${img}`,
         "external_url": "localhost:3000/mcdonalds-nft",
@@ -209,7 +209,7 @@ const CreateNFT = () => {
                 <option value="" disabled>Select One</option>
                 <option value="Food & dining">Food & Dining</option>
                 <option value="Sports & Activity">Sports & Activity</option>
-                <option value="Tranposrtation">Tranposrtation</option>
+                <option value="Transportation">Transportation</option>
               </select>
             </div>
 

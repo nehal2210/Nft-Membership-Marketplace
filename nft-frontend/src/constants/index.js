@@ -4,6 +4,7 @@ const SXT_API_BASE_URL = "https://hackathon.spaceandtime.dev/v1/"
 const BASE_PINATA_URL = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/"
 const DELETE_URL_PINATA = "https://api.pinata.cloud/pinning/unpin/"
 const USER_ID = "nehal"
+const svgBase64 = 'data:image/svg+xml;base64,'
 
  export {
     SXT_API_BASE_URL,
@@ -11,5 +12,6 @@ const USER_ID = "nehal"
     SXT_API_DQL_URL,
     USER_ID,
     BASE_PINATA_URL,
-    DELETE_URL_PINATA
+    DELETE_URL_PINATA,
+    svgBase64
  }

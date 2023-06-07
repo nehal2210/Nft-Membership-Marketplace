@@ -48,7 +48,7 @@ async function getAllProviderData(){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYwOTU4NjUsIm5iZiI6MTY4NjA5NTg2NSwiZXhwIjoxNjg2MDk3MzY1LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjEyZWFkZGM4NjhiOThjMDU0OTM1M2RmZiIsInNzbl9leHAiOjE2ODYxODIyNjU1OTAsIml0ZXJhdGlvbiI6ImNhMzdlODVlYzk0OGI5MGM0YjRlZjY0OSJ9.IWNpjA-zxrpt185uirZrbM5xOufhZPzsyZ2NLN4yA4FSomJiVMMPMEFcgIYjR1Oai9TTpCZuxlffsMRTAuwF6w'
+        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYxNjgzNDcsIm5iZiI6MTY4NjE2ODM0NywiZXhwIjoxNjg2MTY5ODQ3LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjI1Y2IwY2NlNGIyMGE5Y2EzMDVhMDY5MSIsInNzbl9leHAiOjE2ODYyNTQ3NDcyNzMsIml0ZXJhdGlvbiI6IjIyZjcxYzE2MzVjNDBkZTE4OWQyZjM0OCJ9.SqsRO-3w55k_6Ql1BcdyqYCCA_BVYc5xwEHxfeIhL0bdT11O2OCm9ERsJzs1Wt7OhoCth3iLb88h3semrUM9Bw'
         // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
     }
 
@@ -266,7 +266,7 @@ async function requestAuthCode(){
  
  
  
-  async function signMessage() {
+  const signMessage = async () => {
 
     const authCode = "6f32191db0b3fbd0e4bb9aec"
      // Convert the auth code to bytes for signing
@@ -367,6 +367,7 @@ export {
     getProviderNftData,
     getAllNftData,
     getNftData,
-    insertProviderData
+    insertProviderData,
+    signMessage
 
 }
