@@ -41,6 +41,32 @@ function getFoodBase64Svg(companyName,companyLogo){
 return btoa(svg)
 }
 
+const extractMetadata = (svg, id) => {
+    const classRegex = new RegExp(`<.*?id="${id}".*?>(.*?)<\/.*?>`);
+    const match = svg.match(classRegex);
+  
+    if (match) {
+      const metadata = match[1];
+      return metadata
+    } else {
+      console.log(`No matching id "${id}" found.`);
+      return null
+    }
+  };
+
+function updateSvg(base64Svg,nameOfOwner){
+
+
+    const svg = atob(base64Svg.btoa().split("base64,")[1])
+    if(extractMetadata(svg, "ownerAddress") !==null){
+
+        const newSvgBase64 = svg.replace(extractMetadata(svg, "ownerAddress"),nameOfOwner)
+        return newSvgBase64
+    }
+return null}
+
+
+
 export {
-  getFoodBase64Svg
-}
+    getFoodBase64Svg
+  }
