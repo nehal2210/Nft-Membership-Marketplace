@@ -131,6 +131,11 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
   return address(this).balance;
 }
 
+  function getTokenURI(address _nft, uint256 tokenId) external view returns(string memory){
+  return ProviderToNft[NftToProvider[_nft]].tokenURI(tokenId);
+
+}
+
 
   function buyNftWithNative(address to, address _nft, string memory tokenUri) external payable {
 

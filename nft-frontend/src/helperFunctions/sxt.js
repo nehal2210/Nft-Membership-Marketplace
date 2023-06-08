@@ -6,6 +6,10 @@ import crypto from"crypto"
 import dotenv from "dotenv"
 dotenv.config()
 
+
+const REACT_APP_SXT_ACCESS_TOKEN = "Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYyMzI3MDMsIm5iZiI6MTY4NjIzMjcwMywiZXhwIjoxNjg2MjM0MjAzLCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6ImUxMDg5MjBhMWFkNTY3OTVkNWU4MzZjNSIsInNzbl9leHAiOjE2ODYzMTkxMDMyNjYsIml0ZXJhdGlvbiI6IjhmNGU4YTU4OTgyOTY1M2E5NmE4Mzc0ZiJ9.odCtSFSK4zf2kpcZOTMVxfvYOxZLyZrEP8z18zmeCBJsLmFm7343tU-55Id0p-z0Y1lOYoh_cJYBfx8Sler6WA"
+
+
 async function getProviderData(providerAddress){
     const url = SXT_API_DQL_URL
 
@@ -19,7 +23,7 @@ async function getProviderData(providerAddress){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
@@ -49,8 +53,8 @@ async function getAllProviderData(){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYyMDc0NzEsIm5iZiI6MTY4NjIwNzQ3MSwiZXhwIjoxNjg2MjA4OTcxLCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjZhNTZmMWQzYjI0MjRjMGRkOTY0OTE0OCIsInNzbl9leHAiOjE2ODYyOTM4NzEwOTUsIml0ZXJhdGlvbiI6IjUzNDJkOThhMzJlM2UzN2JkNTY5NTI3MiJ9.Z-C4nFbRYHgbwRr1_q8ogHDprMlpV32ziafhHqOQTziGhXsUhGFq7Hb71B1MHoNctY3l2cyFYzejcGTgzWTGVA'
-        // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        // "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
@@ -83,13 +87,13 @@ async function getNftData(nftAddress){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYwODk0MDYsIm5iZiI6MTY4NjA4OTQwNiwiZXhwIjoxNjg2MDkwOTA2LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6ImMxYjI2OGE2NzY4OGRjN2I2ZGQwMWIxMCIsInNzbl9leHAiOjE2ODYxNzU4MDYwMjUsIml0ZXJhdGlvbiI6ImE4NjhiOTk5NmFkODQ2MGMxODhiNmQwNCJ9.fRBC78xFaI37Xz4hw-DxerUo2SR5_TcNxhnr3Bbrlq3iUaS4XJFqduIlSpbNLKLwQJXZf5jbXiZzhAjuB9SQnQ'
-        // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+   
     }
 
     
     try{
-        let res = await axios.post(url,payload,{headers:headers})
+        var res = await axios.post(url,payload,{headers:headers})
         console.log(res.data);
         return({
             status: res.status,
@@ -100,7 +104,10 @@ async function getNftData(nftAddress){
         console.log("error in getting provider data")
     }
 
-
+    return({
+        status: 401,
+        data: {}
+    })
 
 }
 
@@ -110,8 +117,8 @@ async function getAllNftData(){
     const url = SXT_API_DQL_URL
 
    const payload = { 
-        "resourceId": "MARKET.NEWTOEKN",
-        "sqlText": "SELECT * FROM MARKET.NEWTOEKN"
+        "resourceId": "MARKET.NEWTOKEN",
+        "sqlText": "SELECT * FROM MARKET.NEWTOKEN"
         
     }
 
@@ -119,20 +126,69 @@ async function getAllNftData(){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
     try{
         let res = await axios.post(url,payload,{headers:headers})
-        console.log(res.data)
+        return {
+            status: res.status,
+            data:res.data
+        }
     } 
     catch(e){
         console.log("error in getting provider data")
     }
 
+    return {
+        status: 404,
+        data:''
+    }
 
 }
+
+
+
+
+async function getNftTableId(){
+
+    const url = SXT_API_DQL_URL
+
+   const payload = { 
+        "resourceId": "MARKET.NEWTOKEN",
+        "sqlText": "SELECT COUNT(id) FROM MARKET.NEWTOKEN"
+        
+    }
+
+    var headers = {
+        "accept": "application/json",
+        "biscuit": process.env.REACT_APP_BISCUIT,
+        "content-type": "application/json",
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+    }
+
+    
+    try{
+        let res = await axios.post(url,payload,{headers:headers})
+        return {
+            status: res.status,
+            data:res.data
+        }
+    } 
+    catch(e){
+        console.log("error in getting provider data")
+    }
+
+    return {
+        status: 401 ,
+        data:""
+    }
+
+}
+
+
+
 
 async function getProviderNftData(){
 
@@ -148,7 +204,7 @@ async function getProviderNftData(){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
@@ -166,7 +222,7 @@ async function getProviderNftData(){
 
 
 async function insertProviderData(providerData){
-    console.log("token",process.env.REACT_APP_SXT_ACCESS_TOKEN)
+    console.log("token",REACT_APP_SXT_ACCESS_TOKEN)
     const url = SXT_API_DML_URL
 
    const payload = { 
@@ -179,7 +235,7 @@ async function insertProviderData(providerData){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
     
@@ -200,7 +256,7 @@ async function insertProviderData(providerData){
     
        const payload = { 
             "resourceId": "MARKET.NEWTOKEN",
-            "sqlText": `INSERT INTO MARKET.NEWTOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (0,'0x07dbC5662442cdD6F7461982D493788FcC70A572', '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',0,0,0, 1685206597, 1716828751, 0)`
+            "sqlText": `INSERT INTO MARKET.NEWTOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (${nftData.id},'${nftData.nft}', '${nftData.owner}',${nftData.used_count},${nftData.resold_count},${nftData.total_royalty}, ${nftData.mint_date}, ${nftData.expire_date}, ${nftData.token_id})`
             
         }
     
@@ -208,19 +264,19 @@ async function insertProviderData(providerData){
             "accept": "application/json",
             "biscuit": process.env.REACT_APP_BISCUIT,
             "content-type": "application/json",
-            "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
+            "authorization": REACT_APP_SXT_ACCESS_TOKEN
         }
     
         
         try{
             let res = await axios.post(url,payload,{headers:headers})
-            console.log(res.data)
+           return true
         } 
         catch(e){
             console.log("error in getting provider data")
         }
     
-
+        return false
 
 
 }
@@ -384,6 +440,8 @@ export {
     authenticate,
     signMessage,
     insertProviderData,
-    signMessage
+    insertNftData,
+    getNftTableId
+
 
 }

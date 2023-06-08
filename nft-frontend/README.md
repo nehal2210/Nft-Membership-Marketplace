@@ -60,3 +60,11 @@ get balance
 
 
 integrate push protocol
+
+
+User DashBoard
+AllNftwithProvider os specific user -> get logo and company name and token id and nft Address
+put this logo, company name and owner address in svg
+and show
+
+User Detail

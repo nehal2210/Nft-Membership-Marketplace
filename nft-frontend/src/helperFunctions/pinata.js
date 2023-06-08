@@ -54,17 +54,21 @@ async function postTokenMetaData(metaData){
    'Content-Type': 'application/json', 
    'Authorization': process.env.REACT_APP_ACCESS_TOKEN_PINATA
 }})
-    
-// return  newNft.data.IpfsHash
-
 return  ({
   status: newNft.status,
   data: newNft.data
 })
 }
 catch(e){
-    console.log("error in posting metadata to pinata")
+    console.log("error in posting metadata to pinata",e)
 }
+
+
+return  ({
+  status: 401,
+  data: ""
+})
+
 
 }
 

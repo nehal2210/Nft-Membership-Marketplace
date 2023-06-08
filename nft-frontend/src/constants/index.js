@@ -5,11 +5,21 @@ const BASE_PINATA_URL = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/"
 const DELETE_URL_PINATA = "https://api.pinata.cloud/pinning/unpin/"
 const USER_ID = "nehal"
 const CATEGORY = {
-   "Food & dining":"0",
+   "Food and dining":"0",
    "Transportation":"1",
-   "Sports & Activity":"2"
+   "Sports and Activity":"2"
 }
-
+const ATTRIBUTES = {
+   "DISCOUNT" : 0,
+   "EXPIRY" : 1,
+   "EXPIRY_DATE" : 2,
+   "USED_COUNT" : 3,
+   "CATEGORY" : 4,
+   "APPLICAPBLE_IN" : 5,
+   "MAXIMUM_PURCHASE_LIMIT" : 6,
+   "REMAINING_AMOUNT" : 7,
+   "DAYS" : 8,
+  }
 
 
 const svgBase64 = 'data:image/svg+xml;base64,'
@@ -22,5 +32,6 @@ const svgBase64 = 'data:image/svg+xml;base64,'
     BASE_PINATA_URL,
     DELETE_URL_PINATA,
     CATEGORY,
-    svgBase64
+    svgBase64,
+    ATTRIBUTES
  }
