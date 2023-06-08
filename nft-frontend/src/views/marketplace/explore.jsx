@@ -8,6 +8,7 @@ import { useAccount, useContractWrite } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import { Link } from "react-router-dom";
+import { Button } from "antd";
 const Explore = () => {
 
 
@@ -95,9 +96,29 @@ const Explore = () => {
                       data.category == 'Transportation' ?
                         <div className="w-[300px] m-2 cursor-pointer" key={i}>
                           <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
-                          <img src={data.img} />
+                            <img src={data.img} />
                           </Link>
+                          <div className='w-full'>
+                              <div className='w-full cursor-pointer'>
+                                <div className='flex flex-row ml-2 mr-2 dark:text-white'>
+                                  <p>{data.companyName}</p>
+                                </div>
+                                <div className='w-full flex justify-between pl-2 pr-2'>
+                                  <div className='flex flex-row justify-around dark:text-white'>
+                                    <p>Price:</p>
+                                    <p className='font-semibold'>{data.NFT_PRICE}</p>
+                                  </div>
+                                  <div className='flex flex-row justify-around dark:text-white'>
+                                    <p>TOTAL SUPPLY:</p>
+                                    <p className='font-semibold'>{data.TOTAL_SUPPLY}</p>
+                                  </div>
+                                </div>
+                              </div>
 
+                            <div className='w-full'>
+                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                            </div>
+                          </div>
                         </div>
                         : null
                     }
@@ -123,10 +144,30 @@ const Explore = () => {
                     {
                       data.category == 'Sports & Activity' ?
                         <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                         <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
-                          <img src={data.img} />
+                          <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
+                            <img src={data.img} />
                           </Link>
+                          <div className='w-full'>
+                              <div className='w-full cursor-pointer'>
+                                <div className='flex flex-row ml-2 mr-2 dark:text-white'>
+                                  <p>{data.companyName}</p>
+                                </div>
+                                <div className='w-full flex justify-between pl-2 pr-2'>
+                                  <div className='flex flex-row justify-around dark:text-white'>
+                                    <p>Price:</p>
+                                    <p className='font-semibold'>{data.NFT_PRICE}</p>
+                                  </div>
+                                  <div className='flex flex-row justify-around dark:text-white'>
+                                    <p>TOTAL SUPPLY:</p>
+                                    <p className='font-semibold'>{data.TOTAL_SUPPLY}</p>
+                                  </div>
+                                </div>
+                              </div>
 
+                            <div className='w-full'>
+                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                            </div>
+                          </div>
                         </div>
                         : null
                     }
@@ -152,9 +193,30 @@ const Explore = () => {
                     {
                       data.category == 'Food & Dining' ?
                         <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                           <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
-                          <img src={data.img} />
+                          <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
+                            <img src={data.img} />
                           </Link>
+                          <div className='w-full'>
+                              <div className='w-full cursor-pointer'>
+                                <div className='flex flex-row ml-2 mr-2 dark:text-white'>
+                                  <p>{data.companyName}</p>
+                                </div>
+                                <div className='w-full flex justify-between pl-2 pr-2'>
+                                  <div className='flex flex-row justify-around dark:text-white'>
+                                    <p>Price:</p>
+                                    <p className='font-semibold'>{data.NFT_PRICE}</p>
+                                  </div>
+                                  <div className='flex flex-row justify-around dark:text-white'>
+                                    <p>TOTAL SUPPLY:</p>
+                                    <p className='font-semibold'>{data.TOTAL_SUPPLY}</p>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <div className='w-full'>
+                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                            </div>
+                          </div>
 
                         </div>
                         : null
