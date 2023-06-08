@@ -7,9 +7,7 @@ import { BASE_PINATA_URL, svgBase64 } from "../../constants";
 import { useAccount, useContractWrite } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
-import { useAccount, useContractWrite } from 'wagmi'
-import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
-import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
+import { Link } from "react-router-dom";
 const Explore = () => {
 
 

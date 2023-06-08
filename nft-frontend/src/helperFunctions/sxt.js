@@ -49,7 +49,7 @@ async function getAllProviderData(){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYxNzY1MDQsIm5iZiI6MTY4NjE3NjUwNCwiZXhwIjoxNjg2MTc4MDA0LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6ImY3YmY1NmUyYjA3M2VmMmEwM2VlZWExMyIsInNzbl9leHAiOjE2ODYyNjI5MDQ1NTYsIml0ZXJhdGlvbiI6ImY4MjM4YzgzMGQxZjU0MTI4OTM1NTZjZiJ9.irdEbJgC5q1M0ge0dqFRW9gKRH0ab4kecqM3Kj4UteZJh7ewcoc7pAWXFSoOpXTPyjj8nqf_kOiHnPaSMppHGA'
+        "authorization": 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYyMDc0NzEsIm5iZiI6MTY4NjIwNzQ3MSwiZXhwIjoxNjg2MjA4OTcxLCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjZhNTZmMWQzYjI0MjRjMGRkOTY0OTE0OCIsInNzbl9leHAiOjE2ODYyOTM4NzEwOTUsIml0ZXJhdGlvbiI6IjUzNDJkOThhMzJlM2UzN2JkNTY5NTI3MiJ9.Z-C4nFbRYHgbwRr1_q8ogHDprMlpV32ziafhHqOQTziGhXsUhGFq7Hb71B1MHoNctY3l2cyFYzejcGTgzWTGVA'
         // "authorization": process.env.REACT_APP_SXT_ACCESS_TOKEN
     }
 
