@@ -51,8 +51,25 @@ async function getNftAddress(creator){
 
 
 
+async function getNftPrice(nft){
+    const contract = getContract()
+    try{
+
+        let address  = await contract.getNftPrice(nft)
+    return address
+    }
+    catch(e){
+
+        console.log(e)
+    }
+    return "00"
+}
+
+
+
 
 export {
     createNFT,
-    getNftAddress
+    getNftAddress,
+    getNftPrice
 }

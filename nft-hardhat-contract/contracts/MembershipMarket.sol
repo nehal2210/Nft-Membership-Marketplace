@@ -252,6 +252,10 @@ function getNFTCategory(address _nft) external returns(nftCategory) {
     return nftToCategory[_nft];
 }
 
+function  getPercentagePerNFTPrice() external view returns(uint256){
+
+   return precentageEarnedPerNFTSelling;
+}
 
 // function setCategoryFunctionScripts(string memory _cid,nftCategory _category) external {
 
@@ -328,10 +332,7 @@ function  setPercentagePerNFTPrice(uint256 percentage) external onlyOwner(){
    precentageEarnedPerNFTSelling  = percentage;
 }
 
-function  getPercentagePerNFTPrice() external view returns(uint256){
 
-   return precentageEarnedPerNFTSelling;
-}
 
 
 
