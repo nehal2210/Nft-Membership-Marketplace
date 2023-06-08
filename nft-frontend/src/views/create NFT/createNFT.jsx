@@ -9,7 +9,6 @@ import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata"
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { BASE_PINATA_URL, CATEGORY } from "../../constants";
 import { getFoodBase64Svg } from '../../membershipCards'
-import { useAccount, useContractWrite, useContractRead } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import {ethers} from "ethers";
@@ -28,7 +27,6 @@ const CreateNFT = () => {
   // function createNFT(string memory name, string memory symbol,uint256 _supplyLimit,uint256 priceOfNft,bool _isTransferable,bool _isExpireable, uint256 expiration, nftCategory _category)
  
   const [showLoader, setShowLoader] = useState(false);
-  const [hashImg, setHashImg] = useState();
   const [pureImg, setPureImg] = useState();
   const [formData, setFormData] = useState({
     'image_data': 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=',

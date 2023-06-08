@@ -41,16 +41,16 @@ const wagmiConfig = createConfig({
 function App() {
 
 
-const getSxtToken=async ()=>{
+// const getSxtToken=async ()=>{
 
-  signMessage()
-  // const token = await authenticate()
-  // console.log(token)
-}
+//   signMessage()
+//   // const token = await authenticate()
+//   // console.log(token)
+// }
 
   useEffect(() => {
 
-    getSxtToken()
+    // getSxtToken()
     // const cookies = new Cookies();
     // let authValidateToken = validateToken();
     // console.log('authValidateToken', authValidateToken);

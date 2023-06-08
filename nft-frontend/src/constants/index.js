@@ -12,6 +12,7 @@ const CATEGORY = {
 
 
 
+const svgBase64 = 'data:image/svg+xml;base64,'
 
  export {
     SXT_API_BASE_URL,
@@ -20,5 +21,6 @@ const CATEGORY = {
     USER_ID,
     BASE_PINATA_URL,
     DELETE_URL_PINATA,
-    CATEGORY
+    CATEGORY,
+    svgBase64
  }
