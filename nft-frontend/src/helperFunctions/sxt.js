@@ -156,12 +156,12 @@ async function getProviderNftData(){
 
 
 async function insertProviderData(providerData){
-
+    console.log("token",process.env.REACT_APP_SXT_ACCESS_TOKEN)
     const url = SXT_API_DML_URL
 
    const payload = { 
         "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": `INSERT INTO  MARKET.NEWPROVIDER (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('0x07dbC5662442cdD6F7461982D493788FcC70A572','0x8167c75B006819DCE12E106344b1849c7144B623', 'QmZhYbUgzQNjJHiAmEjNzChY4hoRLmheyyHAJAh8BUuGPt','QmQprRZRMU7vNjh2sbGByrZrtVHhTLx3pboYoWbbpa7rCt',100,0.01)`
+        "sqlText": `INSERT INTO  MARKET.NEWPROVIDER (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price})`
         
     }
 
@@ -175,11 +175,12 @@ async function insertProviderData(providerData){
     
     try{
         const res = await axios.post(url,payload,{headers:headers})
-        console.log(res.data)
+        return true
     } 
     catch(e){
-        console.log("error in getting provider data")
+        console.log("error in Insertingprovider data")
     }
+    return false
 }
 
 
@@ -371,6 +372,7 @@ export {
     getNftData,
     validateToken,
     authenticate,
-    signMessage
+    signMessage,
+    insertProviderData,
 
 }

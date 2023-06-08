@@ -7,22 +7,24 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import { BASE_PINATA_URL } from "../../constants";
+import { BASE_PINATA_URL, CATEGORY } from "../../constants";
 import { getFoodBase64Svg } from '../../membershipCards'
-import { postLogoToIPFS } from "../../helperFunctions/pinata";
-import { useAccount, useContractWrite } from 'wagmi'
+import { useAccount, useContractWrite, useContractRead } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
-
+import {ethers} from "ethers";
+import { createNFT, getNftAddress } from "../../contractFunctions";
+import { insertProviderData } from "../../helperFunctions/sxt";
 const CreateNFT = () => {
 
 
   const { address, isConnected, isDisconnected } = useAccount()
-  const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: MEMBERSHIP_MARKET_ADDRESS,
-    abi: MEMBERSHIP_MARKET_ABI,
-    functionName: 'createNFT',
-  })
+
+
+
+
+
+
   // function createNFT(string memory name, string memory symbol,uint256 _supplyLimit,uint256 priceOfNft,bool _isTransferable,bool _isExpireable, uint256 expiration, nftCategory _category)
  
   const [showLoader, setShowLoader] = useState(false);
@@ -35,7 +37,8 @@ const CreateNFT = () => {
     'name': '',
     'Discount': '',
     'Expiry': '',
-    'Expiry Date': 0,
+    'duration' : '',
+    'expiryDate': 0,
     'Used Count': 0,
     'category': '',
     'Applicable in': 'world',
@@ -44,10 +47,10 @@ const CreateNFT = () => {
     'Maximum Purchase amount': '',
     'Remaining Amount': '',
     'Days': 0,
-    'supply limit': '',
-    'transferable': '',
-    'Comapny Symbol': '',
-    'NFT Price': ''
+    'supplyLimit': '',
+    'transferable': false,
+    'ComapnySymbol': '',
+    'nftPrice': ''
   });
 
 
@@ -71,10 +74,10 @@ const CreateNFT = () => {
     });
   };
 
-  /*!formData.name || !formData.description || !formData.Discount || !formData.Expiry || !formData.category || !formData["Applicable in"] || !formData['Maximum Purchase duration'] || !formData["Maximum Purchase amount"] || !formData.price || !formData["NFT Price"] || !formData["Comapny Symbol"]*/
+  /*!formData.name || !formData.description || !formData.Discount || !formData.Expiry || !formData.category || !formData["Applicable in"] || !formData['Maximum Purchase duration'] || !formData["Maximum Purchase amount"] || !formData.price || !formData["nftPrice"] || !formData["Comapny Symbol"]*/
   const submitForm = async () => {
     console.log('form', formData);
-    // if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["NFT Price"].length <= 0 || formData["Comapny Symbol"].length <= 0 || !pureImg) {
+    // if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["nftPrice"].length <= 0 || formData["Comapny Symbol"].length <= 0 || !pureImg) {
     if (!formData) {
 
 
@@ -82,6 +85,17 @@ const CreateNFT = () => {
       console.log('Form Invalid');
     } else {
       setShowLoader(true);
+      
+console.log(formData)
+console.log(CATEGORY[formData.category])
+
+      const isCreated = await createNFT(formData)
+      // write(formData.name,formData.ComapnySymbol,ethers.utils.parseEther(formData.supplyLimit),ethers.utils.parseEther(formData.nftPrice),false,false,ethers.utils.parseEther("0"), ethers.utils.parseEther(CATEGORY[formData.category]))
+      if(!isCreated){
+        setShowLoader(false);
+        notify("Tx Failed");
+        return
+      }
       let hashIPFSimg = await postLogoToIPFS(pureImg);
       console.log('BASE_PINATA', BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
       let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
@@ -98,7 +112,8 @@ const CreateNFT = () => {
           },
           {
             "trait_type": "Expiry",
-            "value": formData.Expiry === '1Year' ? '1 year of expiry after mint' : '6 months of expiry after mint',
+            "duration": formData.Expiry === '1Year' ? "year" : "month",  
+            "value": formData.Expiry === '1Year' ? '1' : '6',
           },
           {
             "trait_type": "Expiry Date",
@@ -139,9 +154,23 @@ const CreateNFT = () => {
       };
       console.log('modified data', modifiedData);
       let res = await postTokenMetaData(modifiedData);
-      console.log('res', res);
       if(res.status == 200){
+
+        console.log('resres.data', res.data);
+        console.log("log",hashIPFSimg.data.IpfsHash)
+        const newNftAddress = await getNftAddress(address)
+        if(newNftAddress !== "0x0"){
+          console.log("new Address",newNftAddress)
+          var isInserted = await insertProviderData({nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: formData.supplyLimit , nft_price: formData.nftPrice }) 
+        
+            if (!isInserted) {
+              notify("your access token is expire please refresh your page to get access token")
+            }
+          
+        }
+
         setShowLoader(false);
+        
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -208,7 +237,7 @@ const CreateNFT = () => {
                 <option value="" disabled>Select One</option>
                 <option value="Food & dining">Food & Dining</option>
                 <option value="Sports & Activity">Sports & Activity</option>
-                <option value="Tranposrtation">Tranposrtation</option>
+                <option value="Transportation">Transportation</option>
               </select>
             </div>
 
@@ -234,14 +263,14 @@ const CreateNFT = () => {
 
             <div className="w-full h-20 mt-2 mb-2 p-1">
               <p className="dark:text-white">Supply Limit</p>
-              <Input type="number" placeholder="Supply Limit" name="Supply Limit" onChange={handleForm} className="dark:bg-black dark:text-white" />
+              <Input type="number" placeholder="Supply Limit" name="supplyLimit" onChange={handleForm} className="dark:bg-black dark:text-white" />
             </div>
 
             <div className="w-full h-20 mt-2 mb-2 p-1">
               <p className="dark:text-white">Transferable</p>
               <select placeholder="Transferable" name="transferable" value={formData.transferable} onChange={handleForm} disabled className="w-full h-[33px] border-[1px] border-blue-gray-100 rounded-md dark:bg-black dark:text-white pt-[4px] pb-[4px] pl-[11px] pr[11px] text-[14px]">
-                <option value="True">True</option>
-                <option value="False">False</option>
+                <option value={true}>True</option>
+                <option value={false}>False</option>
               </select>
             </div>
           </div>
@@ -279,13 +308,13 @@ const CreateNFT = () => {
 
             <div className="w-full h-20 mt-2 mb-2 p-1">
               <p className="dark:text-white">symbol</p>
-              <Input type="text" placeholder="Comapny Symbol" value={formData['Comapny Symbol']} name="Comapny Symbol" onChange={handleForm} maxLength={5} className="dark:bg-black dark:text-white" />
+              <Input type="text" placeholder="Comapny Symbol" value={formData['ComapnySymbol']} name="ComapnySymbol" onChange={handleForm} maxLength={5} className="dark:bg-black dark:text-white" />
             </div>
 
 
             <div className="w-full h-20 mt-2 mb-2 p-1">
               <p className="dark:text-white">NFT Price (MATIC)</p>
-              <Input type="number" placeholder="NFT Price" value={formData['NFT Price']} name="NFT Price" onChange={handleForm} className="dark:bg-black dark:text-white" />
+              <Input type="number" placeholder="NFT Price" value={formData['nftPrice']} name="nftPrice" onChange={handleForm} className="dark:bg-black dark:text-white" />
             </div>
           </div>
 
@@ -298,7 +327,7 @@ const CreateNFT = () => {
           </div>
         </div>
         <div className="w-full flex flex-row-reverse pb-5">
-          <Button className='bg-primary-500 text-white w-24 dark:bg-blue' onClick={submitForm} type="primary">Submit</Button>
+          <Button className='bg-primary-500 text-white w-24 dark:bg-blue' onClick={()=>{isConnected?submitForm():notify("Please Connect your Wallet")}} type="primary">Submit</Button>
         </div>
       </div>
     </div>
