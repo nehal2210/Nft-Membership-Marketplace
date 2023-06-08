@@ -29,8 +29,32 @@ const ATTRIBUTES = {
 
 
 
+ const extractMetadata = (svg, id) => {
+  const classRegex = new RegExp(`<.*?id="${id}".*?>(.*?)<\/.*?>`);
+  const match = svg.match(classRegex);
+
+  if (match) {
+    const metadata = match[1];
+    return metadata
+  } else {
+    console.log(`No matching id "${id}" found.`);
+    return null
+  }
+};
+
+function updateSvg(base64Svg,count){
+
+  const data =  base64Svg.split("base64,")
+  const svg = Buffer.from(data[1],'base64').toString('ascii')
+  if(extractMetadata(svg, "usedCount") !==null){
+
+      const newSvgBase64 =  data[0]+ "base64,"+ svg.replace(extractMetadata(svg, "usedCount"),count)
+      return newSvgBase64
+  }
+return base64Svg
 
 
+}
 const NftJson = await Functions.makeHttpRequest({
   url: tokenURI,
 
