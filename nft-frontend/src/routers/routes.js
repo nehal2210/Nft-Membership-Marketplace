@@ -6,6 +6,7 @@ import Explore from "../views/marketplace/explore";
 import CreateNFT from "../views/create NFT/createNFT";
 import DashBoard from "../views/dashboard/dashboard";
 import CardDetails from "../views/card-details/card-details";
+import MyCardDetail from "../views/my-card-detail/my-card-detail";
 
 const MyRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const MyRoutes = () => {
       <Route path="/create" Component={CreateNFT} />
       <Route path="/dashboard" Component={DashBoard} />
       <Route path="/card-detail" Component={CardDetails} />
+      <Route path="/my-card-detail" Component={MyCardDetail} />
     </Routes>
   );
 };

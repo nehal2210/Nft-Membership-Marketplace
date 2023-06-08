@@ -7,7 +7,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 
-const REACT_APP_SXT_ACCESS_TOKEN = "Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYyMzI3MDMsIm5iZiI6MTY4NjIzMjcwMywiZXhwIjoxNjg2MjM0MjAzLCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6ImUxMDg5MjBhMWFkNTY3OTVkNWU4MzZjNSIsInNzbl9leHAiOjE2ODYzMTkxMDMyNjYsIml0ZXJhdGlvbiI6IjhmNGU4YTU4OTgyOTY1M2E5NmE4Mzc0ZiJ9.odCtSFSK4zf2kpcZOTMVxfvYOxZLyZrEP8z18zmeCBJsLmFm7343tU-55Id0p-z0Y1lOYoh_cJYBfx8Sler6WA"
+const REACT_APP_SXT_ACCESS_TOKEN = "Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYyNjU3MTMsIm5iZiI6MTY4NjI2NTcxMywiZXhwIjoxNjg2MjY3MjEzLCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjQ0YjAyMDQ2YzYzZjM4ODNhYzkxYjYxNiIsInNzbl9leHAiOjE2ODYzNTIxMTM2NDgsIml0ZXJhdGlvbiI6IjNhZDhlMDJhMmRlMzg1NmQ0YmQ3MzZhMiJ9.ZAM1-sRQlk17nObPljfIgYkecfefz-wJYpfFWZBWtld6XU4fzL7oba29vsuHbfyhzXTkpbDX_0902v_kFr3Fug"
 
 
 async function getProviderData(providerAddress){
@@ -190,13 +190,13 @@ async function getNftTableId(){
 
 
 
-async function getProviderNftData(){
+async function getProviderNftData(creator){
 
     const url = SXT_API_DQL_URL
 
    const payload = { 
         "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": "SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft"
+        "sqlText": `SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft WHERE MARKET.NEWPROVIDER.provider = ${creator}`
         
     }
 
@@ -211,14 +211,59 @@ async function getProviderNftData(){
     try{
         let res = await axios.post(url,payload,{headers:headers})
         console.log(res.data)
+        return {
+            status: res.status,
+            data:res.data
+        }
     } 
     catch(e){
-        console.log("error in getting provider data")
+        console.log("error in getting provider data")   
+        
+    }
+
+    return {
+        status: 401 ,
+        data:""
     }
 
 
 }
 
+
+async function getProviderNftOwner(owner){
+
+    const url = SXT_API_DQL_URL
+
+   const payload = { 
+        "resourceId": "MARKET.NEWPROVIDER",
+        "sqlText": `SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft WHERE MARKET.NEWTOKEN.owner = '${owner}' `
+        
+    }
+
+    var headers = {
+        "accept": "application/json",
+        "biscuit": process.env.REACT_APP_BISCUIT,
+        "content-type": "application/json",
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+    }
+
+    
+    try{
+        let res = await axios.post(url,payload,{headers:headers})
+        return {
+            status: res.status,
+            data:res.data
+        }
+    } 
+    catch(e){
+        console.log("error in getting provider data")
+    }
+    return {
+        status: 401,
+        data:''
+    }
+
+}
 
 
 async function insertProviderData(providerData){
@@ -441,7 +486,10 @@ export {
     signMessage,
     insertProviderData,
     insertNftData,
-    getNftTableId
+    getNftTableId,
+    getProviderNftOwner
 
 
 }
+
+// https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq

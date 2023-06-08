@@ -4,26 +4,11 @@ import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, Ai
 import { BiBarChartAlt2, BiCalendar, BiFlag, BiStar } from "react-icons/bi";
 import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
-import { ATTRIBUTES, BASE_PINATA_URL, svgBase64 } from "../../constants";
-import { useAccount, useContractWrite } from 'wagmi';
-import { getNftData, getNftTableId, insertNftData } from '../../helperFunctions/sxt';
-import { SvgOnBuy } from '../../membershipCards';
-import { postTokenMetaData } from '../../helperFunctions/pinata';
-import { buyeNFT } from '../../contractFunctions';
-import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
-import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
-import { ToastContainer, toast } from "react-toastify";
-import axios from 'axios';
-import Loader from '../../components/general-components/loader';
+import { BASE_PINATA_URL } from '../../constants';
 
-const CardDetails = () => {
-    const { address, isConnected, isDisconnected } = useAccount()
-    const { data, isLoading, isSuccess, write } = useContractWrite({
-      address: MEMBERSHIP_MARKET_ADDRESS,
-      abi: MEMBERSHIP_MARKET_ABI,
-      functionName: 'buyNftWithNative',
-    })
-    const [showLoader, setshowLoader] = useState(false);
+
+const MyCardDetail = () => {
+
     const [modifiedData, setModifiedData] = useState({
         attribute: '',
         data: [],
@@ -32,40 +17,12 @@ const CardDetails = () => {
     const searchParams = new URLSearchParams(useLocation().search).get("token");
     console.log('searchParams', searchParams);
 
-
-    const notify = (msg) => {
-        toast.error(msg, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      };
-
-      
-  const notifySuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
-  
     const fetchUserData = () => {
 
 
 
-
-        fetch(BASE_PINATA_URL+searchParams)
+        // https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq
+        fetch('https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq')
             .then(response => {
                 return response.json()
             })
@@ -109,118 +66,6 @@ const CardDetails = () => {
         fetchUserData();
     }, []);
 
-    const NftBuy = async (data) => {
-
-
-        //getting token id
-        setshowLoader(true);
-        const nftTableData = await getNftTableId()
-        if (nftTableData.status !== 200) {
-    
-          setshowLoader(false);
-          notify("get access Token")
-          return
-        }
-    
-    
-        const tableId = nftTableData.data[0]["count(id)"]
-    
-        const nftCollectionData = await getNftData(data?.NFT)
-    
-        if (nftCollectionData.status !== 200) {
-          setshowLoader(false);
-          notify("get access Token")
-          return
-        }
-        const tokenId = nftCollectionData.data.length
-    
-    
-        // getting company Base MetaData
-        const NftJson = await axios.get(BASE_PINATA_URL + data?.BASE_META_DATA_URI)
-        if (NftJson.status !== 200) {
-          setshowLoader(false);
-          notify("get access Token")
-          return
-    
-        }
-    
-    
-        console.log(NftJson.data)
-    
-        // change MetaData from Base to User
-    
-    
-    
-        const MintDate = parseInt(new Date().getTime() / 1000);
-        var ExpireDate;
-    
-    
-        NftJson.data.attributes[ATTRIBUTES.DAYS].value = NftJson.data.attributes[ATTRIBUTES.DAYS].max_value
-        NftJson.data.name = NftJson.data.name + "#" + tokenId
-        if (NftJson.data.attributes[ATTRIBUTES.EXPIRY]?.duration === "year") {
-          NftJson.data.attributes[ATTRIBUTES.EXPIRY_DATE].value = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 31536000 + MintDate
-          ExpireDate = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 31536000 + MintDate
-        }
-        else if (NftJson.data.attributes[ATTRIBUTES.EXPIRY]?.duration === "month") {
-          NftJson.data.attributes[ATTRIBUTES.EXPIRY_DATE].value = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 2592000 + MintDate
-          ExpireDate = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 31536000 + MintDate
-        }
-    
-    
-        const owner = address.substring(0, 5) + "..." + address.substring(35)
-        const base64Img = SvgOnBuy(NftJson.data.name, BASE_PINATA_URL + data.logo, data?.category, owner)
-    
-        NftJson.data.image_data = svgBase64 + base64Img
-    
-        // post metaData for user
-        const newNft = await postTokenMetaData(NftJson.data)
-    
-    
-    
-    
-        if (newNft.status !== 200) {
-          setshowLoader(false);
-          notify("something went wrong")
-          return
-        }
-    
-        const newCID = newNft.data.IpfsHash
-    
-        const isSuccess = await buyeNFT({
-          "to": address, "nft": data.NFT, "tokenUri": BASE_PINATA_URL + newCID, "price": data.NFT_PRICE
-        })
-    
-    
-        if (isSuccess) {
-          setshowLoader(false);
-          notifySuccess("Congratulations! Your Membership has been Created checkout your Dashboard")
-          console.log(BASE_PINATA_URL + newCID)
-    
-    
-        }
-        else {
-          setshowLoader(false);
-          notify("Something went wrong")
-          return
-        }
-    
-    
-        const isInserted = await insertNftData({ id: tableId, nft: data.NFT, owner: address, used_count: 0, resold_count: 0, total_royalty: 0, mint_date: MintDate, expire_date: ExpireDate, token_id: tokenId })
-    
-        if (isInserted) {
-          setshowLoader(false);
-          notifySuccess("Data is Inserted into SxT")
-        }
-        else {
-          setshowLoader(false);
-          notify("Something went wrong")
-          return
-        }
-    
-    
-      }
-    
-
 
     const dateFormat = (secs) => {
         if (!secs || secs == 0) {
@@ -233,8 +78,6 @@ const CardDetails = () => {
 
     return (
         <div className='w-full p-8 flex flex-row justify-start'>
-            <ToastContainer />
-            {showLoader ? <Loader /> : null}
             {/* LEFT SIDE */}
             <div className='w-[40%]'>
                 <div className='border-deep-orange-50 border-2 w-full rounded-xl'>
@@ -322,7 +165,7 @@ const CardDetails = () => {
                     </div>
                 </div>
                 <Button variant="gradient" fullWidth className="mb-2 mt-5 w-40 bg-primary">
-                    <span className='text-white' onClick={() => NftBuy(data)}>Buy Now</span>
+                    <span className='text-white'>Use NFT</span>
                 </Button>
 
 
@@ -337,7 +180,7 @@ const CardDetails = () => {
                                 return (
                                     <div key={i} className='w-40 p-5 mb-2 min-h-[120px] pt-2 border-2 bg-primary-50 border-primary-500 flex items-center flex-col'>
                                         <p className='text-primary-500'>{data.trait_type}</p>
-                                        <p className='text-lg'>{data.value}</p>
+                                        <p className='text-lg'>{data.trait_type == 'Expiry' ? `${data.value} ${data.duration}` : data.value}</p>
                                     </div>
                                 )
                             })
@@ -410,4 +253,4 @@ const CardDetails = () => {
     )
 }
 
-export default CardDetails;
+export default MyCardDetail;

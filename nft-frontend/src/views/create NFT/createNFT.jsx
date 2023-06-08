@@ -76,8 +76,8 @@ const CreateNFT = () => {
   /*!formData.name || !formData.description || !formData.Discount || !formData.Expiry || !formData.category || !formData["Applicable in"] || !formData['Maximum Purchase duration'] || !formData["Maximum Purchase amount"] || !formData.price || !formData["nftPrice"] || !formData["Comapny Symbol"]*/
   const submitForm = async () => {
     console.log('form', formData);
-    // if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["nftPrice"].length <= 0 || formData["Comapny Symbol"].length <= 0 || !pureImg) {
-    if (!formData) {
+    if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["nftPrice"].length <= 0 || formData["ComapnySymbol"].length <= 0 || !pureImg) {
+    // if (!formData) {
 
 
       notify('Form Invalid, Please Fill Full Form!');
@@ -136,7 +136,7 @@ console.log(CATEGORY[formData.category])
           },
           {
             "trait_type": "Maximum Purchase Limit",
-            "value": formData['Maximum Purchase amount'] + '/$' + formData['Maximum Purchase duration']
+            "value": formData['Maximum Purchase amount'] + '$/' + formData['Maximum Purchase duration']
           },
           {
             "trait_type": "Remaining Amount",
@@ -157,10 +157,34 @@ console.log(CATEGORY[formData.category])
 
         console.log('resres.data', res.data);
         console.log("log",hashIPFSimg.data.IpfsHash)
-        const newNftAddress = await getNftAddress(address)
+        const newNftAddress = await getNftAddress(address);
+        setFormData({
+          'image_data': 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=',
+          'external_url': 'localhost:3000/mcdonalds-nft',
+          'description': '',
+          'name': '',
+          'Discount': '',
+          'Expiry': '',
+          'duration' : '',
+          'expiryDate': 0,
+          'Used Count': 0,
+          'category': '',
+          'Applicable in': 'world',
+          'Maximum Purchase Limit': '',
+          'Maximum Purchase duration': '',
+          'Maximum Purchase amount': '',
+          'Remaining Amount': '',
+          'Days': 0,
+          'supplyLimit': '',
+          'transferable': false,
+          'ComapnySymbol': '',
+          'nftPrice': ''
+        })
         if(newNftAddress !== "0x0"){
-          console.log("new Address",newNftAddress)
-          var isInserted = await insertProviderData({nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: formData.supplyLimit , nft_price: formData.nftPrice }) 
+          let a = {nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: Number(formData.supplyLimit) , nft_price: Number(formData.nftPrice) }
+          console.log("new Address",a)
+
+          var isInserted = await insertProviderData({nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: Number(formData.supplyLimit) , nft_price: Number(formData.nftPrice) }) 
         
             if (!isInserted) {
               notify("your access token is expire please refresh your page to get access token")
@@ -253,10 +277,10 @@ console.log(CATEGORY[formData.category])
               <select placeholder="Discount" value={formData.Discount} name="Discount" onChange={handleForm} className="w-full h-[33px] border-[1px] border-blue-gray-100 rounded-md dark:bg-black dark:text-white pt-[4px] pb-[4px] pl-[11px] pr[11px] text-[14px] focus:border-[1px] outline-none focus:border-light-blue-400 focus-visible:border-[1px] focus-visible:border-light-blue-400"
               >
                 <option value="" disabled>Select One</option>
-                <option value="25%">25%</option>
-                <option value="50%">50%</option>
-                <option value="75%">75%</option>
-                <option value="100%">100%</option>
+                <option value="25">25%</option>
+                <option value="50">50%</option>
+                <option value="75">75%</option>
+                <option value="100">100%</option>
               </select>
             </div>
 
