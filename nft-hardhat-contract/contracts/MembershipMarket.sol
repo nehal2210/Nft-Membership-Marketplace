@@ -131,6 +131,11 @@ contract MembershipMarket is  FunctionsClient, ConfirmedOwner  {
   return address(this).balance;
 }
 
+  function getTokenURI(address _nft, uint256 tokenId) external view returns(string memory){
+  return ProviderToNft[NftToProvider[_nft]].tokenURI(tokenId);
+
+}
+
 
   function buyNftWithNative(address to, address _nft, string memory tokenUri) external payable {
 
@@ -252,6 +257,10 @@ function getNFTCategory(address _nft) external returns(nftCategory) {
     return nftToCategory[_nft];
 }
 
+function  getPercentagePerNFTPrice() external view returns(uint256){
+
+   return precentageEarnedPerNFTSelling;
+}
 
 // function setCategoryFunctionScripts(string memory _cid,nftCategory _category) external {
 
@@ -328,10 +337,7 @@ function  setPercentagePerNFTPrice(uint256 percentage) external onlyOwner(){
    precentageEarnedPerNFTSelling  = percentage;
 }
 
-function  getPercentagePerNFTPrice() external view returns(uint256){
 
-   return precentageEarnedPerNFTSelling;
-}
 
 
 

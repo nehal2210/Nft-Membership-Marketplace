@@ -234,8 +234,8 @@ console.log(CATEGORY[formData.category])
               <select placeholder="Category" value={formData.category} name="category" onChange={handleForm} allowClear className="w-full h-[33px] border-[1px] focus:border-[1px] outline-none focus:border-light-blue-400 focus-visible:border-[1px] focus-visible:border-light-blue-400 border-blue-gray-100 rounded-md dark:bg-black dark:text-white pt-[4px] pb-[4px] pl-[11px] pr[11px]  text-[14px]"
               >
                 <option value="" disabled>Select One</option>
-                <option value="Food & dining">Food & Dining</option>
-                <option value="Sports & Activity">Sports & Activity</option>
+                <option value="Food and dining">Food & Dining</option>
+                <option value="Sports and Activity">Sports & Activity</option>
                 <option value="Transportation">Transportation</option>
               </select>
             </div>

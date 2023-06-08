@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { getAllProviderData } from "../../helperFunctions/sxt";
+import { getAllNftData, getAllProviderData, getNftData, getNftTableId, insertNftData } from "../../helperFunctions/sxt";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/general-components/loader";
-import { getFoodBase64Svg } from "../../membershipCards";
-import { BASE_PINATA_URL, svgBase64 } from "../../constants";
+import { SvgOnBuy, getFoodBase64Svg } from "../../membershipCards";
+import { ATTRIBUTES, BASE_PINATA_URL, svgBase64 } from "../../constants";
 import { useAccount, useContractWrite } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
+import { buyeNFT } from "../../contractFunctions";
+import axios from "axios";
+import { postTokenMetaData } from "../../helperFunctions/pinata";
 const Explore = () => {
 
 
@@ -36,9 +39,138 @@ const Explore = () => {
   };
 
 
+  const notifySuccess = (msg) => {
+    toast.success(msg, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+
   useEffect(() => {
     getDate();
   }, []);
+
+
+const NftBuy = async (data)=>{
+
+
+  //getting token id
+  
+  const nftTableData =  await getNftTableId()
+  if (nftTableData.status !== 200){
+
+    notify("get access Token")
+    return
+  }
+  
+  
+  const tableId = nftTableData.data[0]["count(id)"]
+  
+  const nftCollectionData =  await getNftData(data.NFT)
+  
+  if (nftCollectionData.status !== 200){
+
+    notify("get access Token")
+    return
+  }
+      const tokenId = nftCollectionData.data.length
+
+
+// getting company Base MetaData
+   const NftJson = await axios.get(BASE_PINATA_URL + data.BASE_META_DATA_URI)
+  if(NftJson.status !== 200){
+    notify("get access Token")
+    return
+
+  }
+
+
+    console.log(NftJson.data)
+    
+    // change MetaData from Base to User
+    
+    
+    
+    const MintDate = parseInt(new Date().getTime() / 1000);
+var ExpireDate;
+
+
+NftJson.data.attributes[ATTRIBUTES.DAYS].value = NftJson.data.attributes[ATTRIBUTES.DAYS].max_value
+NftJson.data.name = NftJson.data.name+"#"+tokenId
+if(NftJson.data.attributes[ATTRIBUTES.EXPIRY]?.duration === "year") {
+        NftJson.data.attributes[ATTRIBUTES.EXPIRY_DATE].value = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 31536000 + MintDate 
+        ExpireDate = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 31536000 + MintDate
+}
+else if(NftJson.data.attributes[ATTRIBUTES.EXPIRY]?.duration === "month"){
+  NftJson.data.attributes[ATTRIBUTES.EXPIRY_DATE].value = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 2592000 + MintDate
+        ExpireDate = NftJson.data.attributes[ATTRIBUTES.EXPIRY].value * 31536000 + MintDate}
+
+
+        const owner = address.substring(0, 5)+"..."+address.substring(35)
+        const base64Img = SvgOnBuy(NftJson.data.name,BASE_PINATA_URL + data.logo,data?.category ,owner)
+
+        NftJson.data.image_data = svgBase64+base64Img
+
+      // post metaData for user
+        const newNft =  await postTokenMetaData(NftJson.data)
+
+
+
+
+        if(newNft.status !== 200 ){ 
+          notify("something went wrong")
+          return
+        }
+          
+        const  newCID = newNft.data.IpfsHash
+
+  const isSuccess = await buyeNFT({
+    "to": address,"nft": data.NFT, "tokenUri": BASE_PINATA_URL + newCID , "price" : data.NFT_PRICE
+  })
+  
+
+  if(isSuccess){
+    notifySuccess("Congratulations! Your Membership has been Created checkout your Dashboard")
+    console.log(BASE_PINATA_URL + newCID)
+    
+
+  }
+  else{
+    notify("Something went wrong")
+    return
+  }
+
+ 
+  const isInserted = await insertNftData( {id: tableId , nft: data.NFT, owner: address, used_count: 0, resold_count: 0, total_royalty: 0, mint_date: MintDate , expire_date:ExpireDate, token_id:tokenId})
+
+  if(isInserted){
+    notifySuccess("Data is Inserted into SxT")
+  }
+  else{
+    notify("Something went wrong")
+    return
+  }
+  
+
+}
+
+
+
+
+
+
+  
+
+ 
+
+
 
 
   const getDate = async () => {
@@ -58,7 +190,8 @@ const Explore = () => {
             NFT: d.NFT,
             TOTAL_SUPPLY: d.TOTAL_SUPPLY,
             category: 'Food & Dining',
-            BASE_META_DATA_URI: d.BASE_META_DATA_URI
+            BASE_META_DATA_URI: d.BASE_META_DATA_URI,
+            logo: d.LOGO
           });
         });
         console.log("arr", arr);
@@ -74,7 +207,7 @@ const Explore = () => {
 
 
 
-  // buyNftWithNative(address to, address _nft, string memory tokenUri)
+
 
   return (
     <div>
@@ -116,7 +249,7 @@ const Explore = () => {
                               </div>
 
                             <div className='w-full'>
-                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary" onClick={()=>NftBuy(data)}>Buy Now</Button>
                             </div>
                           </div>
                         </div>
@@ -165,7 +298,7 @@ const Explore = () => {
                               </div>
 
                             <div className='w-full'>
-                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary" onClick={()=>NftBuy(data)}  >Buy Now</Button>
                             </div>
                           </div>
                         </div>
@@ -214,7 +347,7 @@ const Explore = () => {
                               </div>
 
                             <div className='w-full'>
-                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Buy Now</Button>
+                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary" onClick={()=>NftBuy(data)} >Buy Now</Button>
                             </div>
                           </div>
 

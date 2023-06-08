@@ -33,6 +33,20 @@ async function createNFT(data){
     return false
 }
 
+async function buyeNFT(data){
+    const contract = getContract()
+    try{
+
+        let tx  = await contract.buyNftWithNative(data.to, data.nft, data.tokenUri,{value:ethers.utils.parseEther(data.price.toString())})
+        await tx.wait()
+    return true
+    }
+    catch(e){
+
+        console.log(e)
+    }
+    return false
+}
 
 
 async function getNftAddress(creator){
@@ -51,8 +65,26 @@ async function getNftAddress(creator){
 
 
 
+async function getNftPrice(nft){
+    const contract = getContract()
+    try{
+
+        let address  = await contract.getNftPrice(nft)
+    return address
+    }
+    catch(e){
+
+        console.log(e)
+    }
+    return "00"
+}
+
+
+
 
 export {
     createNFT,
-    getNftAddress
+    getNftAddress,
+    getNftPrice,
+    buyeNFT
 }
