@@ -14,6 +14,7 @@ import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import {ethers} from "ethers";
 import { createNFT, getNftAddress } from "../../contractFunctions";
 import { insertProviderData } from "../../helperFunctions/sxt";
+import { useAccount } from "wagmi";
 const CreateNFT = () => {
 
 

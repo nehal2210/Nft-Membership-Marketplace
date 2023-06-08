@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cart from '../../components/general-components/cart';
-
+import { useAccount } from 'wagmi';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const UserDashboard = () => {
+
+
+    const { address, isConnected, isDisconnected } = useAccount();
+
+    useEffect(() => {
+        // getData();
+    })
+
 
 
     const [mockData, setMockData] = useState([
@@ -113,6 +122,16 @@ const UserDashboard = () => {
             <h1 className="text-3xl dark:text-white border-b-2 border-primary-500 w-[full] dark:border-blue">User Dashboard</h1>
 
             {
+                !isConnected ?
+                <div className='h-[80vh] w-full flex justify-center items-center flex-col p-10'>
+                <ConnectButton />
+                <p>Please Connect Your Wallet</p>
+                </div>
+                : null
+
+            }
+
+            {/* {
                 mockData && mockData.length > 0 ?
                     mockData.map((data, i) => {
                         return (
@@ -135,7 +154,7 @@ const UserDashboard = () => {
                     })
                     :
                     'Loading...'
-            }
+            } */}
         </div>
     )
 }
