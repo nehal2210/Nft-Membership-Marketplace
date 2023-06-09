@@ -45,7 +45,7 @@ const MyCardDetail = () => {
                 };
                 console.log('data', data);
                 const owner = address.substring(0, 5) + "..." + address.substring(35)
-                const base64Img = SvgOnBuy(data.COMPANY_NAME ? data.COMPANY_NAME : 'ASC', BASE_PINATA_URL + data.LOGO, category, owner)
+                const base64Img = SvgOnBuy(data.name, BASE_PINATA_URL + data.LOGO, category, owner)
                 let img = svgBase64 + base64Img;
                 data.image_data = img;
                 setCardDetail(data);
