@@ -4,26 +4,33 @@ import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, Ai
 import { BiBarChartAlt2, BiCalendar, BiFlag, BiStar } from "react-icons/bi";
 import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
-import { BASE_PINATA_URL, svgBase64 } from '../../constants';
+import { BASE_PINATA_URL, CATEGORY_NAME, svgBase64 } from '../../constants';
 import cardSVG from '../../assets/card.PNG'
 import { getTokenURI } from '../../contractFunctions';
+import { useAccount } from 'wagmi';
+import { SvgOnBuy } from '../../membershipCards';
 
 const MyCardDetail = () => {
 
+    const { address, isConnected, isDisconnected } = useAccount()
     const [modifiedData, setModifiedData] = useState({
         attribute: '',
         data: [],
     });
     const [cardDetail, setCardDetail] = useState({});
-    const searchParams = new URLSearchParams(useLocation().search).get("token");
-    console.log('searchParams', searchParams);
+    const tokenId = new URLSearchParams(useLocation().search).get("tokenId");
+    const NFTAddress = new URLSearchParams(useLocation().search).get("NFTAddress");
+    const category = new URLSearchParams(useLocation().search).get("cat");
+    console.log('tokenId', tokenId);
+    console.log('NFTAddress', NFTAddress);
 
-    const fetchUserData = async() => {
+    const fetchUserData = async () => {
 
-            // const tokenURI = await getTokenURI()
+        const tokenURI = await getTokenURI(NFTAddress, tokenId);
+        console.log('tokenURI', tokenURI);
 
         // https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq
-        fetch('https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq')
+        fetch(tokenURI)
             .then(response => {
                 return response.json()
             })
@@ -37,6 +44,10 @@ const MyCardDetail = () => {
                     bankings: []
                 };
                 console.log('data', data);
+                const owner = address.substring(0, 5) + "..." + address.substring(35)
+                const base64Img = SvgOnBuy(data.COMPANY_NAME ? data.COMPANY_NAME : 'ASC', BASE_PINATA_URL + data.LOGO, category, owner)
+                let img = svgBase64 + base64Img;
+                data.image_data = img;
                 setCardDetail(data);
                 data?.attributes?.forEach((data) => {
                     if (data.display_type == null && typeof data.value == 'string') {
@@ -81,11 +92,11 @@ const MyCardDetail = () => {
         <div className='w-full p-8 flex flex-row justify-start'>
             {/* LEFT SIDE */}
             <div className='w-[40%]'>
-                <div className='border-deep-orange-50 border-2 w-full rounded-xl'>
+                <div className='border-deep-orange-50 w-full rounded-xl'>
                     <img
-                        className='rounded-xl'
+                        className='rounded-xl ml-6'
                         alt="example"
-                        src={cardSVG}
+                        src={cardDetail.image_data}
                     />
                 </div>
                 <div className='rounded-xl border-blue-gray-50 border-2 mt-5'>
@@ -145,7 +156,7 @@ const MyCardDetail = () => {
             </div>
             <div className='w-[60%] p-2 pl-10'>
                 <h2 className='mt-5 font-bold text-2xl '>{cardDetail.name}</h2>
-                <p>Owned by <span className='cursor-pointer text-light-blue-700'>Unreal_1</span></p>
+                <p>Owned by <span className='cursor-pointer text-light-blue-700'>{address}</span></p>
                 <div className='flex flex-row justify-around mt-5 w-[80%]'>
                     <div className='border-2 border-blue-gray-50 rounded-md flex justify-center w-20'># 1,080</div>
                     <div className='flex flex-row justify-between items-center w-24'>

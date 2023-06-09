@@ -6,7 +6,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ToastContainer, toast } from "react-toastify";
 import Loader from '../../components/general-components/loader';
 import { getProviderNftData } from '../../helperFunctions/sxt';
-
+import companyLogo from '../../assets/mcdonalds.png'
 
 const ProviderDashboard = () => {
 
@@ -150,7 +150,7 @@ const ProviderDashboard = () => {
 
     return (
         <div className="w-full">
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <h1 className="text-3xl dark:text-white border-b-2 border-primary-500 w-[full] dark:border-blue">Provider Dashboard</h1>
             {
                 showLoader ?
@@ -177,9 +177,9 @@ const ProviderDashboard = () => {
                                                     <div className='m-2 w-[20%] p-1'>
                                                         <div className='flex items-center justify-center flex-col'>
                                                             <div className='w-40'>
-                                                                <img className='object-fill' src='https://cdn.dribbble.com/userupload/3158902/file/original-7c71bfa677e61dea61bc2acd59158d32.jpg?resize=400x300' />
+                                                                <img className='w-full' src={companyLogo} />
                                                             </div>
-                                                            <h2 className='text-2xl font-bold ml-2 dark:text-white'>COMPANY NAME</h2>
+                                                            <h2 className='text-2xl font-bold dark:text-white'>Mcdonald's</h2>
                                                         </div>
                                                     </div>
 

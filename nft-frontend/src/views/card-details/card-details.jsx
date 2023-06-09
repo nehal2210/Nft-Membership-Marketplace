@@ -307,7 +307,7 @@ const CardDetails = () => {
             </div>
             <div className='w-[60%] p-2 pl-10'>
                 <h2 className='mt-5 font-bold text-2xl '>{cardDetail.name}</h2>
-                <p>Owned by <span className='cursor-pointer text-light-blue-700'>Unreal_1</span></p>
+                <p>Owned by <span className='cursor-pointer text-light-blue-700'>Owner Name</span></p>
                 <div className='flex flex-row justify-around mt-5 w-[80%]'>
                     <div className='border-2 border-blue-gray-50 rounded-md flex justify-center w-20'># 1,080</div>
                     <div className='flex flex-row justify-between items-center w-24'>
