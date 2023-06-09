@@ -2,7 +2,7 @@ const {MembershipMarketAddress} = require("../config")
 
 async function main() {
     // 1 LINK is sufficient for this example
-    const linkAmount = "1";
+    const linkAmount = "5";
     // Set your consumer contract address. This contract will
     // be added as an approved consumer of the subscription.
     const consumer = MembershipMarketAddress;

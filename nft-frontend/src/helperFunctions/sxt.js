@@ -5,23 +5,21 @@ import dotenv from "dotenv"
 dotenv.config()
 const initSDK = SpaceAndTimeSDK.init();
 
-const REACT_APP_SXT_ACCESS_TOKEN = "Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYzMTA4NDYsIm5iZiI6MTY4NjMxMDg0NiwiZXhwIjoxNjg2MzEyMzQ2LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjdjYjdhYjZmNTQ2MjNkMmJmMmRhYTUzMCIsInNzbl9leHAiOjE2ODYzOTcyNDYwNTUsIml0ZXJhdGlvbiI6Ijc1NTc5OGI2MjViZTBiOWQ2M2Y5YzllMCJ9.RxPMVaHSaIZAeSFMYL3-sy-KHdLti-A4naZ7-uMXL6X8DanexMuj7fkBjYvfGPKGQ-zF23C9ZYD4hN5CaslHNA"
 
-
-async function getProviderData(providerAddress) {
+async function getProviderData(providerAddress,token){
     const url = SXT_API_DQL_URL
 
-    const payload = {
-        "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": `SELECT * FROM MARKET.NEWPROVIDER WHERE provider = '${providerAddress}' `
-
+   const payload = { 
+        "resourceId": "MARKET.COMPANY",
+        "sqlText": `SELECT * FROM MARKET.COMPANY WHERE provider = '${providerAddress}' `
+        
     }
 
     var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -37,22 +35,21 @@ async function getProviderData(providerAddress) {
 }
 
 
-async function getAllProviderData() {
+async function getAllProviderData(token){
 
     const url = SXT_API_DQL_URL
 
-    const payload = {
-        "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": "SELECT * FROM MARKET.NEWPROVIDER"
-
+   const payload = { 
+        "resourceId": "MARKET.COMPANY",
+        "sqlText": "SELECT * FROM MARKET.COMPANY"
+        
     }
 
     var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
-        // "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -71,7 +68,7 @@ async function getAllProviderData() {
 }
 
 
-async function getNftData(nftAddress) {
+async function getNftData(nftAddress,token){
 
     const url = SXT_API_DQL_URL
 
@@ -85,8 +82,8 @@ async function getNftData(nftAddress) {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
-
+        "authorization": token
+   
     }
 
 
@@ -110,7 +107,7 @@ async function getNftData(nftAddress) {
 }
 
 
-async function getAllNftData() {
+async function getAllNftData(token){
 
     const url = SXT_API_DQL_URL
 
@@ -124,7 +121,7 @@ async function getAllNftData() {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -149,7 +146,7 @@ async function getAllNftData() {
 
 
 
-async function getNftTableId() {
+async function getNftTableId(token){
 
     const url = SXT_API_DQL_URL
 
@@ -163,7 +160,7 @@ async function getNftTableId() {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -188,21 +185,21 @@ async function getNftTableId() {
 
 
 
-async function getProviderNftData(creator) {
+async function getProviderNftData(creator,token){
 
     const url = SXT_API_DQL_URL
 
-    const payload = {
-        "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": `SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft WHERE MARKET.NEWPROVIDER.provider = ${creator}`
-
+   const payload = { 
+        "resourceId": "MARKET.COMPANY",
+        "sqlText": `SELECT * FROM MARKET.COMPANY INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.COMPANY.nft WHERE MARKET.COMPANY.provider = ${creator}`
+        
     }
 
     var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -228,21 +225,21 @@ async function getProviderNftData(creator) {
 }
 
 
-async function getProviderNftOwner(owner) {
+async function getProviderNftOwner(owner,token){
 
     const url = SXT_API_DQL_URL
 
-    const payload = {
-        "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": `SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft WHERE MARKET.NEWTOKEN.owner = '${owner}' `
-
+   const payload = { 
+        "resourceId": "MARKET.COMPANY",
+        "sqlText": `SELECT * FROM MARKET.COMPANY INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.COMPANY.nft WHERE MARKET.NEWTOKEN.owner = '${owner}' `
+        
     }
 
     var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -264,21 +261,21 @@ async function getProviderNftOwner(owner) {
 }
 
 
-async function insertProviderData(providerData) {
-    console.log("token", REACT_APP_SXT_ACCESS_TOKEN)
+async function insertProviderData(providerData,token){
+   
     const url = SXT_API_DML_URL
 
-    const payload = {
-        "resourceId": "MARKET.NEWPROVIDER",
-        "sqlText": `INSERT INTO  MARKET.NEWPROVIDER (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price})`
-
+   const payload = { 
+        "resourceId": "MARKET.COMPANY",
+        "sqlText": `INSERT INTO  MARKET.COMPANY (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price})`
+        
     }
 
     var headers = {
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+        "authorization": token
     }
 
 
@@ -293,33 +290,33 @@ async function insertProviderData(providerData) {
 }
 
 
-async function insertNftData(nftData) {
+    async function insertNftData(nftData,token){
 
-    const url = SXT_API_DML_URL
-
-    const payload = {
-        "resourceId": "MARKET.NEWTOKEN",
-        "sqlText": `INSERT INTO MARKET.NEWTOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (${nftData.id},'${nftData.nft}', '${nftData.owner}',${nftData.used_count},${nftData.resold_count},${nftData.total_royalty}, ${nftData.mint_date}, ${nftData.expire_date}, ${nftData.token_id})`
-
-    }
-
-    var headers = {
-        "accept": "application/json",
-        "biscuit": process.env.REACT_APP_BISCUIT,
-        "content-type": "application/json",
-        "authorization": REACT_APP_SXT_ACCESS_TOKEN
-    }
-
-
-    try {
-        let res = await axios.post(url, payload, { headers: headers })
-        return true
-    }
-    catch (e) {
-        console.log("error in getting provider data")
-    }
-
-    return false
+        const url = SXT_API_DML_URL
+    
+       const payload = { 
+            "resourceId": "MARKET.NEWTOKEN",
+            "sqlText": `INSERT INTO MARKET.NEWTOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (${nftData.id},'${nftData.nft}', '${nftData.owner}',${nftData.used_count},${nftData.resold_count},${nftData.total_royalty}, ${nftData.mint_date}, ${nftData.expire_date}, ${nftData.token_id})`
+            
+        }
+    
+        var headers = {
+            "accept": "application/json",
+            "biscuit": process.env.REACT_APP_BISCUIT,
+            "content-type": "application/json",
+            "authorization": token
+        }
+    
+        
+        try{
+            let res = await axios.post(url,payload,{headers:headers})
+           return true
+        } 
+        catch(e){
+            console.log("error in getting provider data")
+        }
+    
+        return false
 
 
 }
