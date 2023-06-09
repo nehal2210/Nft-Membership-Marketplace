@@ -1,3 +1,7 @@
+export const UseNft = `
+
+
+
 const amountUsed = parseInt(args[0])
 const tokenId = parseInt(args[1])
 const nft = args[2]
@@ -78,3 +82,7 @@ const NftJson = await Functions.makeHttpRequest({
 
 
 return Functions.encodeString(tokenURI.replace(tokenCID,newCID))
+
+
+
+`

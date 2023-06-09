@@ -35,6 +35,9 @@ const NftJson = await Functions.makeHttpRequest({url: tokenURI})
     if(NftJson.status !== 200){throw "Unable to get token URI"}      
  
 
+// put user address in svg
+
+
 
 
 const MintDate = parseInt(new Date().getTime() / 1000);

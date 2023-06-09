@@ -45,23 +45,7 @@ require("dotenv").config()
 
   const secrets = { biscuit: process.env.BISCUIT, sxtToken: process.env.SXT_ACCESS_TOKEN,pinataToken:process.env.PINATA_ACCESS_TOKEN}
 
-  // Tutorial 6
-  // const source = await fs.readFile(
-  //   "./examples/Functions-source-inline-secrets.js",
-  //   "utf8"
-  // );
-  // const args = ["1", "bitcoin", "btc-bitcoin"];
-  // const secrets = { apiKey: process.env.COINMARKETCAP_API_KEY };
-
-  // Tutorial 7
-  // const source = await fs.readFile(
-  //   "./examples/Functions-source-inline-secrets.js",
-  //   "utf8"
-  // );
-  // const args = ["1", "bitcoin", "btc-bitcoin"];
-  // const secrets = [
-  //   "https://clfunctions.s3.eu-north-1.amazonaws.com/offchain-secrets.json",
-  // ];
+ 
 
   // Create an oracle contract object.
   // Used in this script only to encrypt secrets.
@@ -447,12 +431,7 @@ function isObject(value) {
   );
 }
 
-// main()
-//   .then(() => process.exit(0))
-//   .catch((error) => {
-//     console.error(error);
-//     process.exit(1);
-//   });
+
 
 module.exports ={
   callUseNft

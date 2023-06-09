@@ -89,7 +89,6 @@ console.log(formData)
 console.log(CATEGORY[formData.category])
 
       const isCreated = await createNFT(formData)
-      // write(formData.name,formData.ComapnySymbol,ethers.utils.parseEther(formData.supplyLimit),ethers.utils.parseEther(formData.nftPrice),false,false,ethers.utils.parseEther("0"), ethers.utils.parseEther(CATEGORY[formData.category]))
       if(!isCreated){
         setShowLoader(false);
         notify("Tx Failed");
