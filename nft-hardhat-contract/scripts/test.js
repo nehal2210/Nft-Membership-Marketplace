@@ -1,14 +1,14 @@
 const hre = require("hardhat");
 const {MembershipMarketAddress} = require("../config") 
-const {callUseNft} = require("./request")
+const {callUseNft} = require("./request2")
 
 
 async function main() {
 
     const accounts = await hre.ethers.getSigners();
-    const MarketCreator = accounts[0]
+    const MarketCreator = accounts[1]
     const buyer  = accounts[0]
-    const NftCreator = accounts[1]
+    const NftCreator = accounts[2]
 
 
     console.log("Market Creator address ",MarketCreator.address)
@@ -22,8 +22,8 @@ async function main() {
     // console.log("usd per matic is ",hre.ethers.utils.formatEther(usdPerMatic))
     
 
-    console.log("Macdonald Creating his  Nft Memberships of price 0.01 Matic each ")
-    console.log("total supply of Nft is 100")
+    // console.log("Macdonald Creating his  Nft Memberships of price 0.01 Matic each ")
+    // console.log("total supply of Nft is 100")
     const createNftTx = await MembershipMarket.connect(NftCreator).createNFT("Macdonald", "MC", hre.ethers.utils.parseEther("100") ,hre.ethers.utils.parseEther("0.01"), false,false,hre.ethers.utils.parseEther("0"), hre.ethers.utils.parseEther("0"));
     await createNftTx.wait();
     
@@ -35,37 +35,42 @@ async function main() {
     
     // const supplyLimit = await nftContract.supplyLimit();
     
-    console.log("After creating NFT Contract of specific Company platform will save his details on Pinata ")
+    // console.log("After creating NFT Contract of specific Company platform will save his details on Pinata ")
 
     
     const nftMaticPrice = hre.ethers.utils.formatEther(await MembershipMarket.getNftPrice(nft))
 
-    console.log("Now Buyer comes to our platform to Buy Mcdonald membership")
-    console.log("First He look Matic Price")
+    // console.log("Now Buyer comes to our platform to Buy Mcdonald membership")
+    // console.log("First He look Matic Price")
     // maticPriceInUsd = (nftUsdPrice * hre.ethers.utils.formatEther(usdPerMatic))
     console.log("matic price of NFt ",nftMaticPrice)
 
-    console.log("Buyer can see all details of company base MetaData")
-    const tokenUri = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/QmcUn9T13Mp8wGVpZ4mjAM1h8U8hbBEaVf6q4ipjzvfPZT"
+    // console.log("Buyer can see all details of company base MetaData")
+    console.log("Buyer MetaData")
+    const tokenId = "0"
+
+
+    // console.log("getting token URI")
+    // const tokenUri = await nftContract.tokenURI(hre.ethers.utils.parseEther(tokenId));
+    const tokenUri = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreign46fycvxbdvnt2wvwbyiyypmu7zpvdernyp6fin2qledguvlvtu"
     console.log(tokenUri)
 
     // console.log("Now Buyer is satisfied and he is buying NFT")
     const buyNftTx = await MembershipMarket.connect(buyer).buyNftWithNative(buyer.address,nft,tokenUri,{value:hre.ethers.utils.parseEther(nftMaticPrice)})
     await buyNftTx.wait()
 
-    console.log("we set the above URI to buyer tokenId")
+    // console.log("we set the above URI to buyer tokenId")
 
     const balanceOfBuyer = await nftContract.balanceOf(buyer.address)
     console.log("balance of buyer nft ",balanceOfBuyer);
 
     
-    const tokenId = "0"
-
+    const amountUsed = "10"
     
     console.log("Now Buyer is using NFT by calling use NFt (it is simple now but will make it in a way in which company and buyer both mutually agrred on it)")
 console.log("It will change metaData Details according to buyer usecase like how much amount buyer used")
 
-    await callUseNft(tokenId,tokenUri,nft,"","");
+    await callUseNft(amountUsed, tokenId,tokenUri,nft,"","");
   
     const new_tUri = await nftContract.tokenURI(hre.ethers.utils.parseEther(tokenId));
     console.log("token URI is changed Now you can look into this ",new_tUri)

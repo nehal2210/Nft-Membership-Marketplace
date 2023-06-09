@@ -76,33 +76,6 @@ const NftJson = await Functions.makeHttpRequest({
 
 
 
- // updating owner, total_royalty and resold_count in sxt
- const sqlText = `UPDATE MARKET.NEWTOKEN SET used_count = ${NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value} WHERE token_id = ${tokenId} AND nft = '${nft}' `
-    
-
- const  update_payload = {
-   "resourceId": "MARKET.TOKEN",
-   "sqlText": sqlText
- }
-     
- const  update_headers = {
-       "accept": "application/json",
-       "biscuit": biscuit,
-       "content-type": "application/json",
-       "authorization": `Bearer ${accessToken}`
-   }
- 
-         
-   const sxtUpdate = await Functions.makeHttpRequest({
-           url: SXT_API_DML_URL,
-           method: 'POST',
-           headers: update_headers,
-           timeout: 9000,
-           data: update_payload})
- 
- if (sxtUpdate.status !== 200) {
-           throw "problem occur in sxt update"
- }
  
 
 
