@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getAllNftData, getAllProviderData, getNftData, getNftTableId, insertNftData, validateAccessToken } from "../../helperFunctions/sxt";
+import { getAllNftData, getAllProviderData, getNftData, getNftTableId, insertNftData, putSxtTokenToLocalStorage, validateAccessToken } from "../../helperFunctions/sxt";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/general-components/loader";
-import { SvgOnBuy, getFoodBase64Svg } from "../../membershipCards";
-import { ATTRIBUTES, BASE_PINATA_URL, svgBase64 } from "../../constants";
+import { SvgOnBuy, getBase64Svg} from "../../membershipCards";
+import { ATTRIBUTES, BASE_PINATA_URL, CATEGORY, CATEGORY_NAME, svgBase64 } from "../../constants";
 import { useAccount, useContractWrite } from 'wagmi'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
@@ -64,7 +64,8 @@ const Explore = () => {
 
     //getting token id
     setshowLoader(true);
-    const nftTableData = await getNftTableId()
+    const token = await putSxtTokenToLocalStorage()
+    const nftTableData = await getNftTableId(token)
     if (nftTableData.status !== 200) {
 
       setshowLoader(false);
@@ -73,9 +74,9 @@ const Explore = () => {
     }
 
 
-    const tableId = nftTableData.data[0]["count(id)"]
-
-    const nftCollectionData = await getNftData(data.NFT)
+    const tableId = nftTableData.data[0]["count(id)"] + 1
+    console.log(tableId)
+    const nftCollectionData = await getNftData(data.NFT,token)
 
     if (nftCollectionData.status !== 200) {
       setshowLoader(false);
@@ -155,7 +156,7 @@ const Explore = () => {
     }
 
 
-    const isInserted = await insertNftData({ id: tableId, nft: data.NFT, owner: address, used_count: 0, resold_count: 0, total_royalty: 0, mint_date: MintDate, expire_date: ExpireDate, token_id: tokenId })
+    const isInserted = await insertNftData({ id: tableId, nft: data.NFT, owner: address, used_count: 0, resold_count: 0, total_royalty: 0, mint_date: MintDate, expire_date: ExpireDate, token_id: tokenId },token)
 
     if (isInserted) {
       setshowLoader(false);
@@ -186,23 +187,24 @@ const Explore = () => {
     setshowLoader(true);
     try {
 
+      const token = await putSxtTokenToLocalStorage()
       
-      let allProviders = await getAllProviderData();
+      let allProviders = await getAllProviderData(token);
       const arr = []
       if (allProviders.status == 200) {
         setshowLoader(false);
         console.log('allProviders', allProviders);
         allProviders.data.forEach((d) => {
-          let modifiedSvg = getFoodBase64Svg('asc', BASE_PINATA_URL + d.LOGO, "Food and Dining");
+          let modifiedSvg = getBase64Svg(d.COMPANY_NAME, BASE_PINATA_URL + d.LOGO, CATEGORY_NAME[d.CATEGORY]);
 
           arr.push({
             img: svgBase64 + modifiedSvg,
-            companyName: 'asc',
+            companyName: d.COMPANY_NAME,
             NFT_PRICE: d.NFT_PRICE,
             PROVIDER: d.PROVIDER,
             NFT: d.NFT,
             TOTAL_SUPPLY: d.TOTAL_SUPPLY,
-            category: 'Food & Dining',
+            category: d.CATEGORY,
             BASE_META_DATA_URI: d.BASE_META_DATA_URI,
             logo: d.LOGO
           });
@@ -225,13 +227,15 @@ const Explore = () => {
 
   return (
     <div>
-  
-            {showLoader ? <Loader /> : null}
+      {
+        showLoader ? <Loader /> :
+        <>
             <ToastContainer />
-            <div className="w-full pt-10 pl-10 pr-10 mb-5 shadow-[0_0_5px_0px_#8f808040] dark:shadow-[0_0_5px_0px_#1235ce40] rounded-md">
+
+        <div className="w-full pt-10 pl-10 pr-10 mb-5 shadow-[0_0_5px_0px_#8f808040] dark:shadow-[0_0_5px_0px_#1235ce40] rounded-md">
               <h1 className="text-3xl dark:text-white mb-5 border-b-2 border-primary-500 w-[full] dark:border-blue">Explore</h1>
               {
-                nftCardData.some(data => { return data.category == 'Transportation' }) ?
+                nftCardData.some(data => { return data.category == parseInt(CATEGORY['Transportation']) }) ?
                   <h1 className="text-2xl ml-5 mt-10 dark:text-white">Transportation</h1> : null
 
               }
@@ -242,7 +246,7 @@ const Explore = () => {
                       return (
                         <>
                           {
-                            data.category == 'Transportation' ?
+                            data.category == parseInt(CATEGORY['Transportation']) ?
                               <div className="w-[300px] m-2 cursor-pointer" key={i}>
                                 <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
                                   <img src={data.img} />
@@ -280,7 +284,7 @@ const Explore = () => {
                 }
               </div>
               {
-                nftCardData.some(data => { return data.category == 'Sports & Activity' }) ?
+                nftCardData.some(data => { return data.category == parseInt(CATEGORY['Sports and Activity']) }) ?
                   <h1 className="text-2xl ml-5 mt-10 dark:text-white">Sports & Activity</h1> : null
 
               }
@@ -291,7 +295,7 @@ const Explore = () => {
                       return (
                         <>
                           {
-                            data.category == 'Sports & Activity' ?
+                            data.category == parseInt(CATEGORY['Sports and Activity']) ?
                               <div className="w-[300px] m-2 cursor-pointer" key={i}>
                                 <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
                                   <img src={data.img} />
@@ -329,7 +333,7 @@ const Explore = () => {
                 }
               </div>
               {
-                nftCardData.some(data => { return data.category == 'Food & Dining' }) ?
+                nftCardData.some(data => { return data.category == parseInt(CATEGORY['Food and dining']) }) ?
                   <h1 className="text-2xl ml-5 mt-10 dark:text-white">Food & Dining</h1> : null
 
               }
@@ -340,7 +344,7 @@ const Explore = () => {
                       return (
                         <>
                           {
-                            data.category == 'Food & Dining' ?
+                            data.category == parseInt(CATEGORY['Food and dining']) ?
                               <div className="w-[300px] m-2 cursor-pointer" key={i}>
                                 <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
                                   <img src={data.img} />
@@ -404,8 +408,18 @@ const Explore = () => {
               )
             })
         } */}
-
             </div>
+  
+            {/* {showLoader ? <Loader /> :
+            <>
+            <ToastContainer />
+            
+            </>
+    } */}
+        </>
+      }
+      
+      
 
     </div>
   );

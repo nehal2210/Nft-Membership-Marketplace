@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { postLogoToIPFS, postTokenMetaData } from "../../helperFunctions/pinata";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { BASE_PINATA_URL, CATEGORY } from "../../constants";
-import { getFoodBase64Svg } from '../../membershipCards'
+import { getBase64Svg, getFoodBase64Svg } from '../../membershipCards'
 import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import {ethers} from "ethers";
@@ -106,7 +106,7 @@ console.log(CATEGORY[formData.category])
       }
       let hashIPFSimg = await postLogoToIPFS(pureImg);
       console.log('BASE_PINATA', BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
-      let img = getFoodBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash);
+      let img = getBase64Svg(formData.name, BASE_PINATA_URL + hashIPFSimg.data.IpfsHash,formData.category);
       let modifiedData = {
         "image_data": `data:image/svg+xml;base64,${img}`,
         "external_url": "localhost:3000/mcdonalds-nft",

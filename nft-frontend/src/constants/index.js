@@ -14,6 +14,12 @@ const CATEGORY = {
    "Sports and Activity":"2"
 }
 
+const CATEGORY_NAME = {
+   0:"Food and dining",
+   1:"Transportation",
+   2:"Sports and Activity"
+}
+
 const ATTRIBUTES = {
    "DISCOUNT" : 0,
    "EXPIRY" : 1,
@@ -38,5 +44,6 @@ const ATTRIBUTES = {
     CATEGORY,
     svgBase64,
     ATTRIBUTES,
-    DON_PUBLIC_KEY
+    DON_PUBLIC_KEY,
+    CATEGORY_NAME
  }

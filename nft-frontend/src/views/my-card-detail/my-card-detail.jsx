@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
 import { BASE_PINATA_URL, svgBase64 } from '../../constants';
 import cardSVG from '../../assets/card.PNG'
+import { getTokenURI } from '../../contractFunctions';
 
 const MyCardDetail = () => {
 
@@ -17,9 +18,9 @@ const MyCardDetail = () => {
     const searchParams = new URLSearchParams(useLocation().search).get("token");
     console.log('searchParams', searchParams);
 
-    const fetchUserData = () => {
+    const fetchUserData = async() => {
 
-
+            // const tokenURI = await getTokenURI()
 
         // https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq
         fetch('https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq')

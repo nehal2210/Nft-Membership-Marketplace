@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
 import { ATTRIBUTES, BASE_PINATA_URL, svgBase64 } from "../../constants";
 import { useAccount, useContractWrite } from 'wagmi';
-import { getNftData, getNftTableId, insertNftData } from '../../helperFunctions/sxt';
+import { getNftData, getNftTableId, insertNftData, putSxtTokenToLocalStorage } from '../../helperFunctions/sxt';
 import { SvgOnBuy } from '../../membershipCards';
 import { postTokenMetaData } from '../../helperFunctions/pinata';
 import { buyeNFT } from '../../contractFunctions';
@@ -109,12 +109,14 @@ const CardDetails = () => {
         fetchUserData();
     }, []);
 
+  
     const NftBuy = async (data) => {
 
 
         //getting token id
         setshowLoader(true);
-        const nftTableData = await getNftTableId()
+        const token = await putSxtTokenToLocalStorage()
+        const nftTableData = await getNftTableId(token)
         if (nftTableData.status !== 200) {
     
           setshowLoader(false);
@@ -123,9 +125,9 @@ const CardDetails = () => {
         }
     
     
-        const tableId = nftTableData.data[0]["count(id)"]
-    
-        const nftCollectionData = await getNftData(data?.NFT)
+        const tableId = nftTableData.data[0]["count(id)"] + 1
+        console.log(tableId)
+        const nftCollectionData = await getNftData(data.NFT,token)
     
         if (nftCollectionData.status !== 200) {
           setshowLoader(false);
@@ -136,7 +138,7 @@ const CardDetails = () => {
     
     
         // getting company Base MetaData
-        const NftJson = await axios.get(BASE_PINATA_URL + data?.BASE_META_DATA_URI)
+        const NftJson = await axios.get(BASE_PINATA_URL + data.BASE_META_DATA_URI)
         if (NftJson.status !== 200) {
           setshowLoader(false);
           notify("get access Token")
@@ -205,7 +207,7 @@ const CardDetails = () => {
         }
     
     
-        const isInserted = await insertNftData({ id: tableId, nft: data.NFT, owner: address, used_count: 0, resold_count: 0, total_royalty: 0, mint_date: MintDate, expire_date: ExpireDate, token_id: tokenId })
+        const isInserted = await insertNftData({ id: tableId, nft: data.NFT, owner: address, used_count: 0, resold_count: 0, total_royalty: 0, mint_date: MintDate, expire_date: ExpireDate, token_id: tokenId },token)
     
         if (isInserted) {
           setshowLoader(false);
@@ -219,6 +221,10 @@ const CardDetails = () => {
     
     
       }
+    
+    
+    
+
     
 
 

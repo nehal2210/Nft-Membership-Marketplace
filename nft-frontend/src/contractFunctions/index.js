@@ -151,10 +151,26 @@ async function getNftPrice(nft){
 
 
 
+async function getTokenURI(nft,tokenId){
+    const contract = getContract()
+    try{
+
+        let uri  = await contract.getTokenURI(nft,  tokenId)
+    return  uri
+    }
+    catch(e){
+
+        console.log(e)
+    }
+    return ""
+}
+
+
 
 export {
     createNFT,
     getNftAddress,
     getNftPrice,
-    buyeNFT
+    buyeNFT,
+    getTokenURI
 }

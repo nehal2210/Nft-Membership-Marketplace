@@ -3,10 +3,10 @@ import Cart from '../../components/general-components/cart';
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Loader from '../../components/general-components/loader';
-import { getProviderNftOwner } from '../../helperFunctions/sxt';
+import { getProviderNftOwner, putSxtTokenToLocalStorage } from '../../helperFunctions/sxt';
 import { ToastContainer, toast } from "react-toastify";
 import { SvgOnBuy } from '../../membershipCards';
-import { BASE_PINATA_URL, svgBase64 } from '../../constants';
+import { BASE_PINATA_URL, CATEGORY_NAME, svgBase64 } from '../../constants';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
@@ -46,7 +46,8 @@ const UserDashboard = () => {
 
         try {
             setshowLoader(true);
-            const res = await getProviderNftOwner(address);
+            const token = await putSxtTokenToLocalStorage();
+            const res = await getProviderNftOwner(address,token);
             console.log('res', res);
             if (res.status !== 200) {
                 setshowLoader(false);
@@ -57,18 +58,18 @@ const UserDashboard = () => {
 
                 res.data.forEach((d) => {
                     const owner = address.substring(0, 5) + "..." + address.substring(35)
-                    const base64Img = SvgOnBuy(d.companyName ? d.companyName : 'ASC', BASE_PINATA_URL + d.logo, d?.category ? d.category : 'Food and dining', owner)
+                    const base64Img = SvgOnBuy(d.COMPANY_NAME ? d.COMPANY_NAME : 'ASC', BASE_PINATA_URL + d.LOGO, CATEGORY_NAME[d?.CATEGORY], owner)
                     let img = svgBase64 + base64Img;
 
                     arr.push({
                         img: img,
                         owner: owner,
-                        companyName: 'asc',
+                        companyName: d.COMPANY_NAME,
                         NFT_PRICE: d.NFT_PRICE,
                         PROVIDER: d.PROVIDER,
                         NFT: d.NFT,
                         TOTAL_SUPPLY: d.TOTAL_SUPPLY,
-                        category: 'Food and dining',
+                        category: CATEGORY_NAME[d?.CATEGORY],
                         BASE_META_DATA_URI: d.BASE_META_DATA_URI,
                         logo: d.LOGO,
                     });
