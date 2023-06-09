@@ -24,7 +24,7 @@ async function createNFT(data){
     const contract = getContract()
     try{
 
-        let tx  = await contract.createNFT(data.name,data.ComapnySymbol,ethers.utils.parseEther(data.supplyLimit),ethers.utils.parseEther(data.nftPrice),false,false,ethers.utils.parseEther("0"), ethers.utils.parseEther(CATEGORY[data.category]))
+        let tx  = await contract.createNFT(data.name,data.ComapnySymbol,ethers.utils.parseEther(data.supplyLimit),ethers.utils.parseEther(data.nftPrice),false,false,ethers.utils.parseEther("0"), CATEGORY[data.category])
         await tx.wait()
     return true
     }
