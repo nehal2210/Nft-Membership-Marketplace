@@ -4,8 +4,8 @@ import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, Ai
 import { BiBarChartAlt2, BiCalendar, BiFlag, BiStar } from "react-icons/bi";
 import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
-import { BASE_PINATA_URL } from '../../constants';
-
+import { BASE_PINATA_URL, svgBase64 } from '../../constants';
+import cardSVG from '../../assets/card.PNG'
 
 const MyCardDetail = () => {
 
@@ -84,7 +84,7 @@ const MyCardDetail = () => {
                     <img
                         className='rounded-xl'
                         alt="example"
-                        src={cardDetail.image_data}
+                        src={cardSVG}
                     />
                 </div>
                 <div className='rounded-xl border-blue-gray-50 border-2 mt-5'>
