@@ -3,102 +3,10 @@ const {MembershipMarketAddress} = require("../config")
 const {callUseNft} = require("./request")
 
 
-
-
-// async function processingAfterTokenURISet(tokenCID,nft,tokenId){
-  
-// // call pinata API
-
-//   try{
-
-//     // updating used count in sxt
-//     const sqlText = `UPDATE MARKET.NEWTOKEN SET used_count = ${NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value} WHERE token_id = ${tokenId} AND nft = '${nft}' `
-//     const  payload = {
-//           "resourceId": "MARKET.NEWTOKEN",
-//           "sqlText": sqlText
-//       }
-     
-//        const  headers = {
-//              "accept": "application/json",
-//              "biscuit": biscuit,
-//              "content-type": "application/json",
-//              "authorization": `Bearer ${accessToken}`
-//          }
- 
-         
-//          const sxtUpdate = await axios.post({
-//            url: SXT_API_DML_URL,
-//            method: 'POST',
-//            headers: headers,
-//            timeout: 9000,
-//            data: payload})
- 
-//          console.log("Running qu")
-//          if (sxtUpdate.status !== 200) {
-//            throw "problem occur in sxt update"
-//          }
-//         }
-//         catch(e){
-//           console.log("error in updating in sxt")
-//         }
-// try{
-//   const deleteNft = await axios.delete(
-//     `https://api.pinata.cloud/pinning/unpin/${tokenCID}`,
-//       { 
-//         headers: { 
-//           'Authorization': accessTokenOfPinata
-//       }
-//     })
-    
-//       console.log("delete NFt")
-//       // console.log(deleteNft)
-
-//  }
-
-// catch (e) {
-//     console.log("error in deleting")
-//     }
-
-    
-// }
-
-
-
-// async function BuyNft(){
-//    // updating owner, total_royalty and resold_count in sxt
-// const sqlText = `INSERT INTO MARKET.TOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (${id},'${nft}', '${newOwner}',0,0,0, ${MintDate}, ${ExpireDate}, ${tokenId})`
-    
-
-// const  insert_payload = {
-//   "resourceId": "MARKET.TOKEN",
-//   "sqlText": sqlText
-// }
-    
-// const  insert_headers = {
-//       "accept": "application/json",
-//       "biscuit": biscuit,
-//       "content-type": "application/json",
-//       "authorization": `Bearer ${accessToken}`
-//   }
-
-        
-//     const sxtInsert = await Functions.makeHttpRequest({
-//           url: SXT_API_DML_URL,
-//           method: 'POST',
-//           headers: insert_headers,
-//           timeout: 9000,
-//           data: insert_payload})
-
-//     if(sxtInsert.status !== 200) {throw "problem occur in sxt insert"}
-
-// }
-
-
-
 async function main() {
 
     const accounts = await hre.ethers.getSigners();
-    const MarketCreator = accounts[2]
+    const MarketCreator = accounts[0]
     const buyer  = accounts[0]
     const NftCreator = accounts[1]
 
@@ -141,7 +49,7 @@ async function main() {
     const tokenUri = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/QmcUn9T13Mp8wGVpZ4mjAM1h8U8hbBEaVf6q4ipjzvfPZT"
     console.log(tokenUri)
 
-    console.log("Now Buyer is satisfied and he is buying NFT")
+    // console.log("Now Buyer is satisfied and he is buying NFT")
     const buyNftTx = await MembershipMarket.connect(buyer).buyNftWithNative(buyer.address,nft,tokenUri,{value:hre.ethers.utils.parseEther(nftMaticPrice)})
     await buyNftTx.wait()
 
