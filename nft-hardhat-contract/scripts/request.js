@@ -146,11 +146,13 @@ require("dotenv").config()
               "Ensure the fulfillRequest function in the client contract is correct and the --gaslimit is sufficient."
           );
           console.error(`${msg}\n`);
+          reject()
         } else if (result.userCallbackRawError) {
           console.error(
             "Raw error in contract request fulfillment. Please contact Chainlink support."
           );
           console.error(Buffer.from(msg, "hex").toString());
+          reject()
         } else {
           const { response, err } = result;
           if (response !== "0x") {
@@ -159,6 +161,7 @@ require("dotenv").config()
                 response
               ).toString()}`
             );
+          resolve()
           }
           if (err !== "0x") {
             console.error(
@@ -167,12 +170,14 @@ require("dotenv").config()
                 "hex"
               )}"\n`
             );
+          reject()
           }
         }
 
         clearInterval(polling);
         await cleanup();
       }
+      return
     }
 
     polling = setInterval(checkStore, 1000); // poll every second to see if an event once received
@@ -187,7 +192,16 @@ require("dotenv").config()
         ),
       300_000
     );
-  });
+  }).then((res)=>{
+    console.log("scripts resolved")
+
+  }).catch((e=>{
+    console.log("error")
+  }))
+
+
+
+
 }
 
 // Encrypt the secrets as defined in requestConfig
