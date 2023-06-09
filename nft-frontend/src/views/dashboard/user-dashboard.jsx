@@ -72,6 +72,7 @@ const UserDashboard = () => {
                         category: CATEGORY_NAME[d?.CATEGORY],
                         BASE_META_DATA_URI: d.BASE_META_DATA_URI,
                         logo: d.LOGO,
+                        id: d.TOKEN_ID
                     });
                 });
 
@@ -214,7 +215,7 @@ const UserDashboard = () => {
                                             cards.map((data, i) => {
                                                 return (
                                                     <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                                                        <Link to={`/my-card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
+                                                        <Link to={`/my-card-detail?tokenId=${data.id}&NFTAddress=${data.NFT}&cat=${data.category}`}>
                                                             <img src={data.img} />
                                                         </Link>
                                                         <div className='w-full'>
