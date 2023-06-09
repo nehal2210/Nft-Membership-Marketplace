@@ -8,13 +8,13 @@ const initSDK = SpaceAndTimeSDK.init();
 const REACT_APP_SXT_ACCESS_TOKEN = "Bearer eyJ0eXBlIjoiYWNjZXNzIiwia2lkIjoiNGE2NTUwNjYtZTMyMS00NWFjLThiZWMtZDViYzg4ZWUzYTIzIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE2ODYzMTA4NDYsIm5iZiI6MTY4NjMxMDg0NiwiZXhwIjoxNjg2MzEyMzQ2LCJ0eXBlIjoiYWNjZXNzIiwidXNlciI6Im5laGFsIiwic3Vic2NyaXB0aW9uIjoiMzMwNWM4ZDctYTRlOC00MWM1LWI5OGUtYjVhZmI5OTFkNjhkIiwic2Vzc2lvbiI6IjdjYjdhYjZmNTQ2MjNkMmJmMmRhYTUzMCIsInNzbl9leHAiOjE2ODYzOTcyNDYwNTUsIml0ZXJhdGlvbiI6Ijc1NTc5OGI2MjViZTBiOWQ2M2Y5YzllMCJ9.RxPMVaHSaIZAeSFMYL3-sy-KHdLti-A4naZ7-uMXL6X8DanexMuj7fkBjYvfGPKGQ-zF23C9ZYD4hN5CaslHNA"
 
 
-async function getProviderData(providerAddress){
+async function getProviderData(providerAddress) {
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWPROVIDER",
         "sqlText": `SELECT * FROM MARKET.NEWPROVIDER WHERE provider = '${providerAddress}' `
-        
+
     }
 
     var headers = {
@@ -24,27 +24,27 @@ async function getProviderData(providerAddress){
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        var res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        var res = await axios.post(url, payload, { headers: headers })
         console.log(res.data)
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in getting provider data")
     }
-       
-    
+
+
 }
 
 
-async function getAllProviderData(){
+async function getAllProviderData() {
 
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWPROVIDER",
         "sqlText": "SELECT * FROM MARKET.NEWPROVIDER"
-        
+
     }
 
     var headers = {
@@ -55,30 +55,30 @@ async function getAllProviderData(){
         // "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        let res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        let res = await axios.post(url, payload, { headers: headers })
         console.log(res.data);
-        return({
+        return ({
             status: 200,
             data: res.data
         })
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in getting provider data")
     }
 
 }
 
 
-async function getNftData(nftAddress){
+async function getNftData(nftAddress) {
 
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWTOKEN",
         "sqlText": `SELECT * FROM MARKET.NEWTOKEN WHERE nft = '${nftAddress}'`
-        
+
     }
 
     var headers = {
@@ -86,23 +86,23 @@ async function getNftData(nftAddress){
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
-   
+
     }
 
-    
-    try{
-        var res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        var res = await axios.post(url, payload, { headers: headers })
         console.log(res.data);
-        return({
+        return ({
             status: res.status,
             data: res.data
         })
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in getting provider data")
     }
 
-    return({
+    return ({
         status: 401,
         data: {}
     })
@@ -110,14 +110,14 @@ async function getNftData(nftAddress){
 }
 
 
-async function getAllNftData(){
+async function getAllNftData() {
 
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWTOKEN",
         "sqlText": "SELECT * FROM MARKET.NEWTOKEN"
-        
+
     }
 
     var headers = {
@@ -127,21 +127,21 @@ async function getAllNftData(){
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        let res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        let res = await axios.post(url, payload, { headers: headers })
         return {
             status: res.status,
-            data:res.data
+            data: res.data
         }
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in getting provider data")
     }
 
     return {
         status: 404,
-        data:''
+        data: ''
     }
 
 }
@@ -149,14 +149,14 @@ async function getAllNftData(){
 
 
 
-async function getNftTableId(){
+async function getNftTableId() {
 
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWTOKEN",
         "sqlText": "SELECT COUNT(id) FROM MARKET.NEWTOKEN"
-        
+
     }
 
     var headers = {
@@ -166,21 +166,21 @@ async function getNftTableId(){
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        let res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        let res = await axios.post(url, payload, { headers: headers })
         return {
             status: res.status,
-            data:res.data
+            data: res.data
         }
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in getting provider data")
     }
 
     return {
-        status: 401 ,
-        data:""
+        status: 401,
+        data: ""
     }
 
 }
@@ -188,14 +188,14 @@ async function getNftTableId(){
 
 
 
-async function getProviderNftData(creator){
+async function getProviderNftData(creator) {
 
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWPROVIDER",
         "sqlText": `SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft WHERE MARKET.NEWPROVIDER.provider = ${creator}`
-        
+
     }
 
     var headers = {
@@ -205,37 +205,37 @@ async function getProviderNftData(creator){
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        let res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        let res = await axios.post(url, payload, { headers: headers })
         console.log(res.data)
         return {
             status: res.status,
-            data:res.data
+            data: res.data
         }
-    } 
-    catch(e){
-        console.log("error in getting provider data")   
-        
+    }
+    catch (e) {
+        console.log("error in getting provider data")
+
     }
 
     return {
-        status: 401 ,
-        data:""
+        status: 401,
+        data: ""
     }
 
 
 }
 
 
-async function getProviderNftOwner(owner){
+async function getProviderNftOwner(owner) {
 
     const url = SXT_API_DQL_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWPROVIDER",
         "sqlText": `SELECT * FROM MARKET.NEWPROVIDER INNER JOIN MARKET.NEWTOKEN ON MARKET.NEWTOKEN.nft=MARKET.NEWPROVIDER.nft WHERE MARKET.NEWTOKEN.owner = '${owner}' `
-        
+
     }
 
     var headers = {
@@ -245,33 +245,33 @@ async function getProviderNftOwner(owner){
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        let res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        let res = await axios.post(url, payload, { headers: headers })
         return {
             status: res.status,
-            data:res.data
+            data: res.data
         }
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in getting provider data")
     }
     return {
         status: 401,
-        data:''
+        data: ''
     }
 
 }
 
 
-async function insertProviderData(providerData){
-    console.log("token",REACT_APP_SXT_ACCESS_TOKEN)
+async function insertProviderData(providerData) {
+    console.log("token", REACT_APP_SXT_ACCESS_TOKEN)
     const url = SXT_API_DML_URL
 
-   const payload = { 
+    const payload = {
         "resourceId": "MARKET.NEWPROVIDER",
         "sqlText": `INSERT INTO  MARKET.NEWPROVIDER (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price})`
-        
+
     }
 
     var headers = {
@@ -281,45 +281,45 @@ async function insertProviderData(providerData){
         "authorization": REACT_APP_SXT_ACCESS_TOKEN
     }
 
-    
-    try{
-        const res = await axios.post(url,payload,{headers:headers})
+
+    try {
+        const res = await axios.post(url, payload, { headers: headers })
         return true
-    } 
-    catch(e){
+    }
+    catch (e) {
         console.log("error in Insertingprovider data")
     }
     return false
 }
 
 
-    async function insertNftData(nftData){
+async function insertNftData(nftData) {
 
-        const url = SXT_API_DML_URL
-    
-       const payload = { 
-            "resourceId": "MARKET.NEWTOKEN",
-            "sqlText": `INSERT INTO MARKET.NEWTOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (${nftData.id},'${nftData.nft}', '${nftData.owner}',${nftData.used_count},${nftData.resold_count},${nftData.total_royalty}, ${nftData.mint_date}, ${nftData.expire_date}, ${nftData.token_id})`
-            
-        }
-    
-        var headers = {
-            "accept": "application/json",
-            "biscuit": process.env.REACT_APP_BISCUIT,
-            "content-type": "application/json",
-            "authorization": REACT_APP_SXT_ACCESS_TOKEN
-        }
-    
-        
-        try{
-            let res = await axios.post(url,payload,{headers:headers})
-           return true
-        } 
-        catch(e){
-            console.log("error in getting provider data")
-        }
-    
-        return false
+    const url = SXT_API_DML_URL
+
+    const payload = {
+        "resourceId": "MARKET.NEWTOKEN",
+        "sqlText": `INSERT INTO MARKET.NEWTOKEN (id, nft, owner, used_count, resold_count, total_royalty, mint_date, expire_date, token_id) VALUES (${nftData.id},'${nftData.nft}', '${nftData.owner}',${nftData.used_count},${nftData.resold_count},${nftData.total_royalty}, ${nftData.mint_date}, ${nftData.expire_date}, ${nftData.token_id})`
+
+    }
+
+    var headers = {
+        "accept": "application/json",
+        "biscuit": process.env.REACT_APP_BISCUIT,
+        "content-type": "application/json",
+        "authorization": REACT_APP_SXT_ACCESS_TOKEN
+    }
+
+
+    try {
+        let res = await axios.post(url, payload, { headers: headers })
+        return true
+    }
+    catch (e) {
+        console.log("error in getting provider data")
+    }
+
+    return false
 
 
 }
@@ -336,37 +336,37 @@ async function insertProviderData(providerData){
 //      const payload = {
 //          "userId": user_id
 //      }
-     
+
 //      const headers = {"accept": "application/json"}
-    
+
 //      // """ joinCode is now optional with SxT Beta Release. If supplied it will connect your account to the relevant subscription
 //      // payload = {
 //      //     "userId": user_id,
 //      //     "joinCode": org_code
 //      // }"""
- 
+
 //      try{
-         
+
 //          const res = await axios.post(url, payload, {headers:headers})
- 
+
 //          if (res.status === 200) {
 //              return res.data.authCode
 //          }
-         
+
 //      }
 //     catch(e){
 //      console.log(e)
 //     }
- 
+
 //      return null
- 
-  
+
+
 //  }
- 
- 
- 
- 
- 
+
+
+
+
+
 //   const signMessage = async () => {
 
 //     // const authCode = "6f32191db0b3fbd0e4bb9aec"
@@ -391,24 +391,24 @@ async function insertProviderData(providerData){
 
 //     // console.log("Signature | hashed message, hex:", signedMessage);
 //     // console.log("Signature, hex:", signedMessage.slice(0, 64));
-    
+
 //     // return signedMessage.slice(0, 64);
-   
-     
- 
-   
+
+
+
+
 //    }
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
 //  async function requestToken(auth_code, signed_auth_code){
-  
- 
+
+
 //      const url = SXT_API_BASE_URL + "auth/token"
 //      const payload = {
 //          "userId": USER_ID,
@@ -418,48 +418,48 @@ async function insertProviderData(providerData){
 //      }
 //      const headers = {"accept": "application/json"}
 //      try{
- 
+
 //          const res = await axios.post(url, payload,{headers:headers})
 //          return {accessToken: res.data["accessToken"],refreshToken:res.data["refreshToken"]}
 //      }catch(e){
 //          console.log(e)
 //      }
- 
-     
+
+
 //      return null
-     
-     
- 
-    
+
+
+
+
 //  }
- 
- 
- 
+
+
+
 //  async function authenticate(){
-   
-  
- 
+
+
+
 //      // # 1) Request auth code from SxT API 
 //      var auth_code = await requestAuthCode()
 //      if (auth_code === null){
 //          // use previous authCode
- 
- 
+
+
 //      }
 //      // console.log("authCode",auth_code)
 //      // # 2) Sign the auth code with our private key
 //      const signed_auth_code = await signMessage(auth_code)
-     
+
 //      // // # 3) Request access token using signed_auth_code 
 //      const token = await requestToken(auth_code, signed_auth_code)
 //      if (token !== null){
 //          return token?.accessToken
 //      }
- 
+
 //      return null
- 
+
 //  }
- 
+
 
 // async  function validateToken(token){
 //     const url = SXT_API_BASE_URL + "auth/validtoken"
@@ -472,38 +472,65 @@ async function insertProviderData(providerData){
 //     console.log(res);
 //  }
 
-async function getSxTAccessToken(){
+async function getSxTAccessToken() {
 
-    let [ tokenResponse, tokenError ] = await initSDK.AuthenticateUser(process.env.REACT_APP_SXT_USER_PRIVATE_KEY,process.env.REACT_APP_SXT_USER_PUBLIC_KEY);
-if(!tokenError){ 
-return tokenResponse.accessToken
+    let [tokenResponse, tokenError] = await initSDK.AuthenticateUser(process.env.REACT_APP_SXT_USER_PRIVATE_KEY, process.env.REACT_APP_SXT_USER_PUBLIC_KEY);
+    if (!tokenError) {
+        return tokenResponse.accessToken
 
-} 
-else {
-console.log('Invalid User Tokens Provided');
-console.log(tokenError);
-return ""
-}
-
-}
-
-
-
-async function validateAccessToken(token){
-
-    let [ tokenResponse, tokenError ] = await initSDK.validateToken(token);
-if(!tokenError){ 
-return tokenResponse
-
-} 
-else {
-console.log('Invalid User Tokens Provided');
-console.log(tokenError);
-return ""
-}
+    }
+    else {
+        console.log('Invalid User Tokens Provided');
+        console.log(tokenError);
+        return ""
+    }
 
 }
 
+
+
+async function validateAccessToken(token) {
+
+    let [tokenResponse, tokenError] = await initSDK.validateToken(token);
+    if (!tokenError) {
+        return tokenResponse
+
+    }
+    else {
+        console.log('Invalid User Tokens Provided');
+        console.log(tokenError);
+        return ""
+    }
+
+}
+
+async function putSxtTokenToLocalStorage(token) {
+
+    let sxtToken = localStorage.getItem('sxt-token');
+    console.log('sxtToken', sxtToken);
+    if (sxtToken) {
+        let validateToken = await validateAccessToken(sxtToken);
+        console.log('vvvvvvvvvvvv', validateToken);
+        if (validateToken.userId == process.env.REACT_APP_SXT_USERID) {
+            console.log('aaaaaaaaaaaaaaaa', validateToken);
+            return true
+        } else {
+            let sxtToken = await getSxTAccessToken();
+        }
+    }
+
+    let [tokenResponse, tokenError] = await initSDK.validateToken(token);
+    if (!tokenError) {
+        return tokenResponse
+
+    }
+    else {
+        console.log('Invalid User Tokens Provided');
+        console.log(tokenError);
+        return ""
+    }
+
+}
 
 
 export {

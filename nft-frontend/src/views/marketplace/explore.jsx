@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllNftData, getAllProviderData, getNftData, getNftTableId, insertNftData } from "../../helperFunctions/sxt";
+import { getAllNftData, getAllProviderData, getNftData, getNftTableId, getSxTAccessToken, insertNftData, validateAccessToken } from "../../helperFunctions/sxt";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/general-components/loader";
 import { SvgOnBuy, getFoodBase64Svg } from "../../membershipCards";
@@ -185,6 +185,19 @@ const Explore = () => {
   const getDate = async () => {
     setshowLoader(true);
     try {
+
+      let sxtToken = localStorage.getItem('sxt-token');
+      console.log('sxtToken', sxtToken);
+      if(sxtToken){
+        let validateToken = await validateAccessToken(sxtToken);
+        console.log('vvvvvvvvvvvv', validateToken);
+        if(validateToken.userId == process.env.REACT_APP_SXT_USERID){
+          console.log('aaaaaaaaaaaaaaaa', validateToken);
+          return
+        }else{
+          let sxtToken = await getSxTAccessToken();
+        }
+      }
       let allProviders = await getAllProviderData();
       const arr = []
       if (allProviders.status == 200) {
