@@ -263,7 +263,7 @@ const Explore = () => {
                                   </div>
 
                                   <div className='w-full'>
-                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)}>Buy Now</Button>
+                                    <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)}>Buy Now</Button>
                                   </div>
                                 </div>
                               </div>
@@ -312,7 +312,7 @@ const Explore = () => {
                                   </div>
 
                                   <div className='w-full'>
-                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)}  >Buy Now</Button>
+                                    <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)}  >Buy Now</Button>
                                   </div>
                                 </div>
                               </div>
@@ -361,7 +361,7 @@ const Explore = () => {
                                   </div>
 
                                   <div className='w-full'>
-                                    <Button className='bg-black text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)} >Buy Now</Button>
+                                    <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)} >Buy Now</Button>
                                   </div>
                                 </div>
 

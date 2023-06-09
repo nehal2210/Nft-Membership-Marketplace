@@ -233,7 +233,7 @@ const UserDashboard = () => {
                                                                 </div>
                                                             </div>
                                                             <div className='w-full'>
-                                                                <Button className='bg-black text-white w-full dark:bg-blue' type="primary">Use NFT</Button>
+                                                                <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary">Use NFT</Button>
                                                             </div>
                                                         </div>
                                                     </div>
