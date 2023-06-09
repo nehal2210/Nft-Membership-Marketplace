@@ -14,7 +14,7 @@ import {
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, polygonMumbai } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
-import { authenticate, getSxTAccessToken, signMessage, validateToken } from "./helperFunctions/sxt";
+import { authenticate, signMessage, validateToken } from "./helperFunctions/sxt";
 
 
 const { chains, publicClient } = configureChains(
@@ -41,18 +41,21 @@ const wagmiConfig = createConfig({
 function App() {
 
 
-const getSxtToken=async ()=>{
+// const getSxtToken=async ()=>{
 
-  const token = await getSxTAccessToken();
-  console.log(token);
-  if(token){
-    localStorage.setItem("sxt-token", token);
-  }
-}
+//   signMessage()
+//   // const token = await authenticate()
+//   // console.log(token)
+// }
 
   useEffect(() => {
 
-    getSxtToken();
+    // getSxtToken()
+    // const cookies = new Cookies();
+    // let authValidateToken = validateToken();
+    // console.log('authValidateToken', authValidateToken);
+    // cookies.set('myCat', 'Pacman', { path: '/' });
+    // console.log(cookies.get('myCat'));
 
     localStorage.setItem("theme", "light");
     let theme = localStorage.getItem("theme");

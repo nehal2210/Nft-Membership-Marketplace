@@ -19,7 +19,7 @@ async function getProviderData(providerAddress,token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
@@ -49,7 +49,7 @@ async function getAllProviderData(token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
@@ -82,7 +82,7 @@ async function getNftData(nftAddress,token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
    
     }
 
@@ -121,7 +121,7 @@ async function getAllNftData(token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
@@ -160,7 +160,7 @@ async function getNftTableId(token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
@@ -199,7 +199,7 @@ async function getProviderNftData(creator,token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
@@ -239,7 +239,7 @@ async function getProviderNftOwner(owner,token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
@@ -267,7 +267,7 @@ async function insertProviderData(providerData,token){
 
    const payload = { 
         "resourceId": "MARKET.COMPANY",
-        "sqlText": `INSERT INTO  MARKET.COMPANY (nft, provider, logo,base_meta_data_URI, total_supply, nft_price) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price})`
+        "sqlText": `INSERT INTO  MARKET.COMPANY (nft, provider, logo,base_meta_data_URI, total_supply, nft_price, company_name, category) VALUES ('${providerData.nft}','${providerData.provider}', '${providerData.logo}','${providerData.base_meta_data_URI}',${providerData.total_supply},${providerData.nft_price}, '${providerData.company_name}', ${providerData.category})`
         
     }
 
@@ -275,15 +275,17 @@ async function insertProviderData(providerData,token){
         "accept": "application/json",
         "biscuit": process.env.REACT_APP_BISCUIT,
         "content-type": "application/json",
-        "authorization": token
+        "authorization": 'Bearer '+token
     }
 
 
     try {
-        const res = await axios.post(url, payload, { headers: headers })
+        const res = await axios.post(url, payload, { headers: headers });
+        console.log(res);
         return true
     }
     catch (e) {
+        console.log(e);
         console.log("error in Insertingprovider data")
     }
     return false
@@ -304,7 +306,7 @@ async function insertProviderData(providerData,token){
             "accept": "application/json",
             "biscuit": process.env.REACT_APP_BISCUIT,
             "content-type": "application/json",
-            "authorization": token
+            "authorization": 'Bearer '+token
         }
     
         
@@ -501,7 +503,7 @@ async function validateAccessToken(token) {
 
 }
 
-async function putSxtTokenToLocalStorage(token) {
+async function putSxtTokenToLocalStorage() {
 
     let sxtToken = localStorage.getItem('sxt-token');
     console.log('sxtToken', sxtToken);
@@ -510,22 +512,19 @@ async function putSxtTokenToLocalStorage(token) {
         console.log('vvvvvvvvvvvv', validateToken);
         if (validateToken.userId == process.env.REACT_APP_SXT_USERID) {
             console.log('aaaaaaaaaaaaaaaa', validateToken);
-            return true
+            return sxtToken
         } else {
             let sxtToken = await getSxTAccessToken();
+            return sxtToken
         }
     }
-
-    let [tokenResponse, tokenError] = await initSDK.validateToken(token);
-    if (!tokenError) {
-        return tokenResponse
-
+    else{
+        let sxtToken = await getSxTAccessToken();
+        return sxtToken
     }
-    else {
-        console.log('Invalid User Tokens Provided');
-        console.log(tokenError);
-        return ""
-    }
+
+
+  
 
 }
 
@@ -541,7 +540,8 @@ export {
     getNftTableId,
     getProviderNftOwner,
     getSxTAccessToken,
-    validateAccessToken
+    validateAccessToken,
+    putSxtTokenToLocalStorage
 
 }
 

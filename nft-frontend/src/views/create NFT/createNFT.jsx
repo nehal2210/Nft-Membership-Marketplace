@@ -13,7 +13,7 @@ import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import {ethers} from "ethers";
 import { createNFT, getNftAddress } from "../../contractFunctions";
-import { getSxTAccessToken, insertProviderData, validateAccessToken } from "../../helperFunctions/sxt";
+import { getSxTAccessToken, insertProviderData, putSxtTokenToLocalStorage, validateAccessToken } from "../../helperFunctions/sxt";
 import { useAccount } from "wagmi";
 const CreateNFT = () => {
 
@@ -83,11 +83,18 @@ const CreateNFT = () => {
     // if (!formData) {
 
 
+
+
       notify('Form Invalid, Please Fill Full Form!');
       console.log('Form Invalid');
     } else {
       setShowLoader(true);
-      
+      const token = await getSxTAccessToken();
+      console.log(token)
+      if(!token){
+        notify('Something went wrong');
+        return
+      }
 console.log(formData)
 console.log(CATEGORY[formData.category])
 
@@ -183,10 +190,13 @@ console.log(CATEGORY[formData.category])
           'nftPrice': ''
         })
         if(newNftAddress !== "0x0"){
-          let a = {nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: Number(formData.supplyLimit) , nft_price: Number(formData.nftPrice) }
-          console.log("new Address",a)
+          let d = {nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: formData.supplyLimit , nft_price: formData.nftPrice, company_name: formData.name, category: CATEGORY[formData.category] }
+          console.log("new Address",d)
 
-          var isInserted = await insertProviderData({nft:newNftAddress, provider:address, logo:hashIPFSimg.data.IpfsHash, base_meta_data_URI:res.data.IpfsHash, total_supply: Number(formData.supplyLimit) , nft_price: Number(formData.nftPrice) }) 
+
+          
+
+          var isInserted = await insertProviderData(d, token) 
         
             if (!isInserted) {
               notify("your access token is expire please refresh your page to get access token")
