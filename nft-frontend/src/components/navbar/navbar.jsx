@@ -9,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { Link } from "react-router-dom";
+import logo from '../../assets/g-logo.png'
 
 export default function CustomNavbar() {
   const [openNav, setOpenNav] = useState(false);
@@ -61,9 +62,10 @@ export default function CustomNavbar() {
         <Typography
           as="a"
           href="/"
-          className="cursor-pointer py-1.5 font-extrabold mr-auto sm:text-xl md:text-2xl lg:text-3xl"
+          className="cursor-pointer py-1.5 font-extrabold mr-auto sm:text-xl md:text-2xl lg:text-3xl flex flex-row items-center"
         >
-          Grandeur
+          <img className="w-[11%]" src={logo} />
+          randeur
         </Typography>
         <div className="hidden lg:block">{navList}</div>
         <DarkModeSwitch
