@@ -476,7 +476,6 @@ async function getSxTAccessToken(){
 
     let [ tokenResponse, tokenError ] = await initSDK.AuthenticateUser(process.env.REACT_APP_SXT_USER_PRIVATE_KEY,process.env.REACT_APP_SXT_USER_PUBLIC_KEY);
 if(!tokenError){ 
-    console.log(tokenResponse.accessToken)
 return tokenResponse.accessToken
 
 } 
@@ -489,6 +488,24 @@ return ""
 }
 
 
+
+async function validateAccessToken(token){
+
+    let [ tokenResponse, tokenError ] = await initSDK.validateToken(token);
+if(!tokenError){ 
+return tokenResponse
+
+} 
+else {
+console.log('Invalid User Tokens Provided');
+console.log(tokenError);
+return ""
+}
+
+}
+
+
+
 export {
     getProviderData,
     getAllProviderData,
@@ -499,7 +516,8 @@ export {
     insertNftData,
     getNftTableId,
     getProviderNftOwner,
-    getSxTAccessToken
+    getSxTAccessToken,
+    validateAccessToken
 
 }
 

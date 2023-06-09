@@ -262,14 +262,14 @@ export default class SpaceAndTimeSDK {
     // }
 
     // Validates if the given access token is valid and returns userId on success.
-    async validateToken() {
+    async validateToken(token) {
         try {
 
-            let tokens = this.retrieveFileContents();
-            let tokenValue = tokens.accessToken;
+            // let tokens = this.retrieveFileContents();
+            // let tokenValue = token;
 
-            Utils.checkStringFormat(tokenValue);
-            let bearerTokenValue = 'Bearer ' + tokenValue; 
+            // Utils.checkStringFormat(token);
+            let bearerTokenValue = 'Bearer ' + token; 
             let config = {
                 headers: {
                  Authorization : bearerTokenValue
