@@ -13,7 +13,7 @@ import { MEMBERSHIP_MARKET_ADDRESS } from "../../contracts/Address";
 import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import {ethers} from "ethers";
 import { createNFT, getNftAddress } from "../../contractFunctions";
-import { insertProviderData } from "../../helperFunctions/sxt";
+import { getSxTAccessToken, insertProviderData, validateAccessToken } from "../../helperFunctions/sxt";
 import { useAccount } from "wagmi";
 const CreateNFT = () => {
 
@@ -75,6 +75,9 @@ const CreateNFT = () => {
 
   /*!formData.name || !formData.description || !formData.Discount || !formData.Expiry || !formData.category || !formData["Applicable in"] || !formData['Maximum Purchase duration'] || !formData["Maximum Purchase amount"] || !formData.price || !formData["nftPrice"] || !formData["Comapny Symbol"]*/
   const submitForm = async () => {
+
+   
+   
     console.log('form', formData);
     if (formData.name.length <= 0 || formData.description.length <= 0 || formData.Expiry.length <= 0 || formData.category.length <= 0 || formData["Applicable in"].length <= 0 || formData['Maximum Purchase duration'].length <= 0 || formData["Maximum Purchase amount"].length <= 0 || formData["nftPrice"].length <= 0 || formData["ComapnySymbol"].length <= 0 || !pureImg) {
     // if (!formData) {
@@ -89,7 +92,6 @@ console.log(formData)
 console.log(CATEGORY[formData.category])
 
       const isCreated = await createNFT(formData)
-      // write(formData.name,formData.ComapnySymbol,ethers.utils.parseEther(formData.supplyLimit),ethers.utils.parseEther(formData.nftPrice),false,false,ethers.utils.parseEther("0"), ethers.utils.parseEther(CATEGORY[formData.category]))
       if(!isCreated){
         setShowLoader(false);
         notify("Tx Failed");

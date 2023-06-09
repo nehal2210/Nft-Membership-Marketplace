@@ -45,23 +45,7 @@ require("dotenv").config()
 
   const secrets = { biscuit: process.env.BISCUIT, sxtToken: process.env.SXT_ACCESS_TOKEN,pinataToken:process.env.PINATA_ACCESS_TOKEN}
 
-  // Tutorial 6
-  // const source = await fs.readFile(
-  //   "./examples/Functions-source-inline-secrets.js",
-  //   "utf8"
-  // );
-  // const args = ["1", "bitcoin", "btc-bitcoin"];
-  // const secrets = { apiKey: process.env.COINMARKETCAP_API_KEY };
-
-  // Tutorial 7
-  // const source = await fs.readFile(
-  //   "./examples/Functions-source-inline-secrets.js",
-  //   "utf8"
-  // );
-  // const args = ["1", "bitcoin", "btc-bitcoin"];
-  // const secrets = [
-  //   "https://clfunctions.s3.eu-north-1.amazonaws.com/offchain-secrets.json",
-  // ];
+ 
 
   // Create an oracle contract object.
   // Used in this script only to encrypt secrets.
@@ -162,11 +146,13 @@ require("dotenv").config()
               "Ensure the fulfillRequest function in the client contract is correct and the --gaslimit is sufficient."
           );
           console.error(`${msg}\n`);
+          reject()
         } else if (result.userCallbackRawError) {
           console.error(
             "Raw error in contract request fulfillment. Please contact Chainlink support."
           );
           console.error(Buffer.from(msg, "hex").toString());
+          reject()
         } else {
           const { response, err } = result;
           if (response !== "0x") {
@@ -175,6 +161,7 @@ require("dotenv").config()
                 response
               ).toString()}`
             );
+          resolve()
           }
           if (err !== "0x") {
             console.error(
@@ -183,12 +170,14 @@ require("dotenv").config()
                 "hex"
               )}"\n`
             );
+          reject()
           }
         }
 
         clearInterval(polling);
         await cleanup();
       }
+      return
     }
 
     polling = setInterval(checkStore, 1000); // poll every second to see if an event once received
@@ -203,7 +192,16 @@ require("dotenv").config()
         ),
       300_000
     );
-  });
+  }).then((res)=>{
+    console.log("scripts resolved")
+
+  }).catch((e=>{
+    console.log("error")
+  }))
+
+
+
+
 }
 
 // Encrypt the secrets as defined in requestConfig
@@ -447,12 +445,7 @@ function isObject(value) {
   );
 }
 
-// main()
-//   .then(() => process.exit(0))
-//   .catch((error) => {
-//     console.error(error);
-//     process.exit(1);
-//   });
+
 
 module.exports ={
   callUseNft

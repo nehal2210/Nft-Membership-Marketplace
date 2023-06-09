@@ -13,6 +13,7 @@
     "axios": "^1.4.0",
     "crypto": "^1.0.1",
     "dotenv": "^16.1.4",
+    "eth-crypto": "^2.6.0",
     "ethers": "^5.7.2",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -28,8 +29,18 @@
     "tweetnacl-util": "^0.15.1",
     "viem": "^0.3.50",
     "wagmi": "^1.0.9",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@biscuit-auth/biscuit-wasm": "^0.4.0-alpha3",
+    "base64-js": "^1.5.1",
+    "base64url": "^3.0.1",
+    "crypto-js": "^4.1.1"
   },
+    
+    "browser": {
+      "fs": false,
+      "os": false,
+      "path": false
+    },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
