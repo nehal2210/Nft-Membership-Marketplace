@@ -78,7 +78,7 @@ const NftJson = await Functions.makeHttpRequest({
        const newCID = newNft.data.IpfsHash
 
 
-       // comment it chainlink does not fullfill the request
+       // comment it chainlink does not fullfill the request, because you need table creator access token to chanfe it
  
        const sqlText = `UPDATE MARKET.NEWTOKEN SET used_count = ${NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value} WHERE token_id = ${tokenId} AND nft = '${nft}' `
     

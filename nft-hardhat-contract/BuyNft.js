@@ -39,7 +39,6 @@ const NftJson = await Functions.makeHttpRequest({url: tokenURI})
 
 
 
-
 const MintDate = parseInt(new Date().getTime() / 1000);
 var ExpireDate;
 
