@@ -40,7 +40,7 @@ async function callUseNft(amount,tokenId,tokenUri,nft,newOwner,tableId){
   // Default example
   const source = await fs.readFile("./UseNft.js", "utf8");
   const args = [amount,tokenId,nft, tokenUri];
-  const secrets = {pinataToken:process.env.PINATA_ACCESS_TOKEN}
+  const secrets = {pinataToken:process.env.PINATA_ACCESS_TOKEN,biscuit:process.env.BISCUIT, sxtToken:process.env.SXT_ACCESS_TOKEN}
 
   // Tutorial 6
   // const source = await fs.readFile(

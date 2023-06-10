@@ -4,7 +4,10 @@ const nft = args[2]
 const tokenURI = args[3]
 
 const accessTokenOfPinata = secrets.pinataToken
+const biscuit = secrets.biscuit
+const accessToken = secrets.sxtToken
 
+SXT_API_DML_UR = "https://hackathon.spaceandtime.dev/v1/sql/dml/"
 
 
 const tokenCID = tokenURI.split("ipfs/")[1]
@@ -75,10 +78,35 @@ const NftJson = await Functions.makeHttpRequest({
        const newCID = newNft.data.IpfsHash
 
 
-
+       // comment it chainlink does not fullfill the request
  
+       const sqlText = `UPDATE MARKET.NEWTOKEN SET used_count = ${NftJson.data.attributes[ATTRIBUTES.USED_COUNT].value} WHERE token_id = ${tokenId} AND nft = '${nft}' `
+    
 
+       const  payload = {
+            "resourceId": "MARKET.TOKEN",
+            "sqlText": sqlText
+        }
+    
+      const  headers = {
+            "accept": "application/json",
+            "biscuit": biscuit,
+            "content-type": "application/json",
+            "authorization": `Bearer ${accessToken}`
+        }
 
+        
+        const sxtUpdate = await Functions.makeHttpRequest({
+          url: SXT_API_DML_URL,
+          method: 'POST',
+          headers: headers,
+          timeout: 9000,
+          data: payload})
+
+        console.log("Running qu")
+        if (sxtUpdate.status !== 200) {
+          throw "problem occur in sxt update"
+        }
 
 
 return Functions.encodeString(tokenURI.replace(tokenCID,newCID))

@@ -97,9 +97,6 @@ else if(NftJson.data.attributes[ATTRIBUTES.EXPIRY].duration === "month"){
 
 return Functions.encodeString(tokenURI.replace(tokenCID,newCID))
 
-// const biscuit = secrets.biscuit
-// const accessToken = secrets.sxtToken
 
-// SXT_API_DML_UR = "https://hackathon.spaceandtime.dev/v1/sql/dml/"
 
 

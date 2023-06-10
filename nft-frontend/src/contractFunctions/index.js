@@ -156,7 +156,7 @@ async function getTokenURI(nft,tokenId){
     const contract = getContract()
     try{
         
-        let uri  = await contract.getTokenURI(nft,  tokenId)
+        let uri  = await contract.getTokenURI(nft,  ethers.utils.parseEther(tokenId))
         return  uri
     }
     catch(e){
