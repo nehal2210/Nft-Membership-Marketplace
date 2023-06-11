@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Progress } from 'antd';
-import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, AiOutlineRise } from "react-icons/ai";
+import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, AiOutlineRise, AiOutlinePartition } from "react-icons/ai";
 import { BiBarChartAlt2, BiCalendar, BiFlag, BiStar } from "react-icons/bi";
 import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
@@ -9,6 +9,7 @@ import cardSVG from '../../assets/card.PNG'
 import { getTokenURI } from '../../contractFunctions';
 import { useAccount } from 'wagmi';
 import { SvgOnBuy } from '../../membershipCards';
+import Cart from '../../components/general-components/cart';
 
 const MyCardDetail = () => {
 
@@ -21,6 +22,7 @@ const MyCardDetail = () => {
     const tokenId = new URLSearchParams(useLocation().search).get("tokenId");
     const NFTAddress = new URLSearchParams(useLocation().search).get("NFTAddress");
     const category = new URLSearchParams(useLocation().search).get("cat");
+    const companyLogo = new URLSearchParams(useLocation().search).get("logo");
     console.log('tokenId', tokenId);
     console.log('NFTAddress', NFTAddress);
 
@@ -41,17 +43,22 @@ const MyCardDetail = () => {
                     boots: [],
                     date: [],
                     countries: [],
-                    bankings: []
+                    remaining: [],
+                    bankings: [],
+                    category: "",
+                    "Used Count": 0                    
                 };
                 console.log('data', data);
                 const owner = address.substring(0, 5) + "..." + address.substring(35)
-                const base64Img = SvgOnBuy(data.name, BASE_PINATA_URL + data.LOGO, category, owner)
-                let img = svgBase64 + base64Img;
-                data.image_data = img;
+                // const base64Img = SvgOnBuy(data.name, BASE_PINATA_URL + data.LOGO, category, owner)
+                // let img = svgBase64 + base64Img;
+                // data.image_data = img;
                 setCardDetail(data);
                 data?.attributes?.forEach((data) => {
                     if (data.display_type == null && typeof data.value == 'string') {
                         changingData['properties'].push(data);
+                    } else if (data.display_type == null && typeof data.value == 'number' && data.trait_type == 'Remaining Amount') {
+                        changingData['remaining'].push(data);
                     } else if (data.display_type == null && typeof data.value == 'number') {
                         changingData['bankings'].push(data);
                     } else if (data.display_type == 'number') {
@@ -62,9 +69,15 @@ const MyCardDetail = () => {
                         changingData['date'].push(data);
                     } else if (data.display_type == 'map') {
                         changingData['countries'].push(data);
+                    } else if (data.display_type == 'category') {
+                        changingData['category'] = data.value;
+                    }
+                    else if (data.display_type == "Used Count") {
+                        changingData["Used Count"] = data.value;
                     };
                 });
                 setModifiedData(changingData);
+                console.log('deeeeee', modifiedData);
             })
     }
 
@@ -93,11 +106,23 @@ const MyCardDetail = () => {
             {/* LEFT SIDE */}
             <div className='w-[40%]'>
                 <div className='border-deep-orange-50 w-full rounded-xl'>
-                    <img
+                    {/* <img
                         className='rounded-xl ml-6'
                         alt="example"
                         src={cardDetail.image_data}
-                    />
+                    /> */}
+                      <Cart cardData={{
+                        companyName: cardDetail.name,
+                        NFT: '',
+                        TOTAL_SUPPLY: '',
+                        category: cardDetail.category,
+                        BASE_META_DATA_URI: '',
+                        logo: companyLogo,
+                        owner: 'Owner Address or ENS',
+                        useCount: modifiedData["Used Count"],
+                        routeUrl: '',
+                        btnName: 'Use NFT'
+                    }} showBtn={false} showDetails={false} />
                 </div>
                 <div className='rounded-xl border-blue-gray-50 border-2 mt-5'>
                     <div className='mt-5 pl-5 border-blue-gray-50 border-b-2 flex flex-row items-center'>
@@ -145,6 +170,24 @@ const MyCardDetail = () => {
                                 return (
                                     <div key={i} className='w-80 p-5 pt-2'>
                                         <p>{data.trait_type}: {dateFormat(data.value)}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+                <div className='w-full mt-5'>
+                    <div className='flex items-center'>
+                        <AiOutlinePartition size={'20px'} color='gray' />
+                        <h2 className='ml-2'>Remaining Amount</h2>
+                    </div>
+                    <div className='mt-2 border-t-2 border-blue-gray-50'>
+                        {
+                            modifiedData?.remaining?.map((data, i) => {
+                                return (
+                                    <div key={i} className='w-80 p-5 pt-2'>
+                                        <p><span className='text-4xl font-semibold text-primary-500 mr-2'>{data.value}</span>/{data.max_value}</p>
                                     </div>
                                 )
                             })

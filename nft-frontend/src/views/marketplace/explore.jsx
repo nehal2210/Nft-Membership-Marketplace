@@ -12,6 +12,7 @@ import { Button } from "antd";
 import { buyeNFT } from "../../contractFunctions";
 import axios from "axios";
 import { postTokenMetaData } from "../../helperFunctions/pinata";
+import Cart from "../../components/general-components/cart";
 const Explore = () => {
 
 
@@ -60,6 +61,8 @@ const Explore = () => {
 
 
   const NftBuy = async (data) => {
+
+    console.log('data', data);
 
 
     //getting token id
@@ -206,7 +209,11 @@ const Explore = () => {
             TOTAL_SUPPLY: d.TOTAL_SUPPLY,
             category: d.CATEGORY,
             BASE_META_DATA_URI: d.BASE_META_DATA_URI,
-            logo: d.LOGO
+            logo: d.LOGO,
+            owner: 'Owner Address or ENS',
+            useCount: 0,
+            btnName: 'Buy Now',
+            routeUrl: `/card-detail?URI=${d.BASE_META_DATA_URI}&logo=${d.Logo}&NFTAddress=${d.NFT}`
           });
         });
         console.log("arr", arr);
@@ -226,7 +233,7 @@ const Explore = () => {
 
 
   return (
-    <div>
+    <div className='w-full min-h-[80vh]'>
       {
         showLoader ? <Loader /> :
         <>
@@ -244,39 +251,16 @@ const Explore = () => {
                   nftCardData.length > 0 ?
                     nftCardData.map((data, i) => {
                       return (
-                        <>
+                        <div className='m-2'>
                           {
                             data.category == parseInt(CATEGORY['Transportation']) ?
                               <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                                <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
-                                  <img src={data.img} />
-                                </Link>
-                                <div className='w-full'>
-                                  <div className='w-full cursor-pointer'>
-                                    <div className='flex flex-row ml-2 mr-2 dark:text-white'>
-                                      <p>{data.companyName}</p>
-                                    </div>
-                                    <div className='w-full flex justify-between pl-2 pr-2'>
-                                      <div className='flex flex-row justify-around dark:text-white'>
-                                        <p>Price:</p>
-                                        <p className='font-semibold'>{data.NFT_PRICE}</p>
-                                      </div>
-                                      <div className='flex flex-row justify-around dark:text-white'>
-                                        <p>TOTAL SUPPLY:</p>
-                                        <p className='font-semibold'>{data.TOTAL_SUPPLY}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className='w-full'>
-                                    <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)}>Buy Now</Button>
-                                  </div>
-                                </div>
+                                <Cart cardData={data} showBtn={true} showDetails={true} eventFire={() => {NftBuy(data)}} />
                               </div>
                               : null
                           }
 
-                        </>
+                        </div>
                       )
                     })
                     :
@@ -293,39 +277,16 @@ const Explore = () => {
                   nftCardData.length > 0 ?
                     nftCardData.map((data, i) => {
                       return (
-                        <>
+                        <div className='m-2'>
                           {
                             data.category == parseInt(CATEGORY['Sports and Activity']) ?
-                              <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                                <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
-                                  <img src={data.img} />
-                                </Link>
-                                <div className='w-full'>
-                                  <div className='w-full cursor-pointer'>
-                                    <div className='flex flex-row ml-2 mr-2 dark:text-white'>
-                                      <p>{data.companyName}</p>
-                                    </div>
-                                    <div className='w-full flex justify-between pl-2 pr-2'>
-                                      <div className='flex flex-row justify-around dark:text-white'>
-                                        <p>Price:</p>
-                                        <p className='font-semibold'>{data.NFT_PRICE}</p>
-                                      </div>
-                                      <div className='flex flex-row justify-around dark:text-white'>
-                                        <p>TOTAL SUPPLY:</p>
-                                        <p className='font-semibold'>{data.TOTAL_SUPPLY}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className='w-full'>
-                                    <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)}  >Buy Now</Button>
-                                  </div>
-                                </div>
-                              </div>
-                              : null
+                            <div className="w-[300px] m-2 cursor-pointer" key={i}>
+                            <Cart cardData={data} showBtn={true} showDetails={true} eventFire={() => {NftBuy(data)}} />
+                          </div>
+                          : null
                           }
 
-                        </>
+                        </div>
                       )
                     })
                     :
@@ -342,40 +303,16 @@ const Explore = () => {
                   nftCardData.length > 0 ?
                     nftCardData.map((data, i) => {
                       return (
-                        <>
+                        <div className='m-2'>
                           {
                             data.category == parseInt(CATEGORY['Food and dining']) ?
-                              <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                                <Link to={`/card-detail?token=${data.BASE_META_DATA_URI}&?NFTAddress=${data.NFT}`}>
-                                  <img src={data.img} />
-                                </Link>
-                                <div className='w-full'>
-                                  <div className='w-full cursor-pointer'>
-                                    <div className='flex flex-row ml-2 mr-2 dark:text-white'>
-                                      <p>{data.companyName}</p>
-                                    </div>
-                                    <div className='w-full flex justify-between pl-2 pr-2'>
-                                      <div className='flex flex-row justify-around dark:text-white'>
-                                        <p>Price:</p>
-                                        <p className='font-semibold'>{data.NFT_PRICE}</p>
-                                      </div>
-                                      <div className='flex flex-row justify-around dark:text-white'>
-                                        <p>TOTAL SUPPLY:</p>
-                                        <p className='font-semibold'>{data.TOTAL_SUPPLY}</p>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className='w-full'>
-                                    <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" onClick={() => NftBuy(data)} >Buy Now</Button>
-                                  </div>
-                                </div>
-
-                              </div>
-                              : null
+                            <div className="w-[300px] m-2 cursor-pointer" key={i}>
+                            <Cart cardData={data} showBtn={true} showDetails={true} eventFire={() => {NftBuy(data)}} />
+                          </div>
+                          : null
                           }
 
-                        </>
+                        </div>
                       )
                     })
                     :

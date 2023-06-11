@@ -1,4 +1,4 @@
-import { Table, Tooltip } from 'antd';
+import { Button, Table, Tag, Tooltip } from 'antd';
 import { AiFillGolden, AiFillSignal, AiOutlineRise } from "react-icons/ai";
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
@@ -109,7 +109,19 @@ const ProviderDashboard = () => {
         {
             title: 'Expire Date',
             dataIndex: 'expire_date',
-        }
+        },
+        {
+            title: 'Notify User',
+            key: 'notify',
+            dataIndex: 'notify',
+            render: (_,) => (
+
+
+                <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary" >
+                    {"Notify to Use NFT"}
+                </Button>
+            ),
+        },
     ];
     let data = [
         {
@@ -120,7 +132,7 @@ const ProviderDashboard = () => {
             resold_count: 43,
             total_royalty: '100$',
             mint_date: '06/Jun/2023',
-            expire_date: 1716828751
+            expire_date: 1716828751,
         },
         {
             id: 1,
@@ -130,7 +142,7 @@ const ProviderDashboard = () => {
             resold_count: 10,
             total_royalty: '30$',
             mint_date: '10/Jun/2023',
-            expire_date: '06/Jun/2025'
+            expire_date: '06/Jun/2025',
         },
         {
             id: 2,
@@ -140,7 +152,7 @@ const ProviderDashboard = () => {
             resold_count: 44,
             total_royalty: '67$',
             mint_date: '02/Feb/2023',
-            expire_date: '02/Feb/2025'
+            expire_date: '02/Feb/2025',
         },
         {
             id: 3,
@@ -150,7 +162,7 @@ const ProviderDashboard = () => {
             resold_count: 34,
             total_royalty: '400$',
             mint_date: '17/Feb/2023',
-            expire_date: '17/Feb/2025'
+            expire_date: '17/Feb/2025',
         },
         {
             id: 4,
@@ -160,7 +172,7 @@ const ProviderDashboard = () => {
             resold_count: 75,
             total_royalty: '300$',
             mint_date: '12/Mar/2023',
-            expire_date: '12/Mar/2025'
+            expire_date: '12/Mar/2025',
         },
         {
             id: 5,
@@ -170,7 +182,7 @@ const ProviderDashboard = () => {
             resold_count: 54,
             total_royalty: '532$',
             mint_date: '03/Nov/2022',
-            expire_date: '03/Nov/2024'
+            expire_date: '03/Nov/2024',
         },
         {
             id: 7,
@@ -180,7 +192,7 @@ const ProviderDashboard = () => {
             resold_count: 45,
             total_royalty: '65$',
             mint_date: '14/Apr/2022',
-            expire_date: '14/Apr/2024'
+            expire_date: '14/Apr/2024',
         },
         {
             id: 8,
@@ -190,7 +202,7 @@ const ProviderDashboard = () => {
             resold_count: 44,
             total_royalty: '67$',
             mint_date: '02/Feb/2023',
-            expire_date: '02/Feb/2025'
+            expire_date: '02/Feb/2025',
         },
         {
             id: 9,
@@ -200,7 +212,7 @@ const ProviderDashboard = () => {
             resold_count: 34,
             total_royalty: '400$',
             mint_date: '17/Feb/2023',
-            expire_date: '17/Feb/2025'
+            expire_date: '17/Feb/2025',
         },
         {
             id: 10,
@@ -210,7 +222,7 @@ const ProviderDashboard = () => {
             resold_count: 75,
             total_royalty: '300$',
             mint_date: '12/Mar/2023',
-            expire_date: '12/Mar/2025'
+            expire_date: '12/Mar/2025',
         },
         {
             id: 11,
@@ -220,7 +232,7 @@ const ProviderDashboard = () => {
             resold_count: 54,
             total_royalty: '532$',
             mint_date: '03/Nov/2022',
-            expire_date: '03/Nov/2024'
+            expire_date: '03/Nov/2024',
         },
         {
             id: 12,
@@ -230,7 +242,7 @@ const ProviderDashboard = () => {
             resold_count: 45,
             total_royalty: '65$',
             mint_date: '14/Apr/2022',
-            expire_date: '14/Aprov/2024'
+            expire_date: '14/Aprov/2024',
         }
     ];
 

@@ -16,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 import Loader from '../../components/general-components/loader';
 import { FiInbox } from "react-icons/fi";
+import Cart from '../../components/general-components/cart';
 
 
 
@@ -32,8 +33,9 @@ const CardDetails = () => {
         data: [],
     });
     const [cardDetail, setCardDetail] = useState({});
-    const searchParams = new URLSearchParams(useLocation().search).get("token");
-    console.log('searchParams', searchParams);
+    const uri = new URLSearchParams(useLocation().search).get("URI");
+    const companyLogo = new URLSearchParams(useLocation().search).get("logo");
+    console.log('searchParams', companyLogo);
 
 
     const notify = (msg) => {
@@ -68,7 +70,7 @@ const CardDetails = () => {
 
 
 
-        fetch(BASE_PINATA_URL+searchParams)
+        fetch(BASE_PINATA_URL+uri)
             .then(response => {
                 return response.json()
             })
@@ -80,7 +82,8 @@ const CardDetails = () => {
                     date: [],
                     countries: [],
                     bankings: [],
-                    remaining: []
+                    remaining: [],
+                    category: '',
                 };
                 console.log('data', data);
                 setCardDetail(data);
@@ -99,6 +102,8 @@ const CardDetails = () => {
                         changingData['date'].push(data);
                     } else if (data.display_type == 'map') {
                         changingData['countries'].push(data);
+                    } else if (data.display_type == 'category') {
+                        changingData['category'] = data.value;
                     };
                 });
                 setModifiedData(changingData);
@@ -251,11 +256,26 @@ const CardDetails = () => {
             {/* LEFT SIDE */}
             <div className='w-[40%]'>
                 <div className='border-deep-orange-50 w-full rounded-xl'>
-                    <img
+                    {/* <img
                         className='rounded-xl'
                         alt="example"
                         src={cardDetail.image_data}
-                    />
+                        "Food and dining":"0",
+   "Transportation":"1",
+   "Sports and Activity":"2"
+                    /> */}
+                    <Cart cardData={{
+                        companyName: cardDetail.name,
+                        NFT: '',
+                        TOTAL_SUPPLY: '',
+                        category: cardDetail.category == 'Food and dining' ? 0 : cardDetail.category == 'Transportation' ? 1 : 2,
+                        BASE_META_DATA_URI: '',
+                        logo: companyLogo,
+                        owner: 'Owner Address or ENS',
+                        useCount: 0,
+                        routeUrl: '',
+                        btnName: 'Buy Now'
+                    }} showBtn={false} showDetails={false} />
                 </div>
                 <div className='rounded-xl border-blue-gray-50 border-2 mt-5'>
                     <div className='mt-5 pl-5 border-blue-gray-50 border-b-2 flex flex-row items-center'>
