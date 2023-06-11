@@ -114,32 +114,123 @@ const ProviderDashboard = () => {
     let data = [
         {
             id: 0,
-            token_id: 0,
+            token_id: 5,
             owner: '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',
-            used_count: 0,
-            resold_count: 0,
-            total_royalty: 0,
-            mint_date: 0,
+            used_count: 5,
+            resold_count: 43,
+            total_royalty: '100$',
+            mint_date: '06/Jun/2023',
             expire_date: 1716828751
         },
         {
-            id: 0,
-            token_id: 0,
-            dataIndex: '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',
+            id: 1,
+            token_id: 32,
+            owner: '0xbcFA8eAB1fCe576asdgjdgasjgdasdje0ADCsa564',
+            used_count: 25,
+            resold_count: 10,
+            total_royalty: '30$',
+            mint_date: '10/Jun/2023',
+            expire_date: '06/Jun/2025'
+        },
+        {
+            id: 2,
+            token_id: 43,
+            owner: '0xbcFA8eAB1fCe576yugsyuas8d6as7862342jasdasd',
+            used_count: 54,
+            resold_count: 44,
+            total_royalty: '67$',
+            mint_date: '02/Feb/2023',
+            expire_date: '02/Feb/2025'
+        },
+        {
+            id: 3,
+            token_id: 23,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E46518898sd9fsd678s',
+            used_count: 32,
+            resold_count: 34,
+            total_royalty: '400$',
+            mint_date: '17/Feb/2023',
+            expire_date: '17/Feb/2025'
+        },
+        {
+            id: 4,
+            token_id: 567,
             owner: '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',
-            ellipsis: {
-                showTitle: false,
-            },
-            render: (address) => (
-                <Tooltip placement="topLeft" title={address}>
-                    {address}
-                </Tooltip>
-            ),
-            used_count: 0,
-            resold_count: 0,
-            total_royalty: 0,
-            mint_date: 0,
-            expire_date: 1716828751
+            used_count: 75,
+            resold_count: 75,
+            total_royalty: '300$',
+            mint_date: '12/Mar/2023',
+            expire_date: '12/Mar/2025'
+        },
+        {
+            id: 5,
+            token_id: 55,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E46kkehtjkwe9sdf',
+            used_count: 34,
+            resold_count: 54,
+            total_royalty: '532$',
+            mint_date: '03/Nov/2022',
+            expire_date: '03/Nov/2024'
+        },
+        {
+            id: 7,
+            token_id: 64,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E4kjfkldhfkrwr32',
+            used_count: 74,
+            resold_count: 45,
+            total_royalty: '65$',
+            mint_date: '14/Apr/2022',
+            expire_date: '14/Apr/2024'
+        },
+        {
+            id: 8,
+            token_id: 43,
+            owner: '0xbcFA8eAB1fCe576yugsyuas8d6as7862342jasdasd',
+            used_count: 54,
+            resold_count: 44,
+            total_royalty: '67$',
+            mint_date: '02/Feb/2023',
+            expire_date: '02/Feb/2025'
+        },
+        {
+            id: 9,
+            token_id: 23,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E46518898sd9fsd678s',
+            used_count: 32,
+            resold_count: 34,
+            total_royalty: '400$',
+            mint_date: '17/Feb/2023',
+            expire_date: '17/Feb/2025'
+        },
+        {
+            id: 10,
+            token_id: 567,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E46519e0ADC06623',
+            used_count: 75,
+            resold_count: 75,
+            total_royalty: '300$',
+            mint_date: '12/Mar/2023',
+            expire_date: '12/Mar/2025'
+        },
+        {
+            id: 11,
+            token_id: 55,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E46kkehtjkwe9sdf',
+            used_count: 34,
+            resold_count: 54,
+            total_royalty: '532$',
+            mint_date: '03/Nov/2022',
+            expire_date: '03/Nov/2024'
+        },
+        {
+            id: 12,
+            token_id: 64,
+            owner: '0xbcFA8eAB1fCe576F1Ef71772E4kjfkldhfkrwr32',
+            used_count: 74,
+            resold_count: 45,
+            total_royalty: '65$',
+            mint_date: '14/Apr/2022',
+            expire_date: '14/Aprov/2024'
         }
     ];
 
@@ -149,7 +240,8 @@ const ProviderDashboard = () => {
 
 
     return (
-        <div className="w-full">
+        <div className="w-full min-h-[70vh]">
+            <ToastContainer />
             {/* <ToastContainer /> */}
             <h1 className="text-3xl dark:text-white border-b-2 border-primary-500 w-[full] dark:border-blue">Provider Dashboard</h1>
             {
@@ -185,12 +277,12 @@ const ProviderDashboard = () => {
 
                                                     <div className='w-[60%] flex flex-row justify-between'>
                                                         <div className='m-2 p-1 card-gradient rounded-md'>
-                                                            <div className='w-52 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
+                                                            <div className='w-56 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
                                                                 <div className='w-full h-24 dark:text-white flex flex-col justify-between items-center'>
                                                                     <p className='text-lg'>Royalties earned</p>
                                                                     <div className='w-full flex justify-around flex-row items-center'>
                                                                         <div></div>
-                                                                        <p className='text-3xl font-bold'>50</p>
+                                                                        <p className='text-3xl font-bold'>500000$</p>
                                                                         <AiFillSignal size={60} />
                                                                     </div>
                                                                 </div>
@@ -199,12 +291,12 @@ const ProviderDashboard = () => {
 
 
                                                         <div className='m-2 p-1 card-gradient rounded-md'>
-                                                            <div className='w-52 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
+                                                            <div className='w-56 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
                                                                 <div className='w-full h-24 dark:text-white flex flex-col justify-between items-center'>
                                                                     <p className='text-lg'>NFT sold / NFTs Remain</p>
                                                                     <div className='w-full flex justify-around flex-row items-center'>
                                                                         <div></div>
-                                                                        <p className='text-3xl font-bold'>50 / 50</p>
+                                                                        <p className='text-3xl font-bold'>14 / 50</p>
                                                                         <AiFillGolden size={60} />
                                                                     </div>
                                                                 </div>
@@ -212,12 +304,12 @@ const ProviderDashboard = () => {
                                                         </div>
 
                                                         <div className='m-2 p-1 card-gradient rounded-md'>
-                                                            <div className='w-52 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
+                                                            <div className='w-56 bg-white dark:bg-black flex flex-row justify-center rounded-md items-center'>
                                                                 <div className='w-full h-24 dark:text-white flex flex-col justify-between items-center'>
                                                                     <p className='text-lg'>Revenue</p>
                                                                     <div className='w-full flex justify-around flex-row items-center'>
                                                                         <div></div>
-                                                                        <p className='text-3xl font-bold'>50</p>
+                                                                        <p className='text-3xl font-bold'>490032$</p>
                                                                         <AiOutlineRise size={60} />
                                                                     </div>
                                                                 </div>

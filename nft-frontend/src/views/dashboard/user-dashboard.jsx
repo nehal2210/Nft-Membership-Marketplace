@@ -84,116 +84,11 @@ const UserDashboard = () => {
             setshowLoader(false);
 
         }
-
-
-
     }
 
-    // const [mockData, setMockData] = useState([
-    //     {
-    //         category: 'Dining',
-    //         data: [
-    //             {
-    //                 id: 1,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 2,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 3,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //         ]
-    //     },
-    //     {
-    //         category: 'Delivery',
-    //         data: [
-    //             {
-    //                 id: 4,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 5,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 6,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 7,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 8,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //             {
-    //                 id: 9,
-    //                 cardName: 'NFT Famous Monkey',
-    //                 cardLogo: 'https://i.pinimg.com/736x/4a/d8/4c/4ad84c52bc3d5e190ae480070a78f909--vector-photo-free-icon.jpg',
-    //                 companyName: 'GRANDEUR',
-    //                 companyLogo: 'https://logoeps.com/wp-content/uploads/2013/07/apple-mac-vector-logo.png',
-    //                 secondCompanyName: 'Mcdonalds',
-    //                 secondCompanyLogo: 'https://logos-download.com/wp-content/uploads/2016/03/McDonalds_Logo_2018.svg',
-    //                 price: '250$'
-    //             },
-    //         ]
-    //     }
-    // ]);
-
+    
     return (
-        <div className="w-full">
+        <div className="w-full min-h-[70vh]">
             {
                 showLoader ?
                     <Loader />

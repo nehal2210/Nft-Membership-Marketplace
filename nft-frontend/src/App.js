@@ -41,21 +41,7 @@ const wagmiConfig = createConfig({
 function App() {
 
 
-// const getSxtToken=async ()=>{
-
-//   signMessage()
-//   // const token = await authenticate()
-//   // console.log(token)
-// }
-
   useEffect(() => {
-
-    // getSxtToken()
-    // const cookies = new Cookies();
-    // let authValidateToken = validateToken();
-    // console.log('authValidateToken', authValidateToken);
-    // cookies.set('myCat', 'Pacman', { path: '/' });
-    // console.log(cookies.get('myCat'));
 
     localStorage.setItem("theme", "light");
     let theme = localStorage.getItem("theme");
@@ -83,7 +69,7 @@ function App() {
   }, []);
   return (
     <Router>
-          <WagmiConfig config={wagmiConfig}>
+      <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
       <CustomNavbar />
       <MyRoutes />

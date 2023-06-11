@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Progress } from 'antd';
-import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineBank, AiOutlineRise } from "react-icons/ai";
+import { AiOutlineMenu, AiFillEye, AiOutlineHeart, AiFillGold, AiOutlineRise, AiOutlinePartition } from "react-icons/ai";
 import { BiBarChartAlt2, BiCalendar, BiFlag, BiStar } from "react-icons/bi";
 import * as moment from 'moment';
 import { useLocation } from "react-router-dom";
@@ -15,6 +15,9 @@ import { MEMBERSHIP_MARKET_ABI } from "../../contracts/ABI/membershipMarketAbi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
 import Loader from '../../components/general-components/loader';
+import { FiInbox } from "react-icons/fi";
+
+
 
 const CardDetails = () => {
     const { address, isConnected, isDisconnected } = useAccount()
@@ -76,13 +79,16 @@ const CardDetails = () => {
                     boots: [],
                     date: [],
                     countries: [],
-                    bankings: []
+                    bankings: [],
+                    remaining: []
                 };
                 console.log('data', data);
                 setCardDetail(data);
                 data?.attributes?.forEach((data) => {
                     if (data.display_type == null && typeof data.value == 'string') {
                         changingData['properties'].push(data);
+                    } else if (data.display_type == null && typeof data.value == 'number' && data.trait_type == 'Remaining Amount') {
+                        changingData['remaining'].push(data);
                     } else if (data.display_type == null && typeof data.value == 'number') {
                         changingData['bankings'].push(data);
                     } else if (data.display_type == 'number') {
@@ -96,6 +102,7 @@ const CardDetails = () => {
                     };
                 });
                 setModifiedData(changingData);
+                console.log('setModifiedData', changingData);
             })
     }
 
@@ -243,7 +250,7 @@ const CardDetails = () => {
             {showLoader ? <Loader /> : null}
             {/* LEFT SIDE */}
             <div className='w-[40%]'>
-                <div className='border-deep-orange-50 border-2 w-full rounded-xl'>
+                <div className='border-deep-orange-50 w-full rounded-xl'>
                     <img
                         className='rounded-xl'
                         alt="example"
@@ -296,6 +303,24 @@ const CardDetails = () => {
                                 return (
                                     <div key={i} className='w-80 p-5 pt-2'>
                                         <p>{data.trait_type}: {dateFormat(data.value)}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+                <div className='w-full mt-5'>
+                    <div className='flex items-center'>
+                        <AiOutlinePartition size={'20px'} color='gray' />
+                        <h2 className='ml-2'>Remaining Amount</h2>
+                    </div>
+                    <div className='mt-2 border-t-2 border-blue-gray-50'>
+                        {
+                            modifiedData?.remaining?.map((data, i) => {
+                                return (
+                                    <div key={i} className='w-80 p-5 pt-2'>
+                                        <p><span className='text-4xl font-semibold text-primary-500 mr-2'>{data.value}</span>/{data.max_value}</p>
                                     </div>
                                 )
                             })
