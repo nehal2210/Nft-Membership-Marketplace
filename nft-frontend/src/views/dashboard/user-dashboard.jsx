@@ -72,7 +72,10 @@ const UserDashboard = () => {
                         category: CATEGORY_NAME[d?.CATEGORY],
                         BASE_META_DATA_URI: d.BASE_META_DATA_URI,
                         logo: d.LOGO,
-                        id: d.TOKEN_ID
+                        id: d.TOKEN_ID,
+                        useCount: d.USED_COUNT,
+                        btnName: 'Use NFT',
+                        routeUrl: `/my-card-detail?tokenId=${d.TOKEN_ID}&NFTAddress=${d.NFT}&cat=${d.CATEGORY}&logo=${d.LOGO}`
                     });
                 });
 
@@ -110,10 +113,11 @@ const UserDashboard = () => {
                                             cards.map((data, i) => {
                                                 return (
                                                     <div className="w-[300px] m-2 cursor-pointer" key={i}>
-                                                        <Link to={`/my-card-detail?tokenId=${data.id}&NFTAddress=${data.NFT}&cat=${data.category}`}>
+                                                        {/* <Link to={`/my-card-detail?tokenId=${data.id}&NFTAddress=${data.NFT}&cat=${data.category}`}>
                                                             <img src={data.img} />
-                                                        </Link>
-                                                        <div className='w-full'>
+                                                        </Link> */}
+                                                        <Cart cardData={data} showBtn={true} showDetails={true} eventFire={() => {console.log('');}} />
+                                                        {/* <div className='w-full'>
                                                             <div className='w-full cursor-pointer'>
                                                                 <div className='flex flex-row ml-2 mr-2 dark:text-white'>
                                                                     <p>{data.companyName}</p>
@@ -132,7 +136,7 @@ const UserDashboard = () => {
                                                             <div className='w-full'>
                                                                 <Button className='bg-primary-500 text-white w-full dark:bg-blue' type="primary">Use NFT</Button>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 )
                                             })
