@@ -1,40 +1,36 @@
-# Sample Hardhat Project
+# Grandeur With Hardhat
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
-Try running some of the following tasks:
+## Note: 
+**If you want to test Use NFT functionality in our smart contract, then after the installation of node_modules please directly run the last command** 
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
-
-## How to Deploy Scripts
-
-**First** run
+## Install Dependencies
 
 ```
-npx hardhat node --network hardhat
+npm install
 ```
 
-**Second** run
+## Deploy MembershipContract on Polygon
 
 ```
-npx hardhat run deploy/Mocks/MockUsd.js --network localhost
+npx hardhat deploy scripts/deploy-MembershipMarket.js
 ```
 
-**Then** run
+## you can Fund your Contract
 
 ```
-npx hardhat run deploy/Mocks/MockV3Aggregator.js --network localhost
+npx hardhat run scripts/functions-sub.js
 ```
 
-**Lastly** 
+## Change Config
+Please go to the config file and change the address of the contract and subscription ID.
+
+## Use Functionality Of Membership Market
+
+if you want to test **Use Functionality** of Membrship market then run
 ```
-npx hardhat run deploy/NFTfactory.js --network localhost
+npx hardhat run scripts/TestUseNFT.js
 ```
 
-All the deploy scripts will work and the addresses will be stored in ```./deployedAddress.txt```
+## Note
+All the functionalites are integrated in the dapp, we will write the test cases soon.
