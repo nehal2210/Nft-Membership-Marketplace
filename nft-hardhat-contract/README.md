@@ -27,7 +27,12 @@ Please go to the config file and change the address of the contract and subscrip
 
 ## Use Functionality Of Membership Market
 
-if you want to test **Use Functionality** of Membrship market then run
+if you want to test **Use Functionality** of Membrship market then you first need to fill all the fields in .envsample and save it as .env.
+the update table command of space and time will not work in the UseNft.js file because you did not have my private key so you to comment all the lines related to update table ib the UseNFT.js file.
+after that you have to put your NFT metadata url given by dapp to TestUseNFT.js file in tokenURI variable also put your tokenID as well.
+Both things you can get from your dashboard details nft page url.
+ run this command to use your NFT
+ 
 ```
 npx hardhat run scripts/TestUseNFT.js
 ```
