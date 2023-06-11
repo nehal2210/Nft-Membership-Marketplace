@@ -1,6 +1,6 @@
 const hre = require("hardhat");
 const {MembershipMarketAddress} = require("../config") 
-const {callUseNft} = require("./request2")
+const {callUseNft} = require("./request")
 
 
 async function main() {

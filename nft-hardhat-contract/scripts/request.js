@@ -4,7 +4,7 @@ const fs = require("fs").promises;
 const {MembershipMarketAddress, SubscriptionId, MembershipContractAbi, OracleContractAbi} = require("../config")
 require("dotenv").config()
 
- async function callUseNft(amount,tokenId,tokenUri,nft,newOwner,tableId) {
+async function callUseNft(amount,tokenId,tokenUri,nft,newOwner,tableId){
   // Provider config currently set for Polygon Mumbai
 
   const provider = new ethers.providers.JsonRpcProvider(
@@ -17,11 +17,10 @@ require("dotenv").config()
 
   // Consumer contract
   const consumerAddress = MembershipMarketAddress;
+//   const consumerAbiPath =
+//     "./artifacts/contracts/FunctionsConsumer.sol/FunctionsConsumer.json";
 
-  // const contractAbi = JSON.parse(
-  //   await fs.readFile(consumerAbiPath, "utf8")
-  // ).abi;
-  const contractAbi = MembershipContractAbi
+  const contractAbi = MembershipContractAbi;
   const consumerContract = new ethers.Contract(
     consumerAddress,
     contractAbi,
@@ -41,17 +40,32 @@ require("dotenv").config()
   // Default example
   const source = await fs.readFile("./UseNft.js", "utf8");
   const args = [amount,tokenId,nft, tokenUri];
-  // const args = ["nehal",tokenId,nft, tokenUri,newOwner,tableId];
+  const secrets = {pinataToken:process.env.PINATA_ACCESS_TOKEN,biscuit:process.env.BISCUIT, sxtToken:process.env.SXT_ACCESS_TOKEN}
 
-  const secrets = {pinataToken:process.env.PINATA_ACCESS_TOKEN}
+  // Tutorial 6
+  // const source = await fs.readFile(
+  //   "./examples/Functions-source-inline-secrets.js",
+  //   "utf8"
+  // );
+  // const args = ["1", "bitcoin", "btc-bitcoin"];
+  // const secrets = { apiKey: process.env.COINMARKETCAP_API_KEY };
 
- 
+  // Tutorial 7
+  // const source = await fs.readFile(
+  //   "./examples/Functions-source-inline-secrets.js",
+  //   "utf8"
+  // );
+  // const args = ["1", "bitcoin", "btc-bitcoin"];
+  // const secrets = [
+  //   "https://clfunctions.s3.eu-north-1.amazonaws.com/offchain-secrets.json",
+  // ];
 
   // Create an oracle contract object.
   // Used in this script only to encrypt secrets.
   const oracleAddress = "0xeA6721aC65BCeD841B8ec3fc5fEdeA6141a0aDE4"; // Polygon Mumbai
-  
-  const oracleAbi = OracleContractAbi
+//   const oracleAbiPath =
+    // "./artifacts/contracts/dev/functions/FunctionsOracle.sol/FunctionsOracle.json";
+  const oracleAbi =OracleContractAbi
   const oracle = new ethers.Contract(oracleAddress, oracleAbi, signer);
 
   let encryptedSecrets;
@@ -100,19 +114,19 @@ require("dotenv").config()
     // Submit the request
     // Order of the parameters is critical
     const requestTx = await consumerContract.useNft(
-      source,
-      encryptedSecrets ?? "0x",
-      args ?? [], // Chainlink Functions request args
-      subscriptionId, // Subscription ID
-      gasLimit, // Gas limit for the transaction
-      nft,
-      tokenId,
-
-      (overrides = {
-        //Gas limit for the Chainlink Functions request
-        gasLimit: requestGas,
-      })
-    );
+        source,
+        encryptedSecrets ?? "0x",
+        args ?? [], // Chainlink Functions request args
+        subscriptionId, // Subscription ID
+        gasLimit, // Gas limit for the transaction
+        nft,
+        tokenId,
+  
+        (overrides = {
+          //Gas limit for the Chainlink Functions request
+          gasLimit: requestGas,
+        })
+      );
 
     let requestId;
 
@@ -146,13 +160,11 @@ require("dotenv").config()
               "Ensure the fulfillRequest function in the client contract is correct and the --gaslimit is sufficient."
           );
           console.error(`${msg}\n`);
-          reject()
         } else if (result.userCallbackRawError) {
           console.error(
             "Raw error in contract request fulfillment. Please contact Chainlink support."
           );
           console.error(Buffer.from(msg, "hex").toString());
-          reject()
         } else {
           const { response, err } = result;
           if (response !== "0x") {
@@ -161,7 +173,6 @@ require("dotenv").config()
                 response
               ).toString()}`
             );
-          resolve()
           }
           if (err !== "0x") {
             console.error(
@@ -170,14 +181,12 @@ require("dotenv").config()
                 "hex"
               )}"\n`
             );
-          reject()
           }
         }
 
         clearInterval(polling);
         await cleanup();
       }
-      return
     }
 
     polling = setInterval(checkStore, 1000); // poll every second to see if an event once received
@@ -192,16 +201,7 @@ require("dotenv").config()
         ),
       300_000
     );
-  }).then((res)=>{
-    console.log("scripts resolved")
-
-  }).catch((e=>{
-    console.log("error")
-  }))
-
-
-
-
+  });
 }
 
 // Encrypt the secrets as defined in requestConfig
@@ -445,8 +445,6 @@ function isObject(value) {
   );
 }
 
-
-
 module.exports ={
-  callUseNft
-}
+    callUseNft
+  }
