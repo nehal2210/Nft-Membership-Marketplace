@@ -67,8 +67,8 @@ Our future plans for Grandeur include:
 * Stabilizing the Use NFT functionality through Chainlink Functions.
 * Exploring the integration of the Push Protocol to enable NFT providers to send notifications to consumers when they consume services.
 * Continuing to leverage Polygon for its cost-effectiveness and scalability.
-* Leveraging Hardhat for efficient contract compilation, deployment, and testing.
-* Utilizing React, JavaScript, Tailwind CSS, and Ant Design to further enhance and refine our dapp.
+* Physical businesses  mostly trust on stable currency, so we will integrate stable coins in it.
+* Target Foods, Transportation and Sports business first and generate leads.
 With these plans in mind, the possibilities for Grandeur are endless.
 
 ## Architecture
