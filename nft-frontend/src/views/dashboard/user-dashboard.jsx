@@ -69,13 +69,13 @@ const UserDashboard = () => {
                         PROVIDER: d.PROVIDER,
                         NFT: d.NFT,
                         TOTAL_SUPPLY: d.TOTAL_SUPPLY,
-                        category: CATEGORY_NAME[d?.CATEGORY],
+                        category: d.CATEGORY,
                         BASE_META_DATA_URI: d.BASE_META_DATA_URI,
                         logo: d.LOGO,
                         id: d.TOKEN_ID,
                         useCount: d.USED_COUNT,
                         btnName: 'Use NFT',
-                        routeUrl: `/my-card-detail?tokenId=${d.TOKEN_ID}&NFTAddress=${d.NFT}&cat=${d.CATEGORY}&logo=${d.LOGO}`
+                        routeUrl: `/my-card-detail?tokenId=${d.TOKEN_ID}&NFTAddress=${d.NFT}&cat=${d.CATEGORY}&logo=${d.LOGO}&category=${d.CATEGORY}`
                     });
                 });
 

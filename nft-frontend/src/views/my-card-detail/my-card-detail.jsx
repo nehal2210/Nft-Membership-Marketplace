@@ -123,11 +123,11 @@ const MyCardDetail = () => {
                         companyName: cardDetail.name,
                         NFT: '',
                         TOTAL_SUPPLY: '',
-                        category: cardDetail.category,
+                        category: category,
                         BASE_META_DATA_URI: '',
                         logo: companyLogo,
                         owner: 'Owner Address or ENS',
-                        useCount: cardDetail['Used Count'],
+                        useCount: modifiedData['Used Count'],
                         routeUrl: '',
                         btnName: 'Use NFT'
                     }} showBtn={false} showDetails={false} />

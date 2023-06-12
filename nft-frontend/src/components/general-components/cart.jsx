@@ -9,6 +9,7 @@ import transportation from '../../assets/transportation.png'
 import { BASE_PINATA_URL } from '../../constants';
 
 const Cart = ({ cardData, showBtn, showDetails, eventFire, routeUrl, btnName }) => {
+    console.log('aaaaaaaaaa', cardData)
     return (
         <div className='w-80 m-5 mb-10 bg-[#8f808003] shadow-[0_0_5px_0px_#8f808040] rounded-t-xl'>
             <Link to={cardData.routeUrl}>
