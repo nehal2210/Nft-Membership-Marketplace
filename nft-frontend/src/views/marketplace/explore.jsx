@@ -213,7 +213,7 @@ const Explore = () => {
             owner: 'Owner Address or ENS',
             useCount: 0,
             btnName: 'Buy Now',
-            routeUrl: `/card-detail?URI=${d.BASE_META_DATA_URI}&logo=${d.Logo}&NFTAddress=${d.NFT}`
+            routeUrl: `/card-detail?URI=${d.BASE_META_DATA_URI}&logo=${d.LOGO}&NFTAddress=${d.NFT}`
           });
         });
         console.log("arr", arr);

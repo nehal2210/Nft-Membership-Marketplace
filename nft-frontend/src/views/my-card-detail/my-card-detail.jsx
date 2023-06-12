@@ -10,10 +10,13 @@ import { getTokenURI } from '../../contractFunctions';
 import { useAccount } from 'wagmi';
 import { SvgOnBuy } from '../../membershipCards';
 import Cart from '../../components/general-components/cart';
+import { ToastContainer } from 'react-toastify';
+import Loader from '../../components/general-components/loader';
 
 const MyCardDetail = () => {
 
-    const { address, isConnected, isDisconnected } = useAccount()
+    const { address, isConnected, isDisconnected } = useAccount();
+    const [showLoader, setshowLoader] = useState(false);
     const [modifiedData, setModifiedData] = useState({
         attribute: '',
         data: [],
@@ -28,15 +31,18 @@ const MyCardDetail = () => {
 
     const fetchUserData = async () => {
 
+        setshowLoader(true);
         const tokenURI = await getTokenURI(NFTAddress, tokenId);
         console.log('tokenURI', tokenURI);
 
         // https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreih53vgianmjgkayvtkmfkqy7tke5bqlsio6pfh4d4w22u5yrjhxgq
         fetch(tokenURI)
             .then(response => {
+                setshowLoader(false);
                 return response.json()
             })
             .then(data => {
+                 setshowLoader(false);
                 var changingData = {
                     properties: [],
                     stats: [],
@@ -104,6 +110,8 @@ const MyCardDetail = () => {
     return (
         <div className='w-full p-8 flex flex-row justify-start'>
             {/* LEFT SIDE */}
+            <ToastContainer />
+            {showLoader ? <Loader /> : null}
             <div className='w-[40%]'>
                 <div className='border-deep-orange-50 w-full rounded-xl'>
                     {/* <img
