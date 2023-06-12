@@ -35,6 +35,8 @@ const CardDetails = () => {
     const [cardDetail, setCardDetail] = useState({});
     const uri = new URLSearchParams(useLocation().search).get("URI");
     const companyLogo = new URLSearchParams(useLocation().search).get("logo");
+    const nft = new URLSearchParams(useLocation().search).get("NFTAddress");
+    
     console.log('searchParams', companyLogo);
 
 
@@ -102,12 +104,12 @@ const CardDetails = () => {
                         changingData['date'].push(data);
                     } else if (data.display_type == 'map') {
                         changingData['countries'].push(data);
-                    } else if (data.display_type == 'category') {
+                    } else if (data.trait_type == 'category') {
                         changingData['category'] = data.value;
                     };
                 });
                 setModifiedData(changingData);
-                console.log('setModifiedData', changingData);
+                console.log('setModifiedData', modifiedData);
             })
     }
 
@@ -139,7 +141,7 @@ const CardDetails = () => {
     
         const tableId = nftTableData.data[0]["count(id)"] + 1
         console.log(tableId)
-        const nftCollectionData = await getNftData(data.NFT,token)
+        const nftCollectionData = await getNftData(nft,token)
     
         if (nftCollectionData.status !== 200) {
           setshowLoader(false);
@@ -266,9 +268,9 @@ const CardDetails = () => {
                     /> */}
                     <Cart cardData={{
                         companyName: cardDetail.name,
-                        NFT: '',
+                        NFT: nft,
                         TOTAL_SUPPLY: '',
-                        category: cardDetail.category == 'Food and dining' ? 0 : cardDetail.category == 'Transportation' ? 1 : 2,
+                        category: modifiedData.category ,
                         BASE_META_DATA_URI: '',
                         logo: companyLogo,
                         owner: 'Owner Address or ENS',

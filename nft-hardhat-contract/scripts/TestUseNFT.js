@@ -19,9 +19,9 @@ async function main() {
     
 
       // put your nft from the url of your nft
-    const nft = "0x3F68aF6fA9f587034Caa3EE9bB7112425E22c2E9"
+    const nft = "0xa285ea87943dbDfd5f657faB79FcD4304b60014b"
       // you can copy the metadata url from your browser in your nft detail page and put it here
-    const tokenUri = " https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreiaewkxx6elswmjwfhoghdctbrx37cocabe3qb5esyle4p7doaipcu"
+    const tokenUri = "https://magenta-distinct-guan-162.mypinata.cloud/ipfs/bafkreigj43lv7oqwbbh7ghoeikk4kwdoatayf3ndcqfwygmabr55fb7hfq"
     
     // put your nft token from the url of your nft
     const tokenId = "0"

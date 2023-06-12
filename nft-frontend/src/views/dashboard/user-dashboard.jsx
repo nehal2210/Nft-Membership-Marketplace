@@ -75,7 +75,7 @@ const UserDashboard = () => {
                         id: d.TOKEN_ID,
                         useCount: d.USED_COUNT,
                         btnName: 'Use NFT',
-                        routeUrl: `/my-card-detail?tokenId=${d.TOKEN_ID}&NFTAddress=${d.NFT}&cat=${d.CATEGORY}&logo=${d.LOGO}&category=${d.CATEGORY}`
+                        routeUrl: `/my-card-detail?tokenId=${d.TOKEN_ID}&NFTAddress=${d.NFT}&logo=${d.LOGO}&category=${d.CATEGORY}`
                     });
                 });
 

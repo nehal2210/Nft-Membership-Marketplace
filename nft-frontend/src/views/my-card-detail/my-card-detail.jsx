@@ -26,6 +26,8 @@ const MyCardDetail = () => {
     const NFTAddress = new URLSearchParams(useLocation().search).get("NFTAddress");
     const category = new URLSearchParams(useLocation().search).get("cat");
     const companyLogo = new URLSearchParams(useLocation().search).get("logo");
+    const uri = new URLSearchParams(useLocation().search).get("uri");
+
     console.log('tokenId', tokenId);
     console.log('NFTAddress', NFTAddress);
 
@@ -135,7 +137,7 @@ const MyCardDetail = () => {
                         category: category,
                         BASE_META_DATA_URI: '',
                         logo: companyLogo,
-                        owner: 'Owner Address or ENS',
+                        owner: address.substring(0, 5) + "..." + address.substring(35),
                         useCount: modifiedData["usedCount"],
                         routeUrl: '',
                         btnName: 'Use NFT'
