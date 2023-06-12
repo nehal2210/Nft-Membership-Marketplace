@@ -52,7 +52,7 @@ const MyCardDetail = () => {
                     remaining: [],
                     bankings: [],
                     category: "",
-                    "Used Count": 0                    
+                    usedCount: 0                    
                 };
                 console.log('data', data);
                 const owner = address.substring(0, 5) + "..." + address.substring(35)
@@ -65,11 +65,22 @@ const MyCardDetail = () => {
                         changingData['properties'].push(data);
                     } else if (data.display_type == null && typeof data.value == 'number' && data.trait_type == 'Remaining Amount') {
                         changingData['remaining'].push(data);
-                    } else if (data.display_type == null && typeof data.value == 'number') {
+                    }
+                    
+
+                    
+                    else if (data.display_type == null && typeof data.value == 'number') {
                         changingData['bankings'].push(data);
-                    } else if (data.display_type == 'number') {
+
+                    } 
+
+                    else if (data.trait_type === "Used Count") {
+                        console.log("aaaaaaaaaaaaaaaaa",data.value)
+                        changingData["usedCount"] = data.value;
                         changingData['stats'].push(data);
-                    } else if (data.display_type == 'boost_percentage') {
+                    }
+                    
+                    else if (data.display_type == 'boost_percentage') {
                         changingData['boots'].push(data);
                     } else if (data.display_type == 'date') {
                         changingData['date'].push(data);
@@ -78,9 +89,7 @@ const MyCardDetail = () => {
                     } else if (data.display_type == 'category') {
                         changingData['category'] = data.value;
                     }
-                    else if (data.display_type == "Used Count") {
-                        changingData["Used Count"] = data.value;
-                    };
+              
                 });
                 setModifiedData(changingData);
                 console.log('deeeeee', modifiedData);
@@ -127,7 +136,7 @@ const MyCardDetail = () => {
                         BASE_META_DATA_URI: '',
                         logo: companyLogo,
                         owner: 'Owner Address or ENS',
-                        useCount: modifiedData['Used Count'],
+                        useCount: modifiedData["usedCount"],
                         routeUrl: '',
                         btnName: 'Use NFT'
                     }} showBtn={false} showDetails={false} />
