@@ -127,7 +127,7 @@ const MyCardDetail = () => {
                         BASE_META_DATA_URI: '',
                         logo: companyLogo,
                         owner: 'Owner Address or ENS',
-                        useCount: modifiedData.stats[0].value,
+                        useCount: cardDetail['Used Count'],
                         routeUrl: '',
                         btnName: 'Use NFT'
                     }} showBtn={false} showDetails={false} />
